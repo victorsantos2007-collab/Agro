@@ -19,12 +19,19 @@
           </div>
         </div>
 
-        <nav class="menu" aria-label="Menu principal">
+        <!-- Botão hambúrguer -->
+        <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="menu" id="menu-nav" aria-label="Menu principal">
           <ul>
-            <li><a href="#inicio">Início</a></li>
-            <li><a href="#problema">Problema</a></li>
-            <li><a href="#indicadores">Indicadores</a></li>
-            <li><a href="#solucoes">Soluções</a></li>
+            <li><a href="#inicio" class="menu-link">Início</a></li>
+            <li><a href="#problema" class="menu-link">Problema</a></li>
+            <li><a href="#indicadores" class="menu-link">Indicadores</a></li>
+            <li><a href="#solucoes" class="menu-link">Soluções</a></li>
             <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
           </ul>
         </nav>
@@ -114,10 +121,7 @@
 
           <div class="cards-3">
             <article class="info-card">
-              <img
-                src="img/alimentos.webp"
-                alt="Ícone relacionado a alimentos"
-              />
+              <img src="img/alimentos.webp" alt="Ícone relacionado a alimentos" />
               <h3>Desperdício de alimentos</h3>
               <p>
                 Parte da produção pode ser perdida por falhas de logística,
@@ -139,10 +143,7 @@
             </article>
 
             <article class="info-card">
-              <img
-                src="img/solo.webp"
-                alt="Ícone relacionado ao solo e recursos naturais"
-              />
+              <img src="img/solo.webp" alt="Ícone relacionado ao solo e recursos naturais" />
               <h3>Degradação de recursos</h3>
               <p>
                 Solo, energia e insumos também são perdidos quando o sistema
@@ -223,26 +224,12 @@
               </p>
 
               <div class="pie-and-legend">
-                <div
-                  class="pie-chart"
-                  aria-label="Gráfico circular com recursos naturais"
-                ></div>
-
+                <div class="pie-chart" aria-label="Gráfico circular com recursos naturais"></div>
                 <ul class="legend">
-                  <li>
-                    <span class="legend-color color-agua"></span> Água - 45%
-                  </li>
-                  <li>
-                    <span class="legend-color color-solo"></span> Solo - 25%
-                  </li>
-                  <li>
-                    <span class="legend-color color-energia"></span> Energia -
-                    20%
-                  </li>
-                  <li>
-                    <span class="legend-color color-insumos"></span> Insumos -
-                    10%
-                  </li>
+                  <li><span class="legend-color color-agua"></span> Água - 45%</li>
+                  <li><span class="legend-color color-solo"></span> Solo - 25%</li>
+                  <li><span class="legend-color color-energia"></span> Energia - 20%</li>
+                  <li><span class="legend-color color-insumos"></span> Insumos - 10%</li>
                 </ul>
               </div>
             </article>
@@ -371,10 +358,7 @@
         <div>
           <h4>Currículo da equipe</h4>
           <ul class="footer-links">
-            <li><a href="#" target="_blank">Victor Hugo Dos Santos
-          
-            </a></li>
-         
+            <li><a href="#" target="_blank">Victor Hugo Dos Santos</a></li>
           </ul>
         </div>
       </div>
@@ -386,5 +370,26 @@
         </p>
       </div>
     </footer>
+
+    <script>
+      const hamburger = document.getElementById('hamburger');
+      const menuNav   = document.getElementById('menu-nav');
+      const menuLinks = document.querySelectorAll('.menu-link, .btn-nav');
+
+      hamburger.addEventListener('click', () => {
+        const isOpen = menuNav.classList.toggle('menu-open');
+        hamburger.classList.toggle('hamburger-open', isOpen);
+        hamburger.setAttribute('aria-expanded', isOpen);
+      });
+
+      // Fecha o menu ao clicar em qualquer link
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          menuNav.classList.remove('menu-open');
+          hamburger.classList.remove('hamburger-open');
+          hamburger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    </script>
   </body>
 </html>
