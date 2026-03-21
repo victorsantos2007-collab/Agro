@@ -1,18 +1,553 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AgroVerde Brasil | Sustentabilidade no Agronegócio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="alternate icon" href="favicon.svg" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+
+  <style>
+/* ═══════════════════════════════════════════════
+   INDEX — ESTILOS DESTA PÁGINA
+═══════════════════════════════════════════════ */
+
+/* ── Hero ── */
+.hero-home {
+  min-height: calc(100vh - 68px);
+  display: flex;
+  align-items: center;
+  background: var(--forest-900);
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0;
+}
+
+/* Padrão geométrico de fundo */
+.hero-home::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 70% 30%, rgba(62,154,94,.15) 0%, transparent 45%),
+    radial-gradient(circle at 15% 80%, rgba(33,118,181,.1) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(201,138,26,.08) 0%, transparent 35%);
+  pointer-events: none;
+}
+.hero-home::after {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.04);
+  pointer-events: none;
+}
+
+.hero-home-inner {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* Texto do hero */
+.hero-home-text {}
+
+.home-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.13);
+  color: rgba(255,255,255,.7);
+  padding: 6px 14px;
+  border-radius: var(--radius-xs);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero-home h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.07;
+  letter-spacing: -.04em;
+  margin-bottom: 22px;
+}
+
+.hero-home h1 em {
+  font-style: italic;
+  color: var(--forest-300);
+}
+
+.hero-home-lead {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,.58);
+  line-height: 1.8;
+  max-width: 48ch;
+  margin-bottom: 36px;
+}
+
+/* Stats em linha no hero */
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.hero-stat strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -.04em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.hero-stat span {
+  font-size: .76rem;
+  color: rgba(255,255,255,.4);
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+/* ── Cards de destino ── */
+.dest-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.dest-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  text-decoration: none;
+  color: var(--white);
+  transition: all .22s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+
+.dest-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--dest-color, var(--forest-400));
+  opacity: 0;
+  transition: opacity .22s;
+}
+
+.dest-card:hover {
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.18);
+  transform: translateX(4px);
+  color: var(--white);
+}
+
+.dest-card:hover::before { opacity: 1; }
+
+.dest-icon {
+  width: 50px; height: 50px;
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  transition: background .22s;
+}
+
+.dest-card:hover .dest-icon {
+  background: rgba(255,255,255,.13);
+}
+
+.dest-body { flex: 1; min-width: 0; }
+
+.dest-title {
+  font-family: var(--font-display);
+  font-size: .98rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: -.01em;
+  margin-bottom: 3px;
+  line-height: 1.25;
+}
+
+.dest-desc {
+  font-size: .78rem;
+  color: rgba(255,255,255,.45);
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dest-arrow {
+  font-size: .9rem;
+  color: rgba(255,255,255,.3);
+  flex-shrink: 0;
+  transition: transform .2s, color .2s;
+}
+
+.dest-card:hover .dest-arrow {
+  transform: translateX(4px);
+  color: rgba(255,255,255,.7);
+}
+
+/* Badge "novo" */
+.dest-badge {
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  background: var(--forest-400);
+  color: var(--forest-950);
+  padding: 2px 7px;
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+/* ── Seção "O problema em 3 números" ── */
+.nums-section {
+  padding: 72px 0;
+  background: var(--ink-50);
+  border-bottom: var(--border);
+}
+
+.nums-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--ink-200);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.num-card {
+  background: var(--white);
+  padding: 32px 28px;
+  transition: background .2s;
+}
+
+.num-card:hover { background: var(--forest-50); }
+
+.num-icon { font-size: 1.5rem; margin-bottom: 14px; display: block; }
+
+.num-val {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--forest-900);
+  letter-spacing: -.05em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.num-label {
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--ink-500);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.num-desc {
+  font-size: .84rem;
+  color: var(--ink-500);
+  line-height: 1.65;
+}
+
+/* ── Seção de destinos expandida (páginas) ── */
+.pages-section {
+  padding: 72px 0;
+  background: var(--white);
+  border-bottom: var(--border);
+}
+
+.pages-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 44px;
+}
+
+.page-card {
+  display: block;
+  text-decoration: none;
+  background: var(--white);
+  border: var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all .22s var(--ease);
+  position: relative;
+}
+
+.page-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: var(--ink-200);
+}
+
+.page-card-top {
+  padding: 28px 28px 20px;
+  position: relative;
+}
+
+.page-card-top::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--ink-100);
+}
+
+.page-card-icon-wrap {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+  background: var(--pc-bg, var(--forest-50));
+}
+
+.page-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--forest-950);
+  letter-spacing: -.02em;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.page-card-lead {
+  font-size: .86rem;
+  color: var(--ink-500);
+  line-height: 1.7;
+}
+
+.page-card-bottom {
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.page-card-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.page-tag {
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--ink-400);
+  background: var(--ink-50);
+  border: 1px solid var(--ink-100);
+  border-radius: 99px;
+  padding: 3px 9px;
+  letter-spacing: .03em;
+}
+
+.page-cta {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--forest-600);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap .18s;
+}
+
+.page-card:hover .page-cta { gap: 8px; }
+
+/* Card de agricultor — destaque */
+.page-card.featured {
+  border-color: var(--forest-200);
+  background: linear-gradient(180deg, var(--forest-50) 0%, var(--white) 60%);
+}
+
+.page-card.featured .page-card-top::after { background: var(--forest-100); }
+
+/* ── Parceiros rápido ── */
+.partners-strip {
+  padding: 56px 0;
+  background: var(--forest-50);
+  border-bottom: var(--border);
+}
+
+.partners-label {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-300);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.partners-logos {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.partner-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--white);
+  border: var(--border);
+  border-radius: 99px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--ink-600);
+  text-decoration: none;
+  transition: all .18s;
+  box-shadow: var(--shadow-xs);
+}
+
+.partner-pill:hover {
+  border-color: var(--forest-300);
+  color: var(--forest-700);
+  background: var(--forest-50);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.partner-pill-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--forest-400);
+  flex-shrink: 0;
+}
+
+/* ── CTA ── */
+.home-cta {
+  padding: 88px 0;
+  background: var(--forest-900);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 0%,
+    rgba(108,191,138,.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.home-cta-inner {
+  position: relative; z-index: 1;
+  max-width: 600px; margin: 0 auto;
+}
+
+.home-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--white);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.home-cta h2 em { color: var(--forest-300); font-style: italic; }
+
+.home-cta p {
+  font-size: .98rem;
+  color: rgba(255,255,255,.55);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.home-cta-btns {
+  display: flex; gap: 12px;
+  justify-content: center; flex-wrap: wrap;
+}
+
+.btn-white {
+  background: var(--white); color: var(--forest-900); font-weight: 700;
+  padding: 13px 28px; border-radius: var(--radius-xs); font-size: .92rem;
+  display: inline-flex; align-items: center; gap: 8px; transition: all .2s;
+}
+
+.btn-white:hover { background: var(--forest-50); transform: translateY(-1px); }
+
+.btn-ghost-home {
+  background: transparent; color: rgba(255,255,255,.7);
+  border: 1px solid rgba(255,255,255,.22); font-weight: 600;
+  padding: 13px 28px; border-radius: var(--radius-xs); font-size: .92rem;
+  display: inline-flex; align-items: center; gap: 8px; transition: all .2s;
+}
+
+.btn-ghost-home:hover {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.4);
+  color: var(--white);
+}
+
+/* ── Responsivo ── */
+@media (max-width: 1024px) {
+  .hero-home-inner { grid-template-columns: 1fr; gap: 52px; }
+  .hero-home { min-height: auto; padding: 72px 0; }
+  .hero-home-lead { max-width: 100%; }
+  .dest-grid { grid-template-columns: 1fr 1fr; }
+  .nums-grid { grid-template-columns: 1fr; }
+  .pages-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .hero-home { padding: 56px 0 48px; }
+  .hero-home h1 { font-size: 2rem; }
+  .dest-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 20px; }
+  .pages-grid { grid-template-columns: 1fr; }
+  .home-cta { padding: 64px 0; }
+  .home-cta-btns { flex-direction: column; align-items: center; }
+  .btn-white, .btn-ghost-home { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .hero-home h1 { font-size: 1.75rem; }
+  .num-val { font-size: 2rem; }
+  .page-card-top { padding: 22px 20px 16px; }
+  .page-card-bottom { padding: 14px 20px; }
+}
+  </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header class="topo" id="inicio">
   <div class="container">
     <div class="logo-area">
@@ -29,11 +564,9 @@
 
     <nav class="menu" id="menu-nav" aria-label="Menu principal">
       <ul>
-        <li><a href="#inicio"      class="menu-link">Início</a></li>
-        <li><a href="#problema"    class="menu-link">O Problema</a></li>
-        <li><a href="#indicadores" class="menu-link">Dados</a></li>
-        <li><a href="#solucoes"    class="menu-link">Soluções</a></li>
-        <li><a href="#parceiros"   class="menu-link">Parceiros</a></li>
+        <li><a href="dados.html"    class="menu-link">Dados</a></li>
+        <li><a href="problema.html" class="menu-link">O Problema</a></li>
+        <li><a href="parceiros.html"class="menu-link">Parceiros</a></li>
         <li><a href="proposta.html" class="menu-link menu-link-highlight">Para Agricultores</a></li>
         <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
       </ul>
@@ -44,326 +577,265 @@
 <main>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="container hero-grid">
-    <div class="hero-text">
-      <span class="badge">ODS 12 · Inovação · Campo</span>
-      <h2>Chega de perder o que o campo levou meses para <em>produzir</em></h2>
-      <p>No Brasil, quase metade dos alimentos produzidos nunca chega à mesa. Isso não é inevitável — é um problema que pode ser resolvido com informação, tecnologia e ação coletiva. O AgroVerde Brasil existe para mostrar o tamanho do problema e o caminho da solução.</p>
-      <div class="hero-actions">
-        <a href="cadastro.html" class="btn-primary">Quero participar</a>
-        <a href="#indicadores"  class="btn-secondary">Ver os dados</a>
-      </div>
-      <ul class="hero-highlights">
-        <li>✅ Dados explicados de forma simples</li>
-        <li>✅ Gráficos interativos e acessíveis</li>
-        <li>✅ Conteúdo gratuito para todos</li>
-      </ul>
-    </div>
-    <div class="hero-image-card">
-      <img src="img/hero-fazenda.jpg" alt="Vista de fazenda sustentável brasileira com plantações ordenadas" />
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<section class="stats-strip">
-  <div class="container stats-grid">
-    <article class="stat-card">
-      <span class="stat-icon">🥦</span>
-      <h3>46 Mt</h3>
-      <p><strong>46 milhões de toneladas</strong> de alimentos são perdidas no Brasil a cada ano — o suficiente para alimentar toda a região Nordeste por 12 meses.</p>
-    </article>
-    <article class="stat-card">
-      <span class="stat-icon">💧</span>
-      <h3>70%</h3>
-      <p><strong>Sete em cada dez litros</strong> de água doce no planeta vão para a agricultura. Quando desperdiçamos comida, desperdiçamos também toda essa água.</p>
-    </article>
-    <article class="stat-card">
-      <span class="stat-icon">🌡️</span>
-      <h3>3,3 Gt</h3>
-      <p><strong>3,3 bilhões de toneladas de CO₂</strong> são emitidas por causa do desperdício de alimentos — mais do que toda a aviação comercial mundial.</p>
-    </article>
-  </div>
-</section>
-
-<!-- O PROBLEMA -->
-<section class="section" id="problema">
+<section class="hero-home">
   <div class="container">
-    <div class="section-header">
-      <span class="section-tag">O problema</span>
-      <h2>Por que isso acontece e por que devemos nos importar?</h2>
-      <p>O desperdício não é só culpa do consumidor. Ele começa muito antes da comida chegar à mesa — na colheita, no transporte, no armazenamento. Cada etapa tem suas perdas, e elas somam.</p>
-    </div>
-    <div class="cards-3">
-      <article class="info-card">
-        <img src="img/alimentos.webp" alt="Alimentos frescos em campo agrícola" />
-        <div class="info-card-body">
-          <h3>Desperdício de alimentos</h3>
-          <p>Frutas, verduras e grãos que demoram meses para crescer são perdidos em horas por falhas simples: caixas mal protegidas, caminhões quentes, silos mal vedados. Estima-se que <strong>30% da colheita</strong> nunca chega ao consumidor.</p>
-          <a href="#solucoes">O que podemos fazer →</a>
+    <div class="hero-home-inner">
+
+      <!-- Texto -->
+      <div class="hero-home-text">
+        <div class="home-eyebrow">🌱 AgroVerde Brasil · Sustentabilidade no campo</div>
+
+        <h1>
+          O agro brasileiro <em>produz demais</em> — e desperdiça demais também
+        </h1>
+
+        <p class="hero-home-lead">
+          46 milhões de toneladas de alimentos perdidas por ano. Água, solo e energia
+          jogados fora junto com elas. O problema é grande, mas a solução começa com informação.
+          Explore os dados, entenda as causas e descubra o que você pode fazer.
+        </p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <strong>46 Mt</strong>
+            <span>perdidas/ano</span>
+          </div>
+          <div class="hero-stat">
+            <strong>30%</strong>
+            <span>da colheita some</span>
+          </div>
+          <div class="hero-stat">
+            <strong>3,3 Gt</strong>
+            <span>de CO₂ evitável</span>
+          </div>
+          <div class="hero-stat">
+            <strong>2030</strong>
+            <span>meta ODS −50%</span>
+          </div>
         </div>
-      </article>
-      <article class="info-card">
-        <img src="img/agua.jpg" alt="Sistema de irrigação em plantação" />
-        <div class="info-card-body">
-          <h3>Uso ineficiente da água</h3>
-          <p>A irrigação consome mais água do que qualquer outra atividade humana. Sem tecnologia ou planejamento, grande parte dessa água evapora ou escorre sem chegar às raízes — pressionando rios e represas em todo o país.</p>
-          <a href="#indicadores">Ver os dados de água →</a>
-        </div>
-      </article>
-      <article class="info-card">
-        <img src="img/solo.webp" alt="Solo agrícola fértil sendo analisado" />
-        <div class="info-card-body">
-          <h3>Degradação dos recursos</h3>
-          <p>Quando um alimento é descartado, vai junto tudo que foi investido nele: terra fértil, fertilizante, combustível, horas de trabalho. É como jogar fora dinheiro, esforço e natureza de uma vez só.</p>
-          <a href="cadastro.html">Fazer parte da solução →</a>
-        </div>
-      </article>
+      </div>
+
+      <!-- Cards de destino no hero -->
+      <div class="dest-grid">
+
+        <a href="proposta.html" class="dest-card" style="--dest-color:#6cbf8a">
+          <div class="dest-icon">🚜</div>
+          <div class="dest-body">
+            <div class="dest-title">Calculadora do Agricultor</div>
+            <div class="dest-desc">Descubra quanto você perde e como economizar</div>
+          </div>
+          <span class="dest-badge">novo</span>
+          <span class="dest-arrow">→</span>
+        </a>
+
+        <a href="dados.html" class="dest-card" style="--dest-color:#6cb2e0">
+          <div class="dest-icon">📊</div>
+          <div class="dest-body">
+            <div class="dest-title">Dados e Indicadores</div>
+            <div class="dest-desc">Gráficos reais explicados em linguagem simples</div>
+          </div>
+          <span class="dest-arrow">→</span>
+        </a>
+
+        <a href="problema.html" class="dest-card" style="--dest-color:#e8b84a">
+          <div class="dest-icon">🔍</div>
+          <div class="dest-body">
+            <div class="dest-title">O Problema</div>
+            <div class="dest-desc">Por que o desperdício acontece e onde começa</div>
+          </div>
+          <span class="dest-arrow">→</span>
+        </a>
+
+        <a href="parceiros.html" class="dest-card" style="--dest-color:#97c3dc">
+          <div class="dest-icon">🤝</div>
+          <div class="dest-body">
+            <div class="dest-title">ONGs Parceiras</div>
+            <div class="dest-desc">Organizações que lutam pelo meio ambiente</div>
+          </div>
+          <span class="dest-arrow">→</span>
+        </a>
+
+      </div>
     </div>
   </div>
 </section>
 
-<!-- INDICADORES -->
-<section class="section section-soft" id="indicadores">
+<!-- 3 NÚMEROS QUE IMPORTAM -->
+<section class="nums-section">
   <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Dados e indicadores</span>
-      <h2>Os números por trás do desperdício</h2>
-      <p>Aqui você encontra gráficos com dados reais, acompanhados de explicações simples. Não precisa ser especialista para entender — cada gráfico tem uma legenda em linguagem do dia a dia.</p>
+    <div class="section-header" style="margin-bottom:32px">
+      <span class="section-tag">Por que isso importa</span>
+      <h2>Três números que todo brasileiro deveria conhecer</h2>
     </div>
-
-    <!-- Métricas -->
-    <div class="ind-metrics">
-      <div class="ind-metric m-bad">
-        <div class="ind-metric-label">Perda pós-colheita</div>
-        <div class="ind-metric-value">46 Mt</div>
-        <div class="ind-metric-trend trend-bad">▲ 12% desde 2018</div>
-        <div class="ind-metric-desc">Alimentos que saem da fazenda mas nunca chegam à mesa</div>
+    <div class="nums-grid">
+      <div class="num-card">
+        <span class="num-icon">🥦</span>
+        <div class="num-val">46 Mt</div>
+        <div class="num-label">Alimentos perdidos / ano</div>
+        <div class="num-desc">O suficiente para alimentar toda a região Nordeste por 12 meses. Vai do campo ao lixo sem ninguém comer.</div>
       </div>
-      <div class="ind-metric m-bad">
-        <div class="ind-metric-label">Água desperdiçada / ano</div>
-        <div class="ind-metric-value">750 km³</div>
-        <div class="ind-metric-trend trend-bad">▲ na irrigação ineficiente</div>
-        <div class="ind-metric-desc">Equivalente a 300 mil piscinas olímpicas por hora</div>
+      <div class="num-card">
+        <span class="num-icon">💧</span>
+        <div class="num-val">70%</div>
+        <div class="num-label">Da água doce vai para o agro</div>
+        <div class="num-desc">Sete em cada dez litros de água usados no planeta servem para produzir alimentos. Quando desperdiçamos comida, desperdiçamos também essa água.</div>
       </div>
-      <div class="ind-metric m-warn">
-        <div class="ind-metric-label">Emissão de CO₂ evitável</div>
-        <div class="ind-metric-value">3,3 Gt</div>
-        <div class="ind-metric-trend trend-warn">↔ se não houvesse desperdício</div>
-        <div class="ind-metric-desc">Mais do que toda a aviação comercial global emite</div>
+      <div class="num-card">
+        <span class="num-icon">🌡️</span>
+        <div class="num-val">3,3 Gt</div>
+        <div class="num-label">CO₂ emitido em vão / ano</div>
+        <div class="num-desc">Mais do que toda a aviação comercial mundial. Se o desperdício de alimentos fosse um país, seria o 3º maior emissor do planeta.</div>
       </div>
-      <div class="ind-metric m-ok">
-        <div class="ind-metric-label">Meta global ODS 12.3</div>
-        <div class="ind-metric-value">−50%</div>
-        <div class="ind-metric-trend trend-ok">▼ redução até 2030</div>
-        <div class="ind-metric-desc">Meta da ONU para cortar perdas de alimentos pela metade</div>
-      </div>
-    </div>
-
-    <!-- Linha A -->
-    <div class="ind-row-a">
-      <div class="ind-card">
-        <div class="ind-card-head">
-          <h3>Onde o alimento se perde — por etapa</h3>
-          <p>% do total desperdiçado em cada fase da cadeia alimentar brasileira</p>
-        </div>
-        <div class="ind-tabs">
-          <button class="ind-tab active" data-set="all">Visão geral</button>
-          <button class="ind-tab" data-set="grains">Grãos</button>
-          <button class="ind-tab" data-set="hortic">Frutas e verduras</button>
-        </div>
-        <div class="ind-canvas-wrap" style="height:230px">
-          <canvas id="chainChart"></canvas>
-        </div>
-        <div class="ind-insight">
-          <strong>O que isso significa?</strong> Barras em vermelho indicam as etapas mais críticas. O <em>armazenamento inadequado</em> é historicamente o maior problema no Brasil — especialmente para grãos como milho e soja, onde silos improvisados causam perdas de até 28%.
-        </div>
-      </div>
-
-      <div class="ind-card">
-        <div class="ind-card-head">
-          <h3>Cada alimento perdido carrega junto...</h3>
-          <p>Quando jogamos comida fora, outros recursos vão junto</p>
-        </div>
-        <div class="ind-legend">
-          <span><span class="ind-dot" style="background:#2176b5"></span>Água — 45%</span>
-          <span><span class="ind-dot" style="background:#3e9a5e"></span>Solo — 25%</span>
-          <span><span class="ind-dot" style="background:#c98a1a"></span>Energia — 20%</span>
-          <span><span class="ind-dot" style="background:#718077"></span>Insumos — 10%</span>
-        </div>
-        <div class="ind-canvas-wrap" style="height:195px">
-          <canvas id="donutChart"></canvas>
-        </div>
-        <div class="ind-insight">
-          <strong>Traduzindo:</strong> se você joga fora um tomate, você também desperdiça a água que o irrigou, a energia do transporte e o fertilizante usado no solo. Passe o mouse em cada fatia para ver exemplos concretos.
-        </div>
-      </div>
-    </div>
-
-    <!-- Linha B -->
-    <div class="ind-row-b">
-      <div class="ind-card">
-        <div class="ind-card-head">
-          <h3>Produzimos mais — e perdemos mais também</h3>
-          <p>Evolução histórica no Brasil (2010 = índice base 100)</p>
-        </div>
-        <div class="ind-legend">
-          <span><span class="ind-dot" style="background:#2176b5"></span>Produção total</span>
-          <span><span class="ind-dot" style="background:#922020"></span>Perdas pós-colheita</span>
-          <span><span class="ind-dot" style="background:#3e9a5e"></span>Aproveitamento real</span>
-        </div>
-        <div class="ind-canvas-wrap" style="height:205px">
-          <canvas id="lineChart"></canvas>
-        </div>
-        <div class="ind-insight">
-          <strong>O problema está crescendo:</strong> a produção agrícola cresceu 52% em 14 anos, mas as perdas cresceram quase na mesma velocidade. Produzir mais sem reduzir o desperdício não resolve a fome — só aumenta o impacto ambiental.
-        </div>
-      </div>
-
-      <div class="ind-card">
-        <div class="ind-card-head">
-          <h3>Quem bebe mais água no campo?</h3>
-          <p>Participação de cada cultura no consumo hídrico agrícola total</p>
-        </div>
-        <div class="ind-canvas-wrap" style="height:255px">
-          <canvas id="hbarChart"></canvas>
-        </div>
-        <div class="ind-insight">
-          <strong>Cana e soja concentram quase metade</strong> de toda a água usada na agricultura. Passe o mouse em cada barra para entender o contexto de cada cultura e seu impacto nos rios e represas brasileiros.
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- SOLUÇÕES -->
-<section class="section" id="solucoes">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Nossa proposta</span>
-      <h2>O que o AgroVerde Brasil faz na prática?</h2>
-      <p>Não basta mostrar o problema. Nosso objetivo é oferecer ferramentas, conhecimento e conexão para que produtores, estudantes e comunidades possam agir.</p>
-    </div>
-    <div class="solution-grid">
-      <article class="solution-card">
-        <div class="solution-icon">📚</div>
-        <h3>Educação para todos</h3>
-        <p>Conteúdos sobre desperdício, água e solo escritos em linguagem simples — sem jargão técnico. Do agricultor ao estudante, qualquer um pode aprender.</p>
-      </article>
-      <article class="solution-card">
-        <div class="solution-icon">📊</div>
-        <h3>Dados que fazem sentido</h3>
-        <p>Gráficos interativos com explicações reais. Aqui, número não é decoração — cada dado tem contexto, comparação e tradução para a vida cotidiana.</p>
-      </article>
-      <article class="solution-card">
-        <div class="solution-icon">🤝</div>
-        <h3>Comunidade e rede</h3>
-        <p>Espaço para produtores e interessados se cadastrarem, trocarem experiências e acompanharem novidades sobre práticas sustentáveis no campo brasileiro.</p>
-      </article>
-      <article class="solution-card">
-        <div class="solution-icon">🌿</div>
-        <h3>Práticas sustentáveis</h3>
-        <p>Incentivo a técnicas que reduzem perdas: irrigação por gotejamento, armazenamento correto, colheita no ponto certo. Sustentabilidade que também gera economia.</p>
-      </article>
     </div>
   </div>
 </section>
 
-<!-- ONGs -->
-<section class="ongs-section" id="parceiros">
+<!-- PÁGINAS DO SITE -->
+<section class="pages-section">
   <div class="container">
-    <div class="ongs-header">
-      <div class="ongs-header-text">
-        <span class="section-tag">Parceiros e referências</span>
-        <h2>Organizações que lutam pelo meio ambiente</h2>
-        <p>Conheça as principais ONGs que trabalham pela preservação ambiental, uso sustentável da água e combate ao desperdício. São fontes confiáveis de informação e ação no Brasil e no mundo.</p>
-      </div>
-      <div class="ongs-counter">
-        <div class="ongs-counter-item"><strong>6+</strong><span>organizações</span></div>
-        <div class="ongs-counter-item"><strong>30+</strong><span>anos de atuação</span></div>
-      </div>
+    <div class="section-header" style="margin-bottom:0">
+      <span class="section-tag">O que você encontra aqui</span>
+      <h2>Escolha por onde começar</h2>
+      <p>O AgroVerde Brasil tem conteúdo para diferentes perfis — do curioso ao produtor rural que quer reduzir perdas no bolso.</p>
     </div>
 
-    <div class="ongs-grid">
-      <a class="ong-card" href="https://www.wwf.org.br" target="_blank" rel="noopener" style="--ong-accent:#3e9a5e">
-        <div class="ong-card-header"><div class="ong-icon">🐼</div><span class="ong-badge green">Global</span></div>
-        <h3>WWF Brasil</h3>
-        <p>Pioneira na conservação da biodiversidade. Monitora desmatamento, apoia práticas agrícolas sustentáveis e desenvolve políticas de proteção dos biomas — Amazônia, Cerrado e Pantanal.</p>
-        <div class="ong-card-footer">
-          <span class="ong-link">wwf.org.br <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg></span>
-          <span class="ong-focus-tag">Biodiversidade · Clima</span>
+    <div class="pages-grid">
+
+      <!-- Agricultor — destaque -->
+      <a href="proposta.html" class="page-card featured">
+        <div class="page-card-top">
+          <div class="page-card-icon-wrap" style="--pc-bg:var(--forest-100)">🚜</div>
+          <h3>Para o Agricultor</h3>
+          <p class="page-card-lead">
+            Calculadora interativa com 30+ culturas. Informe sua área, região e o que planta —
+            veja quanto você gasta em insumos, quantas safras cabe no ano, o preço certo para
+            sua cultura e quanto está perdendo sem perceber. Busca de localização por CEP inclusa.
+          </p>
+        </div>
+        <div class="page-card-bottom">
+          <div class="page-card-tags">
+            <span class="page-tag">Calculadora</span>
+            <span class="page-tag">Insumos</span>
+            <span class="page-tag">Safras</span>
+            <span class="page-tag">Preço por região</span>
+          </div>
+          <span class="page-cta">Acessar →</span>
         </div>
       </a>
 
-      <a class="ong-card" href="https://www.greenpeace.org/brasil" target="_blank" rel="noopener" style="--ong-accent:#3e9a5e">
-        <div class="ong-card-header"><div class="ong-icon">☮️</div><span class="ong-badge green">Global</span></div>
-        <h3>Greenpeace Brasil</h3>
-        <p>Organização independente que pressiona empresas e governos. Combate o desmatamento da Amazônia e a agricultura predatória com campanhas, pesquisa e ação direta.</p>
-        <div class="ong-card-footer">
-          <span class="ong-link">greenpeace.org/brasil <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg></span>
-          <span class="ong-focus-tag">Amazônia · Agronegócio</span>
+      <!-- Dados -->
+      <a href="dados.html" class="page-card">
+        <div class="page-card-top">
+          <div class="page-card-icon-wrap" style="--pc-bg:var(--sky-100)">📊</div>
+          <h3>Dados e Indicadores</h3>
+          <p class="page-card-lead">
+            Gráficos interativos com dados reais de perdas por etapa da cadeia, consumo de água
+            por cultura, evolução histórica e muito mais. Cada dado acompanha uma explicação em
+            linguagem do dia a dia — sem precisar ser especialista.
+          </p>
+        </div>
+        <div class="page-card-bottom">
+          <div class="page-card-tags">
+            <span class="page-tag">Gráficos</span>
+            <span class="page-tag">EMBRAPA</span>
+            <span class="page-tag">FAO</span>
+          </div>
+          <span class="page-cta">Ver dados →</span>
         </div>
       </a>
 
-      <a class="ong-card" href="https://www.sosma.org.br" target="_blank" rel="noopener" style="--ong-accent:#6cb2e0">
-        <div class="ong-card-header"><div class="ong-icon">🌳</div><span class="ong-badge blue">Nacional</span></div>
-        <h3>SOS Mata Atlântica</h3>
-        <p>Desde os anos 1980, luta pelo bioma mais ameaçado do Brasil. Realiza monitoramento anual do desmatamento e projetos de restauração florestal com comunidades locais.</p>
-        <div class="ong-card-footer">
-          <span class="ong-link">sosma.org.br <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg></span>
-          <span class="ong-focus-tag">Restauração · Educação</span>
+      <!-- Problema -->
+      <a href="problema.html" class="page-card">
+        <div class="page-card-top">
+          <div class="page-card-icon-wrap" style="--pc-bg:var(--sun-100)">🔍</div>
+          <h3>O Problema</h3>
+          <p class="page-card-lead">
+            Por que tanto alimento se perde no Brasil? Entenda o que acontece desde a colheita
+            até a mesa — o papel do armazenamento ruim, do transporte inadequado e das falhas
+            que poderiam ser evitadas com informação simples.
+          </p>
+        </div>
+        <div class="page-card-bottom">
+          <div class="page-card-tags">
+            <span class="page-tag">Desperdício</span>
+            <span class="page-tag">Colheita</span>
+            <span class="page-tag">Logística</span>
+          </div>
+          <span class="page-cta">Entender →</span>
         </div>
       </a>
 
-      <a class="ong-card" href="https://www.socioambiental.org" target="_blank" rel="noopener" style="--ong-accent:#e8b84a">
-        <div class="ong-card-header"><div class="ong-icon">🏞️</div><span class="ong-badge gold">Nacional</span></div>
-        <h3>Instituto Socioambiental (ISA)</h3>
-        <p>Defende direitos de povos indígenas e comunidades tradicionais. Monitora áreas protegidas e propõe alternativas sustentáveis ao uso dos recursos naturais.</p>
-        <div class="ong-card-footer">
-          <span class="ong-link">socioambiental.org <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg></span>
-          <span class="ong-focus-tag">Direitos · Território</span>
+      <!-- ONGs -->
+      <a href="parceiros.html" class="page-card">
+        <div class="page-card-top">
+          <div class="page-card-icon-wrap" style="--pc-bg:var(--earth-100)">🤝</div>
+          <h3>ONGs Parceiras</h3>
+          <p class="page-card-lead">
+            Conheça as principais organizações brasileiras e internacionais que lutam pela
+            preservação ambiental, uso sustentável da água e combate ao desperdício no campo.
+            Com links diretos para os sites oficiais.
+          </p>
+        </div>
+        <div class="page-card-bottom">
+          <div class="page-card-tags">
+            <span class="page-tag">WWF</span>
+            <span class="page-tag">Greenpeace</span>
+            <span class="page-tag">SOS Mata Atlântica</span>
+          </div>
+          <span class="page-cta">Conhecer →</span>
         </div>
       </a>
 
-      <a class="ong-card" href="https://www.ipe.org.br" target="_blank" rel="noopener" style="--ong-accent:#6cb2e0">
-        <div class="ong-card-header"><div class="ong-icon">🔬</div><span class="ong-badge blue">Nacional</span></div>
-        <h3>IPÊ — Pesquisas Ecológicas</h3>
-        <p>Referência em ciência aplicada à conservação. Desenvolve modelos que geram benefícios socioeconômicos para comunidades rurais e capacita lideranças ambientais em todo o país.</p>
-        <div class="ong-card-footer">
-          <span class="ong-link">ipe.org.br <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg></span>
-          <span class="ong-focus-tag">Ciência · Comunidades</span>
-        </div>
-      </a>
-
-      <a class="ong-card" href="https://www.conservation.org/brasil" target="_blank" rel="noopener" style="--ong-accent:#e8b84a">
-        <div class="ong-card-header"><div class="ong-icon">🗺️</div><span class="ong-badge gold">Global</span></div>
-        <h3>Conservação Internacional</h3>
-        <p>Protege Cerrado e Amazônia com foco em políticas públicas. Desenvolve projetos educacionais para disseminar práticas sustentáveis em toda a cadeia do agronegócio.</p>
-        <div class="ong-card-footer">
-          <span class="ong-link">conservation.org/brasil <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg></span>
-          <span class="ong-focus-tag">Cerrado · Políticas Públicas</span>
-        </div>
-      </a>
     </div>
+  </div>
+</section>
 
-    <div class="ongs-disclaimer">
-      <p>ℹ️ &nbsp;Os links direcionam para os sites oficiais das organizações. O AgroVerde Brasil não possui vínculo institucional formal com nenhuma das ONGs listadas — as informações foram compiladas com fins educativos.</p>
+<!-- PARCEIROS STRIP -->
+<section class="partners-strip">
+  <div class="container">
+    <div class="partners-label">Organizações de referência</div>
+    <div class="partners-logos">
+      <a href="https://www.wwf.org.br" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>WWF Brasil
+      </a>
+      <a href="https://www.greenpeace.org/brasil" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>Greenpeace Brasil
+      </a>
+      <a href="https://www.sosma.org.br" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>SOS Mata Atlântica
+      </a>
+      <a href="https://www.socioambiental.org" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>Instituto Socioambiental
+      </a>
+      <a href="https://www.ipe.org.br" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>IPÊ
+      </a>
+      <a href="https://www.conservation.org/brasil" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>Conservação Internacional
+      </a>
+      <a href="https://www.embrapa.br" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>EMBRAPA
+      </a>
+      <a href="https://www.fao.org" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>FAO
+      </a>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="cta-section">
+<section class="home-cta">
   <div class="container">
-    <div class="cta-box">
-      <div>
-        <span class="section-tag" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.15)">Participe</span>
-        <h2>Faça parte dessa mudança</h2>
-        <p>Cadastre-se para acompanhar o projeto, receber conteúdos e fortalecer a conscientização sobre sustentabilidade no campo brasileiro.</p>
+    <div class="home-cta-inner">
+      <h2>Faça parte da <em>solução</em></h2>
+      <p>
+        Cadastre-se gratuitamente para acompanhar o projeto, receber conteúdos
+        e fortalecer a conscientização sobre sustentabilidade no campo brasileiro.
+      </p>
+      <div class="home-cta-btns">
+        <a href="cadastro.html"  class="btn-white">Quero me cadastrar →</a>
+        <a href="proposta.html"  class="btn-ghost-home">Sou agricultor</a>
       </div>
-      <a href="cadastro.html" class="btn-primary">Ir para o cadastro</a>
     </div>
   </div>
 </section>
@@ -374,15 +846,15 @@
   <div class="container footer-grid">
     <div>
       <h3>AgroVerde Brasil</h3>
-      <p>Projeto acadêmico em HTML e CSS sobre sustentabilidade no agronegócio brasileiro. Dados baseados em publicações da FAO, EMBRAPA e relatórios da ONU.</p>
+      <p>Projeto acadêmico sobre sustentabilidade no agronegócio. Dados baseados em publicações da FAO e EMBRAPA.</p>
     </div>
     <div>
-      <h4>Navegação</h4>
+      <h4>Páginas</h4>
       <ul class="footer-links">
-        <li><a href="#inicio">Início</a></li>
-        <li><a href="#problema">O Problema</a></li>
-        <li><a href="#indicadores">Dados</a></li>
-        <li><a href="#parceiros">ONGs parceiras</a></li>
+        <li><a href="dados.html">Dados e Indicadores</a></li>
+        <li><a href="problema.html">O Problema</a></li>
+        <li><a href="parceiros.html">ONGs Parceiras</a></li>
+        <li><a href="proposta.html">Para Agricultores</a></li>
         <li><a href="cadastro.html">Cadastro</a></li>
       </ul>
     </div>
@@ -391,7 +863,7 @@
       <ul class="footer-links">
         <li><a href="#">Victor Hugo Dos Santos</a></li>
       </ul>
-      <h4 style="margin-top:20px">Fontes de dados</h4>
+      <h4 style="margin-top:20px">Fontes</h4>
       <ul class="footer-links">
         <li><a href="https://www.fao.org" target="_blank" rel="noopener">FAO — fao.org</a></li>
         <li><a href="https://www.embrapa.br" target="_blank" rel="noopener">EMBRAPA — embrapa.br</a></li>
@@ -403,11 +875,10 @@
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 const hamburger = document.getElementById('hamburger');
 const menuNav   = document.getElementById('menu-nav');
-document.querySelectorAll('.menu-link, .btn-nav').forEach(l => l.addEventListener('click', () => {
+document.querySelectorAll('.menu-link,.btn-nav').forEach(l => l.addEventListener('click', () => {
   menuNav.classList.remove('menu-open');
   hamburger.classList.remove('hamburger-open');
   hamburger.setAttribute('aria-expanded','false');
@@ -417,100 +888,6 @@ hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('hamburger-open', open);
   hamburger.setAttribute('aria-expanded', open);
 });
-
-(function() {
-  const gridC  = 'rgba(0,0,0,0.055)';
-  const tickC  = '#718077';
-  const labelC = '#2d3d37';
-
-  Chart.defaults.font.family = '"Plus Jakarta Sans", system-ui, sans-serif';
-  Chart.defaults.font.size   = 11;
-  Chart.defaults.color       = tickC;
-
-  const chain = {
-    all:    { labels:['Produção\n& Colheita','Armazenamento','Processamento','Distribuição','Varejo','Consumidor'], data:[14,22,9,11,8,19] },
-    grains: { labels:['Produção\n& Colheita','Armazenamento','Processamento','Distribuição','Varejo','Consumidor'], data:[8,28,12,7,5,6] },
-    hortic: { labels:['Produção\n& Colheita','Armazenamento','Processamento','Distribuição','Varejo','Consumidor'], data:[22,18,6,16,14,30] }
-  };
-
-  const barColors = d => d.map(v => v>=20 ? '#922020' : v>=14 ? '#c98a1a' : '#3e9a5e');
-
-  const chainChart = new Chart(document.getElementById('chainChart'), {
-    type: 'bar',
-    data: { labels: chain.all.labels, datasets:[{ label:'Perda (%)', data:chain.all.data, backgroundColor:barColors(chain.all.data), borderRadius:5, borderSkipped:false }] },
-    options: {
-      responsive:true, maintainAspectRatio:false,
-      plugins: { legend:{display:false}, tooltip:{ callbacks:{
-        label: ctx => ` ${ctx.parsed.y}% do total desperdiçado`,
-        afterLabel: ctx => ctx.parsed.y>=20 ? '⚠ etapa crítica — prioridade de ação' : ctx.parsed.y>=14 ? '⚡ impacto moderado' : '✓ impacto menor'
-      }}},
-      scales: {
-        x:{ grid:{color:gridC}, ticks:{color:tickC, maxRotation:0, font:{size:10}} },
-        y:{ grid:{color:gridC}, ticks:{color:tickC, callback:v=>v+'%'}, min:0, max:35 }
-      }
-    }
-  });
-
-  document.querySelectorAll('.ind-tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.ind-tab').forEach(t=>t.classList.remove('active'));
-      btn.classList.add('active');
-      const k = btn.dataset.set;
-      chainChart.data.labels = chain[k].labels;
-      chainChart.data.datasets[0].data = chain[k].data;
-      chainChart.data.datasets[0].backgroundColor = barColors(chain[k].data);
-      chainChart.update('active');
-    });
-  });
-
-  new Chart(document.getElementById('donutChart'), {
-    type:'doughnut',
-    data:{ labels:['Água','Solo','Energia','Insumos'], datasets:[{ data:[45,25,20,10], backgroundColor:['#2176b5','#3e9a5e','#c98a1a','#718077'], borderWidth:0, hoverOffset:10 }] },
-    options:{
-      responsive:true, maintainAspectRatio:false, cutout:'65%',
-      plugins:{ legend:{display:false}, tooltip:{ callbacks:{
-        label: ctx => ` ${ctx.label}: ${ctx.parsed}% do impacto total`,
-        afterLabel: ctx => ({ 'Água':'Ex: 1 kg de arroz exige ~2.500 L de água', 'Solo':'O solo leva séculos para se formar', 'Energia':'Transporte, refrigeração, processamento', 'Insumos':'Fertilizantes e sementes desperdiçados' })[ctx.label]||''
-      }}}
-    }
-  });
-
-  new Chart(document.getElementById('lineChart'), {
-    type:'line',
-    data:{
-      labels:['2010','2012','2014','2016','2018','2020','2022','2024'],
-      datasets:[
-        { label:'Produção total', data:[100,108,116,124,133,138,146,152], borderColor:'#2176b5', backgroundColor:'transparent', tension:0.4, pointRadius:3, borderWidth:2.5 },
-        { label:'Perdas pós-colheita', data:[100,104,109,115,122,128,134,138], borderColor:'#922020', backgroundColor:'transparent', tension:0.4, pointRadius:3, borderWidth:2.5 },
-        { label:'Aproveitamento real', data:[100,104,107,109,111,110,112,114], borderColor:'#3e9a5e', backgroundColor:'transparent', tension:0.4, pointRadius:3, borderWidth:2, borderDash:[5,4] }
-      ]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:ctx=>` ${ctx.dataset.label}: índice ${ctx.parsed.y}` }}},
-      scales:{ x:{grid:{color:gridC},ticks:{color:tickC}}, y:{grid:{color:gridC},ticks:{color:tickC},min:90} }
-    }
-  });
-
-  new Chart(document.getElementById('hbarChart'), {
-    type:'bar',
-    data:{
-      labels:['Cana-de-açúcar','Soja','Milho','Arroz irrigado','Algodão','Laranja','Trigo'],
-      datasets:[{ label:'Uso hídrico (%)', data:[31,18,15,14,9,8,5], backgroundColor:['#154e80','#1c6096','#2176b5','#5e9ec7','#97c3dc','#c0dd97','#eaf3de'], borderRadius:4, borderSkipped:false }]
-    },
-    options:{
-      indexAxis:'y', responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{display:false}, tooltip:{ callbacks:{
-        label: ctx=>` ${ctx.parsed.x}% do consumo hídrico agrícola total`,
-        afterLabel: ctx=>({'Cana-de-açúcar':'Cultura mais intensiva em água do Brasil','Soja':'Principal exportação — depende muito de chuva','Milho':'Depende de irrigação no Cerrado','Arroz irrigado':'Sul usa irrigação por inundação','Algodão':'Alto consumo, especialmente no Nordeste','Laranja':'Gotejamento já reduz bastante o consumo','Trigo':'Menor consumo — cultivo em regiões úmidas'})[ctx.label]||''
-      }}},
-      scales:{
-        x:{ grid:{color:gridC}, ticks:{color:tickC, callback:v=>v+'%'}, min:0, max:35 },
-        y:{ grid:{display:false}, ticks:{color:labelC, font:{size:11}} }
-      }
-    }
-  });
-})();
 </script>
 
 </body>
