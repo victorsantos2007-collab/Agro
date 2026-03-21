@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | AgroVerde Brasil</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="auth-body">
+    <header class="topo topo-simples">
+      <div class="container">
+        <div class="logo-area">
+          <div class="logo-icon">🌱</div>
+          <div>
+            <h1 class="logo-text">AgroVerde Brasil</h1>
+            <p class="logo-subtitle">Acesso ao portal</p>
+          </div>
+        </div>
+
+        <nav class="menu" aria-label="Menu principal">
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="cadastro.html">Cadastro</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="auth-main">
+      <section class="form-section">
+        <div class="form-card small-card">
+          <span class="section-tag">Login</span>
+          <h2>Entrar no portal</h2>
+          <p>
+            Página de login simulada para compor o fluxo do projeto em HTML e
+            CSS.
+          </p>
+
+          <form action="index.html" method="get" class="form-grid">
+            <div class="form-group">
+              <label for="login-email">E-mail</label>
+              <input
+                type="email"
+                id="login-email"
+                name="login-email"
+                placeholder="Digite seu e-mail"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="login-senha">Senha</label>
+              <input
+                type="password"
+                id="login-senha"
+                name="login-senha"
+                placeholder="Digite sua senha"
+                required
+              />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">Entrar</button>
+              <a href="cadastro.html" class="btn-secondary">Criar conta</a>
+            </div>
+          </form>
+
+          <div class="login-note">
+            <p>
+              <strong>Observação:</strong> como o projeto é apenas de HTML e
+              CSS, esta tela não autentica usuários de verdade. Ela simula o
+              fluxo de navegação.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <div class="footer-bottom">
+        <p>© 2026 AgroVerde Brasil - Página de login.</p>
+      </div>
+    </footer>
+  </body>
+</html>

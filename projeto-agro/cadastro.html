@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro | AgroVerde Brasil</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="auth-body">
+    <header class="topo topo-simples">
+      <div class="container">
+        <div class="logo-area">
+          <div class="logo-icon">🌱</div>
+          <div>
+            <h1 class="logo-text">AgroVerde Brasil</h1>
+            <p class="logo-subtitle">Cadastro de participantes</p>
+          </div>
+        </div>
+
+        <nav class="menu" aria-label="Menu principal">
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="login.html">Login</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="auth-main">
+      <section class="form-section">
+        <div class="form-card">
+          <span class="section-tag">Cadastro</span>
+          <h2>Crie seu cadastro</h2>
+          <p>
+            Preencha os campos abaixo para participar do projeto e receber
+            informações sobre sustentabilidade no agronegócio.
+          </p>
+
+          <form action="login.html" method="get" class="form-grid">
+            <div class="form-group">
+              <label for="nome">Nome completo</label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                placeholder="Digite seu nome completo"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Digite seu e-mail"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="telefone">Telefone</label>
+              <input
+                type="tel"
+                id="telefone"
+                name="telefone"
+                placeholder="(00) 00000-0000"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="cidade">Cidade</label>
+              <input
+                type="text"
+                id="cidade"
+                name="cidade"
+                placeholder="Digite sua cidade"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="perfil">Perfil</label>
+              <select id="perfil" name="perfil" required>
+                <option value="">Selecione uma opção</option>
+                <option value="estudante">Estudante</option>
+                <option value="produtor">Produtor rural</option>
+                <option value="pesquisador">Pesquisador</option>
+                <option value="comunidade">Membro da comunidade</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="senha">Senha</label>
+              <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Crie uma senha"
+                required
+              />
+            </div>
+
+            <div class="form-group form-group-full">
+              <label for="interesse">Área de interesse</label>
+              <textarea
+                id="interesse"
+                name="interesse"
+                rows="5"
+                placeholder="Descreva seu interesse no projeto"
+              ></textarea>
+            </div>
+
+            <div class="form-group form-group-full">
+              <label class="checkbox-line">
+                <input type="checkbox" required />
+                <span
+                  >Declaro que li e concordo com os objetivos do projeto.</span
+                >
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">Enviar cadastro</button>
+              <a href="index.html" class="btn-secondary">Voltar ao início</a>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <div class="footer-bottom">
+        <p>© 2026 AgroVerde Brasil - Página de cadastro.</p>
+      </div>
+    </footer>
+  </body>
+</html>
