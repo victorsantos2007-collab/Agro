@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calculadora do Produtor | AgroVerde Brasil</title>
+  <title>AgroVerde Brasil | Sustentabilidade no Agronegócio</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -1535,305 +1535,539 @@ ul   { list-style:none; }
 }
 
 </style>
+
   <style>
-/* ═══════════════════════════════════════════
-   HERO
-═══════════════════════════════════════════ */
-.ph{background:var(--forest-900);color:var(--white);padding:72px 0 60px;position:relative;overflow:hidden}
-.ph::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 55% 70% at 80% 40%,rgba(46,122,72,.2) 0%,transparent 55%),
-             radial-gradient(ellipse 35% 50% at 10% 80%,rgba(33,118,181,.12) 0%,transparent 50%);
-  pointer-events:none}
-.ph-inner{position:relative;z-index:1}
-.ph-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);
-  color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.14);padding:5px 13px;
-  border-radius:var(--radius-xs);font-weight:700;font-size:.72rem;letter-spacing:.09em;
-  text-transform:uppercase;margin-bottom:18px}
-.ph h1{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,3.2rem);font-weight:700;
-  line-height:1.1;letter-spacing:-.03em;margin-bottom:16px}
-.ph h1 em{font-style:italic;color:var(--forest-300)}
-.ph-lead{font-size:1rem;color:rgba(255,255,255,.62);line-height:1.8;max-width:54ch;margin-bottom:28px}
-.ph-pills{display:flex;gap:10px;flex-wrap:wrap}
-.ph-pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
-  border-radius:99px;padding:6px 14px;font-size:.8rem;color:rgba(255,255,255,.65);font-weight:500}
+/* ═══════════════════════════════════════════════
+   INDEX — ESTILOS DESTA PÁGINA
+═══════════════════════════════════════════════ */
 
-/* ═══════════════════════════════════════════
-   STEPPER
-═══════════════════════════════════════════ */
-.calc-wrap{padding:64px 0 88px;background:var(--ink-50)}
-.steps{display:flex;margin-bottom:36px;background:var(--white);border:var(--border);
-  border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
-.step{flex:1;padding:14px 10px;text-align:center;cursor:pointer;
-  border-right:var(--border);transition:background .18s}
-.step:last-child{border-right:none}
-.step.active{background:var(--forest-900)}
-.step.done{background:var(--forest-50)}
-.step-num{font-family:var(--font-display);font-size:1rem;font-weight:700;
-  color:var(--ink-300);line-height:1;margin-bottom:3px}
-.step.active .step-num{color:var(--forest-300)}
-.step.done   .step-num{color:var(--forest-500)}
-.step-label{font-size:.68rem;font-weight:700;color:var(--ink-400);
-  letter-spacing:.04em;text-transform:uppercase}
-.step.active .step-label{color:rgba(255,255,255,.7)}
-.step.done   .step-label{color:var(--forest-600)}
-
-.calc-panel{display:none}
-.calc-panel.active{display:block}
-
-/* ═══════════════════════════════════════════
-   CARD DE FORMULÁRIO
-═══════════════════════════════════════════ */
-.fc{background:var(--white);border:var(--border);border-radius:var(--radius-xl);
-  padding:36px 32px;box-shadow:var(--shadow-md)}
-.fc-title{font-family:var(--font-display);font-size:1.3rem;color:var(--forest-950);
-  font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
-.fc-sub{font-size:.84rem;color:var(--ink-400);margin-bottom:26px;line-height:1.7}
-
-/* Campo genérico */
-.ff{margin-bottom:20px}
-.ff>label{display:flex;justify-content:space-between;align-items:baseline;
-  font-size:.82rem;font-weight:700;color:var(--ink-700);margin-bottom:8px}
-.ff>label .lv{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--forest-700)}
-.ff-hint{font-size:.74rem;color:var(--ink-300);margin-top:5px;line-height:1.5}
-.ff-dica{font-size:.78rem;background:var(--forest-50);border:1px solid var(--forest-100);
-  border-radius:var(--radius-xs);padding:8px 12px;margin-top:6px;
-  color:var(--forest-700);line-height:1.6}
-
-/* Slider */
-.fs{-webkit-appearance:none;width:100%;height:6px;border-radius:99px;
-  outline:none;cursor:pointer;background:var(--ink-100)}
-.fs::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;
-  border-radius:50%;background:var(--forest-700);border:3px solid var(--white);
-  box-shadow:0 0 0 2px var(--forest-400);cursor:pointer;transition:background .15s}
-.fs::-webkit-slider-thumb:hover{background:var(--forest-500)}
-.fs::-moz-range-thumb{width:20px;height:20px;border-radius:50%;
-  background:var(--forest-700);border:3px solid var(--white);cursor:pointer}
-
-/* Select padrão */
-.fsel{width:100%;border:var(--border-md);border-radius:var(--radius-sm);
-  padding:11px 38px 11px 14px;font:inherit;font-size:.9rem;color:var(--ink-800);
-  background:var(--white);outline:none;cursor:pointer;appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23718077' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 12px center;transition:border-color .18s}
-.fsel:focus{border-color:var(--forest-500)}
-
-/* Input numérico */
-.fn{width:100%;border:var(--border-md);border-radius:var(--radius-sm);
-  padding:9px 12px;font:inherit;font-size:.9rem;color:var(--ink-800);
-  background:var(--white);outline:none;transition:border-color .18s,box-shadow .18s}
-.fn:focus{border-color:var(--forest-500);box-shadow:0 0 0 3px rgba(62,154,94,.12)}
-
-/* Grid 2 colunas */
-.fg2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-
-/* Navegação */
-.calc-nav{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:12px}
-.btn-prev{background:var(--white);color:var(--ink-700);border:var(--border-md);
-  padding:10px 20px;border-radius:var(--radius-xs);font-weight:600;font-size:.88rem;
-  cursor:pointer;transition:all .18s;font:inherit}
-.btn-prev:hover{background:var(--ink-50)}
-.btn-next{background:var(--forest-900);color:var(--white);
-  padding:10px 24px;border-radius:var(--radius-xs);font-weight:700;font-size:.88rem;
-  cursor:pointer;transition:all .18s;border:none;font:inherit;letter-spacing:.02em}
-.btn-next:hover{background:var(--forest-700)}
-
-/* ═══════════════════════════════════════════
-   SELETOR DE CULTURA — categorias + cards
-═══════════════════════════════════════════ */
-.cult-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.cult-cat{padding:8px 16px;border-radius:var(--radius-xs);border:var(--border-md);
-  background:var(--white);color:var(--ink-600);font-weight:600;font-size:.82rem;
-  cursor:pointer;transition:all .18s;font:inherit;display:flex;align-items:center;gap:6px}
-.cult-cat:hover{background:var(--forest-50);border-color:var(--forest-300);color:var(--forest-700)}
-.cult-cat.active{background:var(--forest-900);border-color:var(--forest-900);color:var(--white)}
-
-/* Grid de cards de cultura */
-.cult-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-bottom:6px}
-.cult-item{display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:5px;padding:12px 6px;border-radius:var(--radius-md);border:var(--border-md);
-  background:var(--white);cursor:pointer;transition:all .18s;text-align:center}
-.cult-item:hover{background:var(--forest-50);border-color:var(--forest-300);transform:translateY(-1px)}
-.cult-item.selected{background:var(--forest-900);border-color:var(--forest-900)}
-.cult-item-emoji{font-size:1.6rem;line-height:1}
-.cult-item-name{font-size:.72rem;font-weight:700;color:var(--ink-700);line-height:1.2}
-.cult-item.selected .cult-item-name{color:var(--white)}
-
-/* Banner da cultura selecionada */
-.cult-selected-banner{display:none;align-items:center;gap:12px;
-  padding:12px 16px;background:var(--forest-50);border:1px solid var(--forest-200);
-  border-radius:var(--radius-sm);margin-top:8px}
-.cult-selected-banner.show{display:flex}
-.cult-selected-emoji{font-size:1.8rem}
-.cult-selected-name{font-family:var(--font-display);font-size:1rem;font-weight:700;
-  color:var(--forest-900);letter-spacing:-.01em}
-.cult-selected-desc{font-size:.78rem;color:var(--ink-400);line-height:1.4}
-
-/* ═══════════════════════════════════════════
-   TABELA DE INSUMOS
-═══════════════════════════════════════════ */
-.insumos-table{width:100%;border-collapse:collapse;font-size:.84rem}
-.insumos-table thead tr{background:var(--forest-900);color:var(--white)}
-.insumos-table thead th{padding:10px 14px;text-align:left;font-weight:700;
-  font-size:.74rem;letter-spacing:.05em;text-transform:uppercase}
-.insumos-table tbody tr{border-bottom:var(--border);transition:background .15s}
-.insumos-table tbody tr:hover{background:var(--forest-50)}
-.insumos-table tbody td{padding:9px 14px;color:var(--ink-700);vertical-align:top}
-.insumos-table td.cat{font-weight:700;color:var(--ink-900)}
-.insumos-table td.tip{color:var(--ink-400);font-size:.76rem;line-height:1.5}
-.insumos-table td.num{font-family:var(--font-display);font-weight:700;
-  color:var(--forest-700);font-size:.9rem;white-space:nowrap}
-.insumos-note{margin-top:12px;padding:12px 14px;background:var(--sun-100);
-  border:1px solid var(--sun-300);border-radius:var(--radius-xs);
-  font-size:.78rem;color:var(--earth-700);line-height:1.6}
-
-/* Total de insumos */
-.insumos-total{margin-top:16px;display:flex;justify-content:space-between;align-items:center;
-  background:var(--forest-50);border:1px solid var(--forest-200);
-  border-radius:var(--radius-sm);padding:14px 18px}
-.insumos-total-label{font-size:.78rem;font-weight:700;color:var(--ink-400);
-  letter-spacing:.05em;text-transform:uppercase;margin-bottom:3px}
-.insumos-total-sub{font-size:.8rem;color:var(--ink-500)}
-.insumos-total-val{font-family:var(--font-display);font-size:1.8rem;font-weight:700;
-  color:var(--forest-900);letter-spacing:-.04em}
-.insumos-total-period{font-size:.74rem;color:var(--ink-400);text-align:right}
-
-/* ═══════════════════════════════════════════
-   RESULTADO
-═══════════════════════════════════════════ */
-.result-hero{background:var(--forest-900);border-radius:var(--radius-xl);
-  padding:34px 30px;color:var(--white);margin-bottom:18px;position:relative;overflow:hidden}
-.result-hero::before{content:'';position:absolute;top:-80px;right:-80px;
-  width:240px;height:240px;border-radius:50%;border:1px solid rgba(255,255,255,.05);pointer-events:none}
-.result-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.09em;
-  text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:5px}
-.result-big{font-family:var(--font-display);font-size:3rem;font-weight:700;
-  color:var(--forest-300);letter-spacing:-.05em;line-height:1;margin-bottom:4px}
-.result-sublabel{font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:24px}
-.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.result-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
-  border-radius:var(--radius-sm);padding:13px 15px}
-.result-box.green{background:rgba(108,191,138,.1);border-color:rgba(108,191,138,.25)}
-.result-box.red{background:rgba(249,115,115,.08);border-color:rgba(249,115,115,.2)}
-.result-box-label{font-size:.73rem;color:rgba(255,255,255,.5);font-weight:600;
-  margin-bottom:5px;letter-spacing:.02em}
-.result-box-val{font-family:var(--font-display);font-size:1.2rem;font-weight:700;
-  color:var(--white);letter-spacing:-.02em}
-.result-box.green .result-box-val{color:#86efac}
-.result-box.red   .result-box-val{color:#fca5a5}
-
-.result-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.rc{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
-  padding:18px 16px;box-shadow:var(--shadow-xs)}
-.rc-icon{font-size:1.3rem;margin-bottom:6px}
-.rc-title{font-size:.74rem;font-weight:700;color:var(--ink-500);
-  letter-spacing:.04em;text-transform:uppercase;margin-bottom:3px}
-.rc-val{font-family:var(--font-display);font-size:1.3rem;font-weight:700;
-  color:var(--ink-950);letter-spacing:-.03em;margin-bottom:2px}
-.rc-val.green{color:var(--forest-600)}
-.rc-val.red{color:var(--danger-600)}
-.rc-sub{font-size:.74rem;color:var(--ink-400);line-height:1.45}
-
-.compare-bar-wrap{background:var(--white);border:var(--border);
-  border-radius:var(--radius-lg);padding:20px 18px;box-shadow:var(--shadow-xs);margin-bottom:12px}
-.compare-bar-title{font-size:.8rem;font-weight:700;color:var(--ink-700);margin-bottom:14px}
-.compare-row{display:grid;grid-template-columns:110px 1fr 90px;
-  align-items:center;gap:10px;margin-bottom:10px}
-.compare-row:last-child{margin-bottom:0}
-.compare-lbl{font-size:.78rem;color:var(--ink-600);font-weight:600;text-align:right}
-.compare-track{height:10px;background:var(--ink-100);border-radius:99px;overflow:hidden}
-.compare-fill{height:100%;border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1)}
-.compare-fill.before{background:var(--danger-600)}
-.compare-fill.after{background:var(--forest-500)}
-.compare-num{font-family:var(--font-display);font-size:.86rem;font-weight:700;
-  color:var(--ink-800);white-space:nowrap}
-
-/* ═══════════════════════════════════════════
-   TIMELINE / PRÁTICAS / CTA
-═══════════════════════════════════════════ */
-.retorno-section{padding:72px 0;background:var(--earth-50);
-  border-top:var(--border);border-bottom:var(--border)}
-.retorno-timeline{display:grid;grid-template-columns:repeat(4,1fr);
-  gap:0;margin-top:44px;position:relative}
-.retorno-timeline::before{content:'';position:absolute;
-  top:22px;left:12.5%;right:12.5%;height:2px;
-  background:linear-gradient(90deg,var(--forest-200),var(--forest-500))}
-.retorno-step{display:flex;flex-direction:column;align-items:center;
-  text-align:center;padding:0 10px;position:relative;z-index:1}
-.retorno-dot{width:44px;height:44px;border-radius:50%;background:var(--white);
-  border:2px solid var(--forest-300);display:flex;align-items:center;
-  justify-content:center;font-family:var(--font-display);font-size:1rem;
-  font-weight:700;color:var(--forest-600);margin-bottom:14px;box-shadow:var(--shadow-sm)}
-.retorno-dot.active{background:var(--forest-800);border-color:var(--forest-800);color:var(--white)}
-.retorno-period{font-size:.7rem;font-weight:700;letter-spacing:.07em;
-  text-transform:uppercase;color:var(--ink-400);margin-bottom:6px}
-.retorno-desc{font-size:.83rem;color:var(--ink-600);line-height:1.55;margin-bottom:8px}
-.retorno-val{font-family:var(--font-display);font-size:1.1rem;font-weight:700;
-  color:var(--forest-700);letter-spacing:-.02em}
-
-.praticas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
-.pratica-card{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
-  padding:24px 20px;box-shadow:var(--shadow-sm);transition:all .22s var(--ease);
-  position:relative;overflow:hidden}
-.pratica-card::after{content:'';position:absolute;bottom:0;left:0;right:0;
-  height:3px;background:var(--pratica-color,var(--forest-400))}
-.pratica-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
-.pratica-num{font-family:var(--font-display);font-size:2.6rem;font-weight:700;
-  color:var(--ink-100);letter-spacing:-.06em;line-height:1;margin-bottom:8px}
-.pratica-card h3{font-family:var(--font-display);font-size:1rem;
-  color:var(--forest-950);font-weight:600;letter-spacing:-.01em;margin-bottom:8px;line-height:1.3}
-.pratica-card p{color:var(--ink-500);font-size:.85rem;line-height:1.75;margin-bottom:12px}
-.pratica-eco{display:inline-flex;align-items:center;gap:5px;
-  background:var(--forest-50);border:1px solid var(--forest-200);
-  border-radius:var(--radius-xs);padding:5px 11px;font-size:.76rem;
-  font-weight:700;color:var(--forest-700)}
-
-.prop-cta{padding:80px 0;background:var(--forest-900);text-align:center;
-  position:relative;overflow:hidden}
-.prop-cta::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(108,191,138,.12) 0%,transparent 60%);
-  pointer-events:none}
-.prop-cta-inner{position:relative;z-index:1;max-width:620px;margin:0 auto}
-.prop-cta h2{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);
-  color:var(--white);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:16px}
-.prop-cta h2 em{color:var(--forest-300);font-style:italic}
-.prop-cta p{font-size:.98rem;color:rgba(255,255,255,.58);line-height:1.8;margin-bottom:32px}
-.prop-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-white{background:var(--white);color:var(--forest-900);font-weight:700;
-  padding:13px 28px;border-radius:var(--radius-xs);font-size:.92rem;
-  display:inline-flex;align-items:center;gap:8px;transition:all .2s;letter-spacing:.01em}
-.btn-white:hover{background:var(--forest-50)}
-.btn-ghost{background:transparent;color:rgba(255,255,255,.75);
-  border:1px solid rgba(255,255,255,.22);font-weight:600;padding:13px 28px;
-  border-radius:var(--radius-xs);font-size:.92rem;display:inline-flex;
-  align-items:center;gap:8px;transition:all .2s}
-.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.4)}
-
-/* ═══════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════ */
-@media(max-width:1024px){
-  .result-grid{grid-template-columns:1fr 1fr}
-  .result-cards{grid-template-columns:1fr 1fr}
-  .praticas-grid{grid-template-columns:1fr 1fr}
-  .retorno-timeline{grid-template-columns:1fr 1fr;gap:28px}
-  .retorno-timeline::before{display:none}
+/* ── Hero ── */
+.hero-home {
+  min-height: calc(100vh - 68px);
+  display: flex;
+  align-items: center;
+  background: var(--forest-900);
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0;
 }
-@media(max-width:768px){
-  .steps{overflow-x:auto}
-  .fg2{grid-template-columns:1fr}
-  .cult-grid{grid-template-columns:repeat(auto-fill,minmax(85px,1fr))}
-  .result-cards{grid-template-columns:1fr}
-  .praticas-grid{grid-template-columns:1fr}
-  .retorno-timeline{grid-template-columns:1fr}
-  .compare-row{grid-template-columns:80px 1fr 70px}
-  .fc{padding:22px 16px}
+
+/* Padrão geométrico de fundo */
+.hero-home::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 70% 30%, rgba(62,154,94,.15) 0%, transparent 45%),
+    radial-gradient(circle at 15% 80%, rgba(33,118,181,.1) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(201,138,26,.08) 0%, transparent 35%);
+  pointer-events: none;
 }
-@media(max-width:480px){
-  .result-big{font-size:2.4rem}
-  .result-grid{grid-template-columns:1fr}
-  .cult-grid{grid-template-columns:repeat(auto-fill,minmax(76px,1fr))}
-  .prop-cta-btns{flex-direction:column;align-items:center}
-  .btn-white,.btn-ghost{width:100%;justify-content:center}
+.hero-home::after {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.04);
+  pointer-events: none;
+}
+
+.hero-home-inner {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* Texto do hero */
+.hero-home-text {}
+
+.home-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.13);
+  color: rgba(255,255,255,.7);
+  padding: 6px 14px;
+  border-radius: var(--radius-xs);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero-home h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.07;
+  letter-spacing: -.04em;
+  margin-bottom: 22px;
+}
+
+.hero-home h1 em {
+  font-style: italic;
+  color: var(--forest-300);
+}
+
+.hero-home-lead {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,.58);
+  line-height: 1.8;
+  max-width: 48ch;
+  margin-bottom: 36px;
+}
+
+/* Stats em linha no hero */
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.hero-stat strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -.04em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.hero-stat span {
+  font-size: .76rem;
+  color: rgba(255,255,255,.4);
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+/* ── Cards de destino ── */
+.dest-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.dest-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  text-decoration: none;
+  color: var(--white);
+  transition: all .22s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+
+.dest-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--dest-color, var(--forest-400));
+  opacity: 0;
+  transition: opacity .22s;
+}
+
+.dest-card:hover {
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.18);
+  transform: translateX(4px);
+  color: var(--white);
+}
+
+.dest-card:hover::before { opacity: 1; }
+
+.dest-icon {
+  width: 50px; height: 50px;
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  transition: background .22s;
+}
+
+.dest-card:hover .dest-icon {
+  background: rgba(255,255,255,.13);
+}
+
+.dest-body { flex: 1; min-width: 0; }
+
+.dest-title {
+  font-family: var(--font-display);
+  font-size: .98rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: -.01em;
+  margin-bottom: 3px;
+  line-height: 1.25;
+}
+
+.dest-desc {
+  font-size: .78rem;
+  color: rgba(255,255,255,.45);
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dest-arrow {
+  font-size: .9rem;
+  color: rgba(255,255,255,.3);
+  flex-shrink: 0;
+  transition: transform .2s, color .2s;
+}
+
+.dest-card:hover .dest-arrow {
+  transform: translateX(4px);
+  color: rgba(255,255,255,.7);
+}
+
+/* Badge "novo" */
+.dest-badge {
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  background: var(--forest-400);
+  color: var(--forest-950);
+  padding: 2px 7px;
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+/* ── Seção "O problema em 3 números" ── */
+.nums-section {
+  padding: 72px 0;
+  background: var(--ink-50);
+  border-bottom: var(--border);
+}
+
+.nums-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--ink-200);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.num-card {
+  background: var(--white);
+  padding: 32px 28px;
+  transition: background .2s;
+}
+
+.num-card:hover { background: var(--forest-50); }
+
+.num-icon { font-size: 1.5rem; margin-bottom: 14px; display: block; }
+
+.num-val {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--forest-900);
+  letter-spacing: -.05em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.num-label {
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--ink-500);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.num-desc {
+  font-size: .84rem;
+  color: var(--ink-500);
+  line-height: 1.65;
+}
+
+/* ── Seção de destinos expandida (páginas) ── */
+.pages-section {
+  padding: 72px 0;
+  background: var(--white);
+  border-bottom: var(--border);
+}
+
+.pages-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 44px;
+}
+
+.page-card {
+  display: block;
+  text-decoration: none;
+  background: var(--white);
+  border: var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all .22s var(--ease);
+  position: relative;
+}
+
+.page-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: var(--ink-200);
+}
+
+.page-card-top {
+  padding: 28px 28px 20px;
+  position: relative;
+}
+
+.page-card-top::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--ink-100);
+}
+
+.page-card-icon-wrap {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+  background: var(--pc-bg, var(--forest-50));
+}
+
+.page-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--forest-950);
+  letter-spacing: -.02em;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.page-card-lead {
+  font-size: .86rem;
+  color: var(--ink-500);
+  line-height: 1.7;
+}
+
+.page-card-bottom {
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.page-card-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.page-tag {
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--ink-400);
+  background: var(--ink-50);
+  border: 1px solid var(--ink-100);
+  border-radius: 99px;
+  padding: 3px 9px;
+  letter-spacing: .03em;
+}
+
+.page-cta {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--forest-600);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap .18s;
+}
+
+.page-card:hover .page-cta { gap: 8px; }
+
+/* Card de agricultor — destaque */
+.page-card.featured {
+  border-color: var(--forest-200);
+  background: linear-gradient(180deg, var(--forest-50) 0%, var(--white) 60%);
+}
+
+.page-card.featured .page-card-top::after { background: var(--forest-100); }
+
+/* ── Parceiros rápido ── */
+.partners-strip {
+  padding: 56px 0;
+  background: var(--forest-50);
+  border-bottom: var(--border);
+}
+
+.partners-label {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-300);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.partners-logos {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.partner-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--white);
+  border: var(--border);
+  border-radius: 99px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--ink-600);
+  text-decoration: none;
+  transition: all .18s;
+  box-shadow: var(--shadow-xs);
+}
+
+.partner-pill:hover {
+  border-color: var(--forest-300);
+  color: var(--forest-700);
+  background: var(--forest-50);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.partner-pill-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--forest-400);
+  flex-shrink: 0;
+}
+
+/* ── CTA ── */
+.home-cta {
+  padding: 88px 0;
+  background: var(--forest-900);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 0%,
+    rgba(108,191,138,.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.home-cta-inner {
+  position: relative; z-index: 1;
+  max-width: 600px; margin: 0 auto;
+}
+
+.home-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--white);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.home-cta h2 em { color: var(--forest-300); font-style: italic; }
+
+.home-cta p {
+  font-size: .98rem;
+  color: rgba(255,255,255,.55);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.home-cta-btns {
+  display: flex; gap: 12px;
+  justify-content: center; flex-wrap: wrap;
+}
+
+.btn-white {
+  background: var(--white); color: var(--forest-900); font-weight: 700;
+  padding: 13px 28px; border-radius: var(--radius-xs); font-size: .92rem;
+  display: inline-flex; align-items: center; gap: 8px; transition: all .2s;
+}
+
+.btn-white:hover { background: var(--forest-50); transform: translateY(-1px); }
+
+.btn-ghost-home {
+  background: transparent; color: rgba(255,255,255,.7);
+  border: 1px solid rgba(255,255,255,.22); font-weight: 600;
+  padding: 13px 28px; border-radius: var(--radius-xs); font-size: .92rem;
+  display: inline-flex; align-items: center; gap: 8px; transition: all .2s;
+}
+
+.btn-ghost-home:hover {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.4);
+  color: var(--white);
+}
+
+/* ── Responsivo ── */
+@media (max-width: 1024px) {
+  .hero-home-inner { grid-template-columns: 1fr; gap: 52px; }
+  .hero-home { min-height: auto; padding: 72px 0; }
+  .hero-home-lead { max-width: 100%; }
+  .dest-grid { grid-template-columns: 1fr 1fr; }
+  .nums-grid { grid-template-columns: 1fr; }
+  .pages-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .hero-home { padding: 56px 0 48px; }
+  .hero-home h1 { font-size: 2rem; }
+  .dest-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 20px; }
+  .pages-grid { grid-template-columns: 1fr; }
+  .home-cta { padding: 64px 0; }
+  .home-cta-btns { flex-direction: column; align-items: center; }
+  .btn-white, .btn-ghost-home { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .hero-home h1 { font-size: 1.75rem; }
+  .num-val { font-size: 2rem; }
+  .page-card-top { padding: 22px 20px 16px; }
+  .page-card-bottom { padding: 14px 20px; }
 }
   </style>
 </head>
@@ -1842,22 +2076,24 @@ ul   { list-style:none; }
 <!-- HEADER -->
 <header class="topo" id="inicio">
   <div class="container">
-    <a href="index.html" class="logo-area" style="text-decoration:none">
+    <div class="logo-area">
       <div class="logo-icon">🌱</div>
       <div>
-        <div class="logo-text">AgroVerde Brasil</div>
+        <h1 class="logo-text">AgroVerde Brasil</h1>
         <p class="logo-subtitle">Sustentabilidade no agronegócio</p>
       </div>
-    </a>
+    </div>
+
     <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
       <span></span><span></span><span></span>
     </button>
-    <nav class="menu" id="menu-nav">
+
+    <nav class="menu" id="menu-nav" aria-label="Menu principal">
       <ul>
-        <li><a href="index.html#problema"    class="menu-link">O Problema</a></li>
-        <li><a href="index.html#indicadores" class="menu-link">Dados</a></li>
-        <li><a href="#calculadora"           class="menu-link">Calculadora</a></li>
-        <li><a href="#praticas"              class="menu-link">Como fazer</a></li>
+        <li><a href="dados.html"    class="menu-link">Dados</a></li>
+        <li><a href="problema.html" class="menu-link">O Problema</a></li>
+        <li><a href="parceiros.html"class="menu-link">Parceiros</a></li>
+        <li><a href="proposta.html" class="menu-link menu-link-highlight">Para Agricultores</a></li>
         <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
       </ul>
     </nav>
@@ -1867,308 +2103,264 @@ ul   { list-style:none; }
 <main>
 
 <!-- HERO -->
-<section class="ph">
-  <div class="container ph-inner">
-    <div class="ph-tag">Para o agricultor</div>
-    <h1>Descubra quanto sua lavoura <em>pode render a mais</em></h1>
-    <p class="ph-lead">
-      Escolha o que você planta, informe sua área e região. A calculadora mostra quanto você gasta em insumos,
-      quantas colheitas faz no ano, o valor do que produz — e quanto está perdendo sem perceber.
-      Tudo explicado em linguagem simples, passo a passo.
-    </p>
-    <div class="ph-pills">
-      <span class="ph-pill">🍊 30+ culturas</span>
-      <span class="ph-pill">🗓️ Safras por clima e região</span>
-      <span class="ph-pill">💰 Custo de insumo explicado</span>
-      <span class="ph-pill">📉 Quanto você perde</span>
-      <span class="ph-pill">📈 Quanto pode recuperar</span>
-    </div>
-  </div>
-</section>
-
-<!-- CALCULADORA -->
-<section class="calc-wrap" id="calculadora">
+<section class="hero-home">
   <div class="container">
+    <div class="hero-home-inner">
 
-    <!-- Steps -->
-    <div class="steps" id="steps-bar">
-      <div class="step active" data-step="0"><div class="step-num">01</div><div class="step-label">Sua propriedade</div></div>
-      <div class="step" data-step="1"><div class="step-num">02</div><div class="step-label">Insumos</div></div>
-      <div class="step" data-step="2"><div class="step-num">03</div><div class="step-label">Produção</div></div>
-      <div class="step" data-step="3"><div class="step-num">04</div><div class="step-label">Resultado</div></div>
-    </div>
+      <!-- Texto -->
+      <div class="hero-home-text">
+        <div class="home-eyebrow">🌱 AgroVerde Brasil · Sustentabilidade no campo</div>
 
-    <!-- PASSO 1 -->
-    <div class="calc-panel active" id="panel-0">
-      <div class="fc">
-        <div class="fc-title">O que você planta e onde?</div>
-        <div class="fc-sub">Selecione sua cultura e região. A calculadora ajusta automaticamente os custos, o número de colheitas e os preços para sua realidade.</div>
+        <h1>
+          O agro brasileiro <em>produz demais</em> — e desperdiça demais também
+        </h1>
 
-        <!-- Seletor de cultura -->
-        <div class="ff" style="margin-bottom:12px">
-          <label>Escolha o que você cultiva</label>
-        </div>
+        <p class="hero-home-lead">
+          46 milhões de toneladas de alimentos perdidas por ano. Água, solo e energia
+          jogados fora junto com elas. O problema é grande, mas a solução começa com informação.
+          Explore os dados, entenda as causas e descubra o que você pode fazer.
+        </p>
 
-        <div class="cult-cats" id="cult-cats">
-          <button class="cult-cat active" data-cat="frutas-tropicais">🍊 Frutas tropicais</button>
-          <button class="cult-cat" data-cat="frutas-temperadas">🍇 Frutas temperadas</button>
-          <button class="cult-cat" data-cat="graos">🌾 Grãos e cereais</button>
-          <button class="cult-cat" data-cat="hortalicas">🥬 Hortaliças</button>
-          <button class="cult-cat" data-cat="outros">🌿 Outros</button>
-        </div>
-
-        <div class="cult-grid" id="cult-grid"></div>
-        <input type="hidden" id="sel-cultura" value=""/>
-
-        <!-- Banner da selecionada -->
-        <div class="cult-selected-banner" id="cult-banner">
-          <div class="cult-selected-emoji" id="banner-emoji">🍊</div>
-          <div>
-            <div class="cult-selected-name" id="banner-name">Nenhuma selecionada</div>
-            <div class="cult-selected-desc" id="banner-desc">Clique em uma cultura acima para ver os detalhes.</div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <strong>46 Mt</strong>
+            <span>perdidas/ano</span>
           </div>
-        </div>
-
-        <!-- Região -->
-        <div class="ff" style="margin-top:20px">
-          <label>Qual é a sua região?</label>
-          <select class="fsel" id="sel-regiao">
-            <option value="sul">Sul (RS, SC, PR)</option>
-            <option value="sudeste">Sudeste (SP, MG, RJ, ES)</option>
-            <option value="centroeste" selected>Centro-Oeste (MT, MS, GO, DF)</option>
-            <option value="nordeste">Nordeste (BA, MA, PI, CE e demais)</option>
-            <option value="norte">Norte (PA, TO, RO e demais)</option>
-          </select>
-          <div class="ff-hint">Região afeta o clima, número de colheitas no ano e o preço médio da produção.</div>
-        </div>
-
-        <!-- Área -->
-        <div class="ff">
-          <label>Área cultivada <span class="lv" id="lv-area">50 ha</span></label>
-          <input type="range" class="fs" id="sl-area" min="1" max="500" step="1" value="50"/>
-          <div class="ff-hint">Pequenos produtores: 1–20 ha · Médios: 20–150 ha · Grandes: acima de 150 ha</div>
-        </div>
-
-        <!-- Info região -->
-        <div id="info-regiao" style="padding:14px 16px;background:var(--sky-100);
-          border:1px solid var(--sky-300);border-radius:var(--radius-sm);
-          font-size:.82rem;color:var(--sky-700);line-height:1.7;margin-top:4px">
-          Selecione sua região para ver as informações de clima e colheitas possíveis.
-        </div>
-
-        <div class="calc-nav">
-          <span></span>
-          <button class="btn-next" id="btn-p1" onclick="irPasso1()" disabled style="opacity:.4;cursor:not-allowed">
-            Próximo: ver meus insumos →
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- PASSO 2 -->
-    <div class="calc-panel" id="panel-1">
-      <div class="fc">
-        <div class="fc-title">O que são insumos — e quanto você gasta?</div>
-        <div class="fc-sub"><strong>Insumo</strong> é tudo que você compra para produzir: semente, adubo, defensivo, combustível, mão de obra. A tabela abaixo já vem preenchida com valores típicos para a sua cultura. <strong>Você pode alterar qualquer campo</strong> se souber o valor real do que paga.</div>
-
-        <div style="overflow-x:auto;margin-bottom:14px">
-          <table class="insumos-table" id="tabela-insumos">
-            <thead><tr>
-              <th>Insumo</th>
-              <th>O que é e para que serve</th>
-              <th>Média / ha</th>
-              <th>Seu custo total (R$)</th>
-            </tr></thead>
-            <tbody id="tbody-insumos"></tbody>
-          </table>
-        </div>
-
-        <div class="insumos-note" id="insumos-note"></div>
-
-        <div class="insumos-total">
-          <div>
-            <div class="insumos-total-label">Total de insumos por safra</div>
-            <div class="insumos-total-sub">para <span id="lv-area2">50</span> ha · <span id="lv-cult2">—</span></div>
+          <div class="hero-stat">
+            <strong>30%</strong>
+            <span>da colheita some</span>
           </div>
-          <div style="text-align:right">
-            <div class="insumos-total-val" id="total-insumos">R$ 0</div>
-            <div class="insumos-total-period">por safra/ciclo</div>
+          <div class="hero-stat">
+            <strong>3,3 Gt</strong>
+            <span>de CO₂ evitável</span>
           </div>
-        </div>
-
-        <div class="calc-nav">
-          <button class="btn-prev" onclick="goStep(0)">← Voltar</button>
-          <button class="btn-next" onclick="goStep(2)">Próximo: minha produção →</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- PASSO 3 -->
-    <div class="calc-panel" id="panel-2">
-      <div class="fc">
-        <div class="fc-title">Quanto você produz e pelo que vende?</div>
-        <div class="fc-sub">Os valores já foram preenchidos com médias da sua região e cultura. Ajuste se souber os seus números reais — quanto mais preciso, melhor o resultado.</div>
-
-        <div class="fg2">
-          <div class="ff">
-            <label>Colheitas por ano <span class="lv" id="lv-safras">2</span></label>
-            <input type="range" class="fs" id="sl-safras" min="1" max="6" step="1" value="2"/>
-            <div class="ff-dica" id="dica-safras">Para <strong id="ds-cult">—</strong> na <strong id="ds-reg">—</strong>: <strong id="ds-max">—</strong> colheitas/ano são possíveis.</div>
+          <div class="hero-stat">
+            <strong>2030</strong>
+            <span>meta ODS −50%</span>
           </div>
-          <div class="ff">
-            <label>Produção por hectare <span class="lv" id="lv-prodha">—</span></label>
-            <input type="range" class="fs" id="sl-prodha" min="1" max="500" step="1" value="50"/>
-            <div class="ff-dica">Média nacional: <strong id="ds-prod">—</strong>. Irrigação e bom manejo podem superar essa média.</div>
-          </div>
-        </div>
-
-        <div class="fg2">
-          <div class="ff">
-            <label>Preço médio de venda <span class="lv" id="lv-saca">—</span></label>
-            <input type="range" class="fs" id="sl-saca" min="1" max="5000" step="1" value="150"/>
-            <div class="ff-dica" id="dica-saca">Preço típico na <strong id="ds-regiao2">—</strong>: <strong id="ds-preco">—</strong></div>
-          </div>
-          <div class="ff">
-            <label>Perda estimada pós-colheita <span class="lv" id="lv-pc">20%</span></label>
-            <input type="range" class="fs" id="sl-pc" min="2" max="60" step="1" value="20"/>
-            <div class="ff-dica" id="dica-pc">Média Brasil: 20–30%. Para frutas e hortaliças, pode passar de 40% sem armazenamento adequado.</div>
-          </div>
-        </div>
-
-        <div class="calc-nav">
-          <button class="btn-prev" onclick="goStep(1)">← Voltar</button>
-          <button class="btn-next" onclick="goStep(3);calcularFinal()">Ver meu resultado →</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- PASSO 4 -->
-    <div class="calc-panel" id="panel-3">
-
-      <div class="result-hero">
-        <div class="result-eyebrow">Economia anual possível</div>
-        <div class="result-big" id="r-economia">R$ 0</div>
-        <div class="result-sublabel" id="r-sublabel">aplicando as práticas recomendadas</div>
-        <div class="result-grid">
-          <div class="result-box"><div class="result-box-label">Receita bruta / ano</div><div class="result-box-val" id="r-receita">—</div></div>
-          <div class="result-box red"><div class="result-box-label">Perda pós-colheita / ano</div><div class="result-box-val" id="r-perdapc">—</div></div>
-          <div class="result-box red"><div class="result-box-label">Custo de insumos / ano</div><div class="result-box-val" id="r-insumos">—</div></div>
-          <div class="result-box green"><div class="result-box-label">Resultado líquido possível</div><div class="result-box-val" id="r-liquido">—</div></div>
         </div>
       </div>
 
-      <div class="result-cards">
-        <div class="rc"><div class="rc-icon">🌾</div><div class="rc-title">Produção total / ano</div><div class="rc-val" id="r-prodtotal">—</div><div class="rc-sub" id="r-prodsub">—</div></div>
-        <div class="rc"><div class="rc-icon">💰</div><div class="rc-title">Preço de venda</div><div class="rc-val" id="r-saca">—</div><div class="rc-sub" id="r-unidade">—</div></div>
-        <div class="rc"><div class="rc-icon">📦</div><div class="rc-title">Perdido / ano</div><div class="rc-val red" id="r-perdido">—</div><div class="rc-sub" id="r-perdidoval">—</div></div>
-        <div class="rc"><div class="rc-icon">📈</div><div class="rc-title">Retorno em 5 anos</div><div class="rc-val green" id="r-5anos">—</div><div class="rc-sub">com as práticas recomendadas</div></div>
-      </div>
+      <!-- Cards de destino no hero -->
+      <div class="dest-grid">
 
-      <div class="compare-bar-wrap">
-        <div class="compare-bar-title">Onde seu dinheiro vai — antes e depois das práticas</div>
-        <div class="compare-row">
-          <div class="compare-lbl">Sem práticas</div>
-          <div class="compare-track"><div class="compare-fill before" id="bar-before" style="width:70%"></div></div>
-          <div class="compare-num" id="bar-before-val">70%</div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-lbl">Com práticas</div>
-          <div class="compare-track"><div class="compare-fill after" id="bar-after" style="width:35%"></div></div>
-          <div class="compare-num" id="bar-after-val">35%</div>
-        </div>
-      </div>
-
-      <div class="fc" style="margin-bottom:0">
-        <div class="fc-title" style="font-size:1.05rem;margin-bottom:16px">De onde vem a economia?</div>
-        <div id="economia-detalhe"></div>
-      </div>
-
-      <div class="calc-nav" style="margin-top:18px">
-        <button class="btn-prev" onclick="goStep(2)">← Ajustar dados</button>
-        <a href="cadastro.html" class="btn-next" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px">
-          Quero meu plano personalizado →
+        <a href="proposta.html" class="dest-card" style="--dest-color:#6cbf8a">
+          <div class="dest-icon">🚜</div>
+          <div class="dest-body">
+            <div class="dest-title">Calculadora do Agricultor</div>
+            <div class="dest-desc">Descubra quanto você perde e como economizar</div>
+          </div>
+          <span class="dest-badge">novo</span>
+          <span class="dest-arrow">→</span>
         </a>
-      </div>
-    </div>
 
-  </div>
-</section>
+        <a href="dados.html" class="dest-card" style="--dest-color:#6cb2e0">
+          <div class="dest-icon">📊</div>
+          <div class="dest-body">
+            <div class="dest-title">Dados e Indicadores</div>
+            <div class="dest-desc">Gráficos reais explicados em linguagem simples</div>
+          </div>
+          <span class="dest-arrow">→</span>
+        </a>
 
-<!-- PRÁTICAS -->
-<section class="section" id="praticas">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Como fazer na prática</span>
-      <h2>Seis mudanças concretas — sem gastar quase nada</h2>
-      <p>Não precisa de tecnologia cara. A maioria dessas práticas custa menos do que um saco de fertilizante e se paga em menos de 6 meses.</p>
-    </div>
-    <div class="praticas-grid">
-      <div class="pratica-card" style="--pratica-color:var(--sky-500)">
-        <div class="pratica-num">01</div>
-        <h3>Irrigação por gotejamento ou aspersão localizada</h3>
-        <p>Irrigação por inundação desperdiça até 50% da água. O gotejamento entrega direto na raiz — menos conta de energia, menos gasto com bomba, mais produção.</p>
-        <div class="pratica-eco">💧 Até 40% menos gasto com água</div>
-      </div>
-      <div class="pratica-card" style="--pratica-color:var(--forest-400)">
-        <div class="pratica-num">02</div>
-        <h3>Análise de solo antes de adubar</h3>
-        <p>Uma análise custa R$ 50–150 e mostra exatamente o que falta. Sem ela, você provavelmente compra fertilizante que a planta não consegue usar — dinheiro que vai para o lençol freático.</p>
-        <div class="pratica-eco">🌾 25–35% menos gasto com fertilizante</div>
-      </div>
-      <div class="pratica-card" style="--pratica-color:var(--sun-500)">
-        <div class="pratica-num">03</div>
-        <h3>Colheita no ponto certo e pós-colheita adequada</h3>
-        <p>Fruta colhida fora do ponto perde sabor, peso e preço. Um refratômetro (R$ 40) mede o ponto de açúcar em frutas. Para grãos, um higrômetro evita perdas na secagem.</p>
-        <div class="pratica-eco">📦 15–25% menos perda pós-colheita</div>
-      </div>
-      <div class="pratica-card" style="--pratica-color:var(--forest-500)">
-        <div class="pratica-num">04</div>
-        <h3>Planejamento de rotas e manutenção preventiva</h3>
-        <p>Trator ou bomba rodando além do necessário é diesel ou energia queimada à toa. Filtros limpos e injeção calibrada reduzem o consumo em até 20% sem mudar nenhum equipamento.</p>
-        <div class="pratica-eco">🚜 Até 20% menos gasto com combustível</div>
-      </div>
-      <div class="pratica-card" style="--pratica-color:var(--sky-700)">
-        <div class="pratica-num">05</div>
-        <h3>Armazenamento com temperatura e umidade controladas</h3>
-        <p>Galpão mal ventilado ou caixa sem proteção geram fungos e perda de peso rápida. Lona, sombrite e termômetro simples já reduzem drasticamente as perdas no pós-colheita.</p>
-        <div class="pratica-eco">📦 50% menos perda no armazém</div>
-      </div>
-      <div class="pratica-card" style="--pratica-color:var(--earth-400)">
-        <div class="pratica-num">06</div>
-        <h3>Cobertura de solo e rotação de culturas</h3>
-        <p>Solo exposto perde umidade 3× mais rápido. Palhada ou braquiária como cobertura reduzem a irrigação, preservam matéria orgânica e diminuem o uso de herbicida na próxima safra.</p>
-        <div class="pratica-eco">🌱 20% menos necessidade de irrigação</div>
+        <a href="problema.html" class="dest-card" style="--dest-color:#e8b84a">
+          <div class="dest-icon">🔍</div>
+          <div class="dest-body">
+            <div class="dest-title">O Problema</div>
+            <div class="dest-desc">Por que o desperdício acontece e onde começa</div>
+          </div>
+          <span class="dest-arrow">→</span>
+        </a>
+
+        <a href="parceiros.html" class="dest-card" style="--dest-color:#97c3dc">
+          <div class="dest-icon">🤝</div>
+          <div class="dest-body">
+            <div class="dest-title">ONGs Parceiras</div>
+            <div class="dest-desc">Organizações que lutam pelo meio ambiente</div>
+          </div>
+          <span class="dest-arrow">→</span>
+        </a>
+
       </div>
     </div>
   </div>
 </section>
 
-<!-- TIMELINE -->
-<section class="retorno-section">
+<!-- 3 NÚMEROS QUE IMPORTAM -->
+<section class="nums-section">
   <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Linha do tempo</span>
-      <h2>O que acontece no bolso, mês a mês</h2>
-      <p>O retorno não é imediato, mas começa cedo. Veja como a economia se acumula nos primeiros 12 meses.</p>
+    <div class="section-header" style="margin-bottom:32px">
+      <span class="section-tag">Por que isso importa</span>
+      <h2>Três números que todo brasileiro deveria conhecer</h2>
     </div>
-    <div class="retorno-timeline">
-      <div class="retorno-step"><div class="retorno-dot active">1</div><div class="retorno-period">1º mês</div><div class="retorno-desc">Análise de solo + ajuste da irrigação. Custo mínimo, redução imediata no consumo de água.</div><div class="retorno-val">−R$ 200 investido</div></div>
-      <div class="retorno-step"><div class="retorno-dot">3</div><div class="retorno-period">3º mês</div><div class="retorno-desc">Primeira redução visível na conta de energia e no gasto com adubo da próxima adubação.</div><div class="retorno-val">+R$ 1.500 recuperado</div></div>
-      <div class="retorno-step"><div class="retorno-dot">6</div><div class="retorno-period">6º mês</div><div class="retorno-desc">Ponto de equilíbrio: os ganhos já cobriram o investimento inicial. Lucro positivo a partir daqui.</div><div class="retorno-val">+R$ 3.800 acumulado</div></div>
-      <div class="retorno-step"><div class="retorno-dot">12</div><div class="retorno-period">1º ano</div><div class="retorno-desc">Com todas as práticas, a economia está consolidada e previsível safra a safra.</div><div class="retorno-val" style="color:var(--forest-600)">Use a calculadora ↑</div></div>
+    <div class="nums-grid">
+      <div class="num-card">
+        <span class="num-icon">🥦</span>
+        <div class="num-val">46 Mt</div>
+        <div class="num-label">Alimentos perdidos / ano</div>
+        <div class="num-desc">O suficiente para alimentar toda a região Nordeste por 12 meses. Vai do campo ao lixo sem ninguém comer.</div>
+      </div>
+      <div class="num-card">
+        <span class="num-icon">💧</span>
+        <div class="num-val">70%</div>
+        <div class="num-label">Da água doce vai para o agro</div>
+        <div class="num-desc">Sete em cada dez litros de água usados no planeta servem para produzir alimentos. Quando desperdiçamos comida, desperdiçamos também essa água.</div>
+      </div>
+      <div class="num-card">
+        <span class="num-icon">🌡️</span>
+        <div class="num-val">3,3 Gt</div>
+        <div class="num-label">CO₂ emitido em vão / ano</div>
+        <div class="num-desc">Mais do que toda a aviação comercial mundial. Se o desperdício de alimentos fosse um país, seria o 3º maior emissor do planeta.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PÁGINAS DO SITE -->
+<section class="pages-section">
+  <div class="container">
+    <div class="section-header" style="margin-bottom:0">
+      <span class="section-tag">O que você encontra aqui</span>
+      <h2>Escolha por onde começar</h2>
+      <p>O AgroVerde Brasil tem conteúdo para diferentes perfis — do curioso ao produtor rural que quer reduzir perdas no bolso.</p>
+    </div>
+
+    <div class="pages-grid">
+
+      <!-- Agricultor — destaque -->
+      <a href="proposta.html" class="page-card featured">
+        <div class="page-card-top">
+          <div class="page-card-icon-wrap" style="--pc-bg:var(--forest-100)">🚜</div>
+          <h3>Para o Agricultor</h3>
+          <p class="page-card-lead">
+            Calculadora interativa com 30+ culturas. Informe sua área, região e o que planta —
+            veja quanto você gasta em insumos, quantas safras cabe no ano, o preço certo para
+            sua cultura e quanto está perdendo sem perceber. Busca de localização por CEP inclusa.
+          </p>
+        </div>
+        <div class="page-card-bottom">
+          <div class="page-card-tags">
+            <span class="page-tag">Calculadora</span>
+            <span class="page-tag">Insumos</span>
+            <span class="page-tag">Safras</span>
+            <span class="page-tag">Preço por região</span>
+          </div>
+          <span class="page-cta">Acessar →</span>
+        </div>
+      </a>
+
+      <!-- Dados -->
+      <a href="dados.html" class="page-card">
+        <div class="page-card-top">
+          <div class="page-card-icon-wrap" style="--pc-bg:var(--sky-100)">📊</div>
+          <h3>Dados e Indicadores</h3>
+          <p class="page-card-lead">
+            Gráficos interativos com dados reais de perdas por etapa da cadeia, consumo de água
+            por cultura, evolução histórica e muito mais. Cada dado acompanha uma explicação em
+            linguagem do dia a dia — sem precisar ser especialista.
+          </p>
+        </div>
+        <div class="page-card-bottom">
+          <div class="page-card-tags">
+            <span class="page-tag">Gráficos</span>
+            <span class="page-tag">EMBRAPA</span>
+            <span class="page-tag">FAO</span>
+          </div>
+          <span class="page-cta">Ver dados →</span>
+        </div>
+      </a>
+
+      <!-- Problema -->
+      <a href="problema.html" class="page-card">
+        <div class="page-card-top">
+          <div class="page-card-icon-wrap" style="--pc-bg:var(--sun-100)">🔍</div>
+          <h3>O Problema</h3>
+          <p class="page-card-lead">
+            Por que tanto alimento se perde no Brasil? Entenda o que acontece desde a colheita
+            até a mesa — o papel do armazenamento ruim, do transporte inadequado e das falhas
+            que poderiam ser evitadas com informação simples.
+          </p>
+        </div>
+        <div class="page-card-bottom">
+          <div class="page-card-tags">
+            <span class="page-tag">Desperdício</span>
+            <span class="page-tag">Colheita</span>
+            <span class="page-tag">Logística</span>
+          </div>
+          <span class="page-cta">Entender →</span>
+        </div>
+      </a>
+
+      <!-- ONGs -->
+      <a href="parceiros.html" class="page-card">
+        <div class="page-card-top">
+          <div class="page-card-icon-wrap" style="--pc-bg:var(--earth-100)">🤝</div>
+          <h3>ONGs Parceiras</h3>
+          <p class="page-card-lead">
+            Conheça as principais organizações brasileiras e internacionais que lutam pela
+            preservação ambiental, uso sustentável da água e combate ao desperdício no campo.
+            Com links diretos para os sites oficiais.
+          </p>
+        </div>
+        <div class="page-card-bottom">
+          <div class="page-card-tags">
+            <span class="page-tag">WWF</span>
+            <span class="page-tag">Greenpeace</span>
+            <span class="page-tag">SOS Mata Atlântica</span>
+          </div>
+          <span class="page-cta">Conhecer →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- PARCEIROS STRIP -->
+<section class="partners-strip">
+  <div class="container">
+    <div class="partners-label">Organizações de referência</div>
+    <div class="partners-logos">
+      <a href="https://www.wwf.org.br" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>WWF Brasil
+      </a>
+      <a href="https://www.greenpeace.org/brasil" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>Greenpeace Brasil
+      </a>
+      <a href="https://www.sosma.org.br" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>SOS Mata Atlântica
+      </a>
+      <a href="https://www.socioambiental.org" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>Instituto Socioambiental
+      </a>
+      <a href="https://www.ipe.org.br" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>IPÊ
+      </a>
+      <a href="https://www.conservation.org/brasil" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>Conservação Internacional
+      </a>
+      <a href="https://www.embrapa.br" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>EMBRAPA
+      </a>
+      <a href="https://www.fao.org" target="_blank" rel="noopener" class="partner-pill">
+        <span class="partner-pill-dot"></span>FAO
+      </a>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="prop-cta">
+<section class="home-cta">
   <div class="container">
-    <div class="prop-cta-inner">
-      <h2>Pronto para parar de <em>perder</em> o que você produziu?</h2>
-      <p>Cadastre-se gratuitamente e receba um plano de ação personalizado para a sua cultura, região e tamanho de propriedade.</p>
-      <div class="prop-cta-btns">
-        <a href="cadastro.html" class="btn-white">Quero meu plano gratuito →</a>
-        <a href="index.html"    class="btn-ghost">Voltar ao início</a>
+    <div class="home-cta-inner">
+      <h2>Faça parte da <em>solução</em></h2>
+      <p>
+        Cadastre-se gratuitamente para acompanhar o projeto, receber conteúdos
+        e fortalecer a conscientização sobre sustentabilidade no campo brasileiro.
+      </p>
+      <div class="home-cta-btns">
+        <a href="cadastro.html"  class="btn-white">Quero me cadastrar →</a>
+        <a href="proposta.html"  class="btn-ghost-home">Sou agricultor</a>
       </div>
     </div>
   </div>
@@ -2178,25 +2370,38 @@ ul   { list-style:none; }
 
 <footer class="rodape">
   <div class="container footer-grid">
-    <div><h3>AgroVerde Brasil</h3><p>Projeto acadêmico sobre sustentabilidade no agronegócio. Dados baseados em publicações da FAO e EMBRAPA.</p></div>
-    <div><h4>Nesta página</h4><ul class="footer-links">
-      <li><a href="#calculadora">Calculadora</a></li>
-      <li><a href="#praticas">Como fazer</a></li>
-      <li><a href="index.html">Início</a></li>
-      <li><a href="cadastro.html">Cadastro</a></li>
-    </ul></div>
-    <div><h4>Fontes</h4><ul class="footer-links">
-      <li><a href="https://www.fao.org" target="_blank" rel="noopener">FAO — fao.org</a></li>
-      <li><a href="https://www.embrapa.br" target="_blank" rel="noopener">EMBRAPA — embrapa.br</a></li>
-    </ul></div>
+    <div>
+      <h3>AgroVerde Brasil</h3>
+      <p>Projeto acadêmico sobre sustentabilidade no agronegócio. Dados baseados em publicações da FAO e EMBRAPA.</p>
+    </div>
+    <div>
+      <h4>Páginas</h4>
+      <ul class="footer-links">
+        <li><a href="dados.html">Dados e Indicadores</a></li>
+        <li><a href="problema.html">O Problema</a></li>
+        <li><a href="parceiros.html">ONGs Parceiras</a></li>
+        <li><a href="proposta.html">Para Agricultores</a></li>
+        <li><a href="cadastro.html">Cadastro</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Equipe</h4>
+      <ul class="footer-links">
+        <li><a href="#">Victor Hugo Dos Santos</a></li>
+      </ul>
+      <h4 style="margin-top:20px">Fontes</h4>
+      <ul class="footer-links">
+        <li><a href="https://www.fao.org" target="_blank" rel="noopener">FAO — fao.org</a></li>
+        <li><a href="https://www.embrapa.br" target="_blank" rel="noopener">EMBRAPA — embrapa.br</a></li>
+      </ul>
+    </div>
   </div>
-  <div class="footer-bottom"><p>© 2026 AgroVerde Brasil — Projeto para a disciplina de Programação Web Front-end.</p></div>
+  <div class="footer-bottom">
+    <p>© 2026 AgroVerde Brasil — Projeto para a disciplina de Programação Web Front-end.</p>
+  </div>
 </footer>
 
 <script>
-/* ═══════════════════════════════════════════════════
-   HAMBÚRGUER
-═══════════════════════════════════════════════════ */
 const hamburger = document.getElementById('hamburger');
 const menuNav   = document.getElementById('menu-nav');
 document.querySelectorAll('.menu-link,.btn-nav').forEach(l => l.addEventListener('click', () => {
@@ -2209,734 +2414,7 @@ hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('hamburger-open', open);
   hamburger.setAttribute('aria-expanded', open);
 });
-
-/* ═══════════════════════════════════════════════════
-   BASE DE DADOS COMPLETA — 30+ culturas
-   unidade: o que se mede (sc 60kg / cx / kg / t / dz)
-   prodMedia: produção típica por ha por ciclo
-   precos: R$ por unidade, por região
-   safras: colheitas/ano por região
-   perdaPC: % média de perda pós-colheita
-   insumos: [ { cat, custoHa, dica } ]
-═══════════════════════════════════════════════════ */
-const CULTURAS = {
-  /* ─── FRUTAS TROPICAIS ─── */
-  laranja: {
-    cat:'frutas-tropicais', emoji:'🍊', nome:'Laranja',
-    desc:'Fruta cítrica de alta demanda. Ciclos longos mas produção constante por anos.',
-    unidade:'cx 40kg', prodMedia:500,
-    precos:{ sul:28, sudeste:22, centroeste:25, nordeste:20, norte:22 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
-    perdaPC:28,
-    insumos:[
-      { cat:'Mudas (implantação)', custoHa:1800, dica:'Custo alto no 1º ano. Pomar dura 20–30 anos, então dilua esse custo pelos anos de produção.' },
-      { cat:'Fertilizante',        custoHa:1400, dica:'Citros exige muito K e Mg. Análise foliar indica o que falta antes de gastar com adubo.' },
-      { cat:'Defensivos',          custoHa:1100, dica:'Cancro cítrico e mosca-das-frutas são as maiores ameaças. Monitoramento semanal evita surtos.' },
-      { cat:'Irrigação',           custoHa:600,  dica:'Citros tolera seca curta, mas irrigação aumenta tamanho e produtividade dos frutos.' },
-      { cat:'Mão de obra colheita',custoHa:900,  dica:'Colheita manual e seletiva é padrão. Colher no ponto certo garante melhor preço.' },
-    ]
-  },
-  pitaya: {
-    cat:'frutas-tropicais', emoji:'🐉', nome:'Pitaya',
-    desc:'Fruta exótica de alto valor. Demanda crescente no mercado nacional e export.',
-    unidade:'kg', prodMedia:8000,
-    precos:{ sul:8, sudeste:12, centroeste:10, nordeste:9, norte:8 },
-    safras:{ sul:1, sudeste:2, centroeste:2, nordeste:2, norte:2 },
-    perdaPC:35,
-    insumos:[
-      { cat:'Mudas/estacas',       custoHa:3500, dica:'Custo elevado de implantação. Planta produz por mais de 15 anos com manejo correto.' },
-      { cat:'Tutoramento (moirão)',custoHa:4000, dica:'Estrutura de apoio obrigatória. Custo de implantação, não se repete todo ano.' },
-      { cat:'Fertilizante',        custoHa:800,  dica:'Pitaya responde bem a matéria orgânica. Composto e biofertilizante reduzem custo.' },
-      { cat:'Irrigação',           custoHa:700,  dica:'Gotejamento é essencial. Pitaya não tolera encharcamento — excesso mata a planta.' },
-      { cat:'Mão de obra',         custoHa:1200, dica:'Colheita seletiva e frequente (fruta matura rápido). Pós-colheita cuidadoso mantém preço alto.' },
-    ]
-  },
-  melancia: {
-    cat:'frutas-tropicais', emoji:'🍉', nome:'Melancia',
-    desc:'Ciclo curto (75–90 dias), alta produtividade e boa rentabilidade no verão.',
-    unidade:'kg', prodMedia:40000,
-    precos:{ sul:0.60, sudeste:0.75, centroeste:0.65, nordeste:0.55, norte:0.60 },
-    safras:{ sul:2, sudeste:3, centroeste:2, nordeste:3, norte:3 },
-    perdaPC:25,
-    insumos:[
-      { cat:'Sementes',   custoHa:600,  dica:'Sementes híbridas sem sementes custam mais mas valem pelo preço de venda maior.' },
-      { cat:'Fertilizante',custoHa:900,  dica:'Melancia exige muito K na fase de enchimento do fruto. Falta de potássio = fruto sem doçura.' },
-      { cat:'Defensivos', custoHa:700,  dica:'Oídio e míldio são os maiores problemas. Aplicação preventiva na floração é essencial.' },
-      { cat:'Irrigação',  custoHa:500,  dica:'Gotejamento economiza 40% de água vs. aspersão. Déficit hídrico na frutificação = fruto oco.' },
-      { cat:'Mão de obra',custoHa:800,  dica:'Colheita e carregamento são as etapas que mais precisam de gente. Organize a equipe com antecedência.' },
-    ]
-  },
-  manga: {
-    cat:'frutas-tropicais', emoji:'🥭', nome:'Manga',
-    desc:'Alta valorização no mercado externo. Nordeste brasileiro é referência mundial.',
-    unidade:'cx 13kg', prodMedia:600,
-    precos:{ sul:18, sudeste:16, centroeste:14, nordeste:20, norte:15 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:2, norte:1 },
-    perdaPC:30,
-    insumos:[
-      { cat:'Mudas',      custoHa:2200, dica:'Mudas enxertadas produzem mais cedo e com qualidade uniforme. Evite mudas de procedência duvidosa.' },
-      { cat:'Fertilizante',custoHa:1100,dica:'Após a poda de produção, adubação pesada com K e P garante boa florada na próxima estação.' },
-      { cat:'Indutor floral',custoHa:400,dica:'Nitrato de potássio ou reguladores são usados para induzir florada fora de época — aumenta safras.' },
-      { cat:'Defensivos', custoHa:900,  dica:'Antracnose (fungo na fruta) é o maior inimigo. Tratamento pós-colheita mantém a fruta para export.' },
-      { cat:'Mão de obra', custoHa:1000,dica:'Poda, raleio de frutos e colheita seletiva fazem toda a diferença na qualidade final.' },
-    ]
-  },
-  mamao: {
-    cat:'frutas-tropicais', emoji:'🍈', nome:'Mamão',
-    desc:'Ciclo produtivo curto — começa a produzir em 8 meses. Alta demanda no mercado.',
-    unidade:'cx 13kg', prodMedia:1200,
-    precos:{ sul:18, sudeste:20, centroeste:16, nordeste:14, norte:14 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
-    perdaPC:35,
-    insumos:[
-      { cat:'Mudas',       custoHa:800,  dica:'Sementes germinam facilmente mas variedades melhoradas (Formosa, Solo) dão frutos mais valorizados.' },
-      { cat:'Fertilizante',custoHa:1600, dica:'Mamão é muito exigente em nutrição. Fertiirrigação é muito usada para maior eficiência.' },
-      { cat:'Defensivos',  custoHa:800,  dica:'Vírus do mosaico (PRSV) não tem cura — use sementes resistentes e controle o pulgão que transmite.' },
-      { cat:'Irrigação',   custoHa:700,  dica:'Não tolera seca nem alagamento. Dreno e irrigação regular são obrigatórios para boa produção.' },
-      { cat:'Mão de obra', custoHa:900,  dica:'Colheita semanal porque o mamão matura rápido. Logística rápida evita perdas na pós-colheita.' },
-    ]
-  },
-  abacaxi: {
-    cat:'frutas-tropicais', emoji:'🍍', nome:'Abacaxi',
-    desc:'Ciclo de 12–18 meses. Brasil é um dos maiores produtores mundiais.',
-    unidade:'mil frutos', prodMedia:30,
-    precos:{ sul:1800, sudeste:2000, centroeste:1600, nordeste:1400, norte:1500 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
-    perdaPC:20,
-    insumos:[
-      { cat:'Mudas (filhotes)',custoHa:1200,dica:'Filhotes ou mudas-tolete do próprio pomar reduzem custo. Só compre mudas de origem certificada.' },
-      { cat:'Fertilizante',   custoHa:1800,dica:'Abacaxi é planta CAM — aproveita a noite para absorver CO₂. Adubação noturna via fertiirrigação funciona bem.' },
-      { cat:'Indutor floral', custoHa:200, dica:'Etileno (carbureto ou ethephon) induz florada uniforme — essencial para colheita de uma vez só.' },
-      { cat:'Defensivos',     custoHa:600, dica:'Fusariose é a doença mais grave. Tratamento de mudas antes do plantio é obrigatório.' },
-      { cat:'Mão de obra',    custoHa:1100,dica:'Plantio e colheita são intensivos em mão de obra. Proteja os trabalhadores do espinho.' },
-    ]
-  },
-  goiaba: {
-    cat:'frutas-tropicais', emoji:'🟩', nome:'Goiaba',
-    desc:'Fruta versátil — in natura e indústria. Produção contínua ao longo do ano.',
-    unidade:'kg', prodMedia:30000,
-    precos:{ sul:1.2, sudeste:1.8, centroeste:1.4, nordeste:1.2, norte:1.3 },
-    safras:{ sul:2, sudeste:2, centroeste:2, nordeste:3, norte:2 },
-    perdaPC:30,
-    insumos:[
-      { cat:'Mudas',       custoHa:1800, dica:'Mudas enxertadas produzem mais cedo e com frutos uniformes. Variedade Paluma domina o mercado.' },
-      { cat:'Fertilizante',custoHa:900,  dica:'Poda de produção seguida de adubação pesada define a produtividade da próxima colheita.' },
-      { cat:'Defensivos',  custoHa:700,  dica:'Mosca-das-frutas é o principal problema. Proteína hidrolisada com inseticida reduz 80% do ataque.' },
-      { cat:'Irrigação',   custoHa:500,  dica:'Irrigação regular aumenta tamanho e uniformidade. Déficit na frutificação = fruto pequeno.' },
-      { cat:'Mão de obra', custoHa:800,  dica:'Colheita semanal é necessária. Goiaba matura rapidamente e perde qualidade em 3–5 dias.' },
-    ]
-  },
-  maracuja: {
-    cat:'frutas-tropicais', emoji:'🟡', nome:'Maracujá',
-    desc:'Alta rentabilidade por ha. Ciclo produtivo de 2–3 anos com manejo correto.',
-    unidade:'kg', prodMedia:15000,
-    precos:{ sul:2.0, sudeste:2.8, centroeste:2.2, nordeste:2.0, norte:2.1 },
-    safras:{ sul:1, sudeste:2, centroeste:2, nordeste:2, norte:2 },
-    perdaPC:25,
-    insumos:[
-      { cat:'Mudas/sementes',custoHa:400, dica:'Mudas de estaca ou sementes selecionadas. Variedades azedas são mais resistentes a vírus.' },
-      { cat:'Espaldeira',    custoHa:3000,dica:'Estrutura de arame e mourão: custo de implantação, dura toda a vida do pomar.' },
-      { cat:'Fertilizante',  custoHa:1200,dica:'Muito exigente em N e K. Fertirrigação é comum e muito eficiente para maracujá.' },
-      { cat:'Defensivos',    custoHa:900, dica:'Bacteriose e vírus (PWV) são as maiores ameaças. Polinização manual em áreas pequenas aumenta produção.' },
-      { cat:'Mão de obra',   custoHa:1000,dica:'Polinização manual e colheita regular (2x semana) fazem grande diferença na produtividade.' },
-    ]
-  },
-  banana: {
-    cat:'frutas-tropicais', emoji:'🍌', nome:'Banana',
-    desc:'Uma das frutas mais produzidas no Brasil. Alta demanda interna e boa rentabilidade.',
-    unidade:'cx 22kg', prodMedia:1000,
-    precos:{ sul:22, sudeste:20, centroeste:18, nordeste:16, norte:18 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
-    perdaPC:35,
-    insumos:[
-      { cat:'Mudas',       custoHa:1200, dica:'Mudas micropropagadas (tissue culture) custam mais mas são livres de doenças e uniformes.' },
-      { cat:'Fertilizante',custoHa:1800, dica:'Banana é das culturas mais exigentes em potássio. Deficiência de K = cacho pequeno e mal formado.' },
-      { cat:'Defensivos',  custoHa:900,  dica:'Sigatoka-negra (fungo) exige 30–50 aplicações/ano em regiões úmidas — grande custo do bananicultor.' },
-      { cat:'Irrigação',   custoHa:600,  dica:'Banana precisa de muita água mas não suporta solo encharcado. Drenagem é tão importante quanto irrigação.' },
-      { cat:'Mão de obra', custoHa:1100, dica:'Embalagem do cacho, desbaste (deixar 8–10 pencas) e escoramento das plantas são obrigatórios.' },
-    ]
-  },
-  coco: {
-    cat:'frutas-tropicais', emoji:'🥥', nome:'Coco',
-    desc:'Alta demanda — água de coco, leite, óleo. Produção começa em 3–4 anos.',
-    unidade:'mil frutos', prodMedia:15,
-    precos:{ sul:2800, sudeste:3200, centroeste:3000, nordeste:2600, norte:2500 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
-    perdaPC:15,
-    insumos:[
-      { cat:'Mudas',       custoHa:3000, dica:'Custo alto de implantação, mas a palmeira produz por 50+ anos. Escolha variedades anãs para colheita mais fácil.' },
-      { cat:'Fertilizante',custoHa:1200, dica:'Muito exigente em Cl e K. Solo com deficiência de potássio reduz produção em até 50%.' },
-      { cat:'Defensivos',  custoHa:400,  dica:'Ácaros e broca do coqueiro são as principais pragas. Monitoramento periódico evita surtos.' },
-      { cat:'Irrigação',   custoHa:800,  dica:'Coqueiro responde muito bem à irrigação — pode dobrar a produção em relação ao sequeiro.' },
-      { cat:'Mão de obra', custoHa:700,  dica:'Colheita requer subida nas palmeiras ou equipamento específico — custo alto em propriedades sem mecanização.' },
-    ]
-  },
-  acerola: {
-    cat:'frutas-tropicais', emoji:'🔴', nome:'Acerola',
-    desc:'A fruta com mais vitamina C do mundo. Alta demanda da indústria farmacêutica e de sucos.',
-    unidade:'kg', prodMedia:12000,
-    precos:{ sul:2.5, sudeste:3.0, centroeste:2.5, nordeste:2.2, norte:2.3 },
-    safras:{ sul:2, sudeste:3, centroeste:2, nordeste:3, norte:3 },
-    perdaPC:40,
-    insumos:[
-      { cat:'Mudas',       custoHa:2000, dica:'Mudas enxertadas garantem uniformidade e alta produção desde o 2º ano.' },
-      { cat:'Fertilizante',custoHa:800,  dica:'Acerola responde bem à adubação orgânica. Matéria orgânica eleva o teor de vitamina C nos frutos.' },
-      { cat:'Defensivos',  custoHa:500,  dica:'Alta resistência natural. Mosca-das-frutas é o principal problema em período chuvoso.' },
-      { cat:'Irrigação',   custoHa:500,  dica:'Gotejamento é indicado. Excesso de chuva dilui o teor de vitamina C na fruta — dreno é importante.' },
-      { cat:'Mão de obra', custoHa:1500, dica:'Colheita muito intensiva em mão de obra — fruta cai rapidamente e oxida com velocidade.' },
-    ]
-  },
-
-  /* ─── FRUTAS TEMPERADAS ─── */
-  uva: {
-    cat:'frutas-temperadas', emoji:'🍇', nome:'Uva',
-    desc:'Para mesa e vinho. Sul do Brasil é referência nacional em qualidade.',
-    unidade:'kg', prodMedia:15000,
-    precos:{ sul:4.5, sudeste:5.0, centroeste:5.5, nordeste:6.0, norte:6.5 },
-    safras:{ sul:1, sudeste:2, centroeste:2, nordeste:2, norte:2 },
-    perdaPC:20,
-    insumos:[
-      { cat:'Mudas/porta-enxerto',custoHa:5000,dica:'Implantação cara mas dura 30+ anos. Escolha variedade e porta-enxerto certo para o solo e clima.' },
-      { cat:'Espaldeira e tutores',custoHa:8000,dica:'Infraestrutura de arame, mourão e cobertura plástica — custo de implantação significativo.' },
-      { cat:'Fertilizante',       custoHa:1600,dica:'Adubação pós-poda e foliar são obrigatórias. Deficiência de zinco causa aborto de flores.' },
-      { cat:'Defensivos',         custoHa:2200,dica:'Míldio e botrytis (podridão) em clima úmido. Viticultura convencional usa muitos fungicidas.' },
-      { cat:'Mão de obra',        custoHa:2500,dica:'Poda, raleio de cachos, amarrio e colheita são altamente intensivos em mão de obra.' },
-    ]
-  },
-  maca: {
-    cat:'frutas-temperadas', emoji:'🍎', nome:'Maçã',
-    desc:'Produção concentrada no Sul. Exige frio para produzir — regula o ciclo produtivo.',
-    unidade:'cx 18kg', prodMedia:1500,
-    precos:{ sul:35, sudeste:40, centroeste:42, nordeste:45, norte:48 },
-    safras:{ sul:1, sudeste:0, centroeste:0, nordeste:0, norte:0 },
-    perdaPC:15,
-    insumos:[
-      { cat:'Mudas enxertadas',   custoHa:6000, dica:'Mudas certificadas são caras mas garantem produção uniforme e início de produção em 3 anos.' },
-      { cat:'Fertilizante',       custoHa:1800, dica:'Cálcio é fundamental para evitar bitter pit (mancha amarga). Adubação foliar com Ca é comum.' },
-      { cat:'Raleio de frutos',   custoHa:1200, dica:'Raleio manual ou químico é obrigatório — sem ele, os frutos ficam pequenos e a planta alternância.' },
-      { cat:'Defensivos',         custoHa:2800, dica:'Sarna e mosca-das-frutas exigem monitoramento constante. É uma das culturas com mais aplicações.' },
-      { cat:'Mão de obra',        custoHa:2000, dica:'Poda de inverno, raleio, instalação de telas antigranizo e colheita são muito intensivos.' },
-    ]
-  },
-  pessego: {
-    cat:'frutas-temperadas', emoji:'🍑', nome:'Pêssego',
-    desc:'Ciclo curto de produção. Alta demanda em compota e consumo in natura no Sul.',
-    unidade:'cx 10kg', prodMedia:1800,
-    precos:{ sul:18, sudeste:22, centroeste:24, nordeste:26, norte:28 },
-    safras:{ sul:1, sudeste:1, centroeste:0, nordeste:0, norte:0 },
-    perdaPC:30,
-    insumos:[
-      { cat:'Mudas',       custoHa:3000, dica:'Cultivares adaptadas ao clima local produzem mais. Evite cultivares de frio intenso em áreas de inverno ameno.' },
-      { cat:'Fertilizante',custoHa:1200, dica:'Pós-poda e pós-colheita são as fases críticas de adubação. Boro aumenta a frutificação.' },
-      { cat:'Raleio',      custoHa:800,  dica:'Raleio de frutos garante frutos grandes e de qualidade. Sem raleio, muitos frutos pequenos e baratos.' },
-      { cat:'Defensivos',  custoHa:1500, dica:'Monilínia (podridão-parda) é devastadora em clima úmido. Pulverize durante a floração.' },
-      { cat:'Mão de obra', custoHa:1800, dica:'Poda, raleio e colheita rápida (pêssego amadurece muito rápido) são os maiores custos.' },
-    ]
-  },
-  morango: {
-    cat:'frutas-temperadas', emoji:'🍓', nome:'Morango',
-    desc:'Alta rentabilidade por ha. Ciclo curto e valorização constante no mercado.',
-    unidade:'kg', prodMedia:40000,
-    precos:{ sul:6.0, sudeste:8.0, centroeste:9.0, nordeste:10.0, norte:11.0 },
-    safras:{ sul:1, sudeste:2, centroeste:2, nordeste:2, norte:2 },
-    perdaPC:40,
-    insumos:[
-      { cat:'Mudas',       custoHa:8000, dica:'Mudas frigorificadas são caras mas garantem floração e produção uniformes. Custo é o principal gargalo.' },
-      { cat:'Substrato/canteiro',custoHa:3000,dica:'Cultivo em canteiro elevado ou em saco reduz doenças de solo e facilita colheita e manejo.' },
-      { cat:'Fertilizante',custoHa:2000, dica:'Fertirrigação é padrão para morango. Alta demanda nutricional em ciclo curto.' },
-      { cat:'Defensivos',  custoHa:2500, dica:'Oidio, ácaros e tripes são as principais pragas. Alta pressão de pragas exige monitoramento constante.' },
-      { cat:'Mão de obra', custoHa:5000, dica:'Colheita diária é obrigatória — fruta matura em 24h. Maior custo da cultura depois das mudas.' },
-    ]
-  },
-  ameixa: {
-    cat:'frutas-temperadas', emoji:'🟣', nome:'Ameixa',
-    desc:'Fruta de alta valorização. Boa para mesa e indústria. Concentrada no Sul.',
-    unidade:'cx 10kg', prodMedia:1200,
-    precos:{ sul:22, sudeste:28, centroeste:30, nordeste:32, norte:35 },
-    safras:{ sul:1, sudeste:1, centroeste:0, nordeste:0, norte:0 },
-    perdaPC:22,
-    insumos:[
-      { cat:'Mudas',       custoHa:3500, dica:'Escolha cultivares com necessidade de frio compatível com sua altitude e latitude.' },
-      { cat:'Fertilizante',custoHa:1300, dica:'Nitrogênio em excesso causa crescimento vegetativo em detrimento da produção de frutos.' },
-      { cat:'Defensivos',  custoHa:1400, dica:'Podridão-parda e bactérioses são os principais problemas. Poda sanitária reduz o inóculo.' },
-      { cat:'Mão de obra', custoHa:1600, dica:'Raleio manual de frutos é importante para calibre e qualidade. Colheita seletiva em etapas.' },
-    ]
-  },
-
-  /* ─── GRÃOS ─── */
-  soja: {
-    cat:'graos', emoji:'🌱', nome:'Soja',
-    desc:'Principal commodity do agronegócio brasileiro. Exportação e mercado interno.',
-    unidade:'sc 60kg', prodMedia:55,
-    precos:{ sul:142, sudeste:148, centroeste:145, nordeste:155, norte:162 },
-    safras:{ sul:1, sudeste:2, centroeste:2, nordeste:2, norte:2 },
-    perdaPC:15,
-    insumos:[
-      { cat:'Semente',     custoHa:380,  dica:'Semente certificada produz 10–15% mais. Inoculação com rizóbio reduz até 40 kg/ha de ureia.' },
-      { cat:'Fertilizante',custoHa:820,  dica:'NPK na base e cobertura. Análise de solo antes de comprar — pode economizar 30% do custo.' },
-      { cat:'Defensivos',  custoHa:650,  dica:'Ferrugem asiática exige monitoramento. Aplicação preventiva na floração é mais barata que curativa.' },
-      { cat:'Inoculante',  custoHa:30,   dica:'Bactérias fixadoras de N — custo baixíssimo com retorno enorme. Não salte essa etapa.' },
-      { cat:'Combustível', custoHa:220,  dica:'Plantio, tratos e colheita. Média de 40–60 L de diesel por hectare por ciclo.' },
-    ]
-  },
-  milho: {
-    cat:'graos', emoji:'🌽', nome:'Milho',
-    desc:'Cultura versátil: ração, etanol, alimento humano. Alta produtividade no Cerrado.',
-    unidade:'sc 60kg', prodMedia:100,
-    precos:{ sul:52, sudeste:58, centroeste:55, nordeste:62, norte:68 },
-    safras:{ sul:2, sudeste:2, centroeste:2, nordeste:2, norte:2 },
-    perdaPC:18,
-    insumos:[
-      { cat:'Semente híbrida',custoHa:420,dica:'Milho híbrido simples produz 20% mais que duplo. Escolha pelo ciclo e adaptação à sua região.' },
-      { cat:'Fertilizante',   custoHa:960,dica:'Ureia em cobertura é o maior custo. Mostre o solo para o técnico antes de comprar.' },
-      { cat:'Defensivos',     custoHa:480,dica:'Lagarta-do-cartucho ataca cedo. Monitoramento semanal nos primeiros 30 dias economiza muito.' },
-      { cat:'Combustível',    custoHa:260,dica:'Maior consumo que a soja — milho precisa de mais passadas de máquina.' },
-    ]
-  },
-  cafe: {
-    cat:'graos', emoji:'☕', nome:'Café',
-    desc:'Bebida mais consumida no Brasil. Alta valorização por qualidade de cup score.',
-    unidade:'sc 60kg', prodMedia:28,
-    precos:{ sul:1200, sudeste:1150, centroeste:1100, nordeste:1050, norte:1000 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
-    perdaPC:15,
-    insumos:[
-      { cat:'Fertilizante',custoHa:1800,dica:'Café exige muito K e B. Adubação foliar complementa a de solo e corrige deficiências rápido.' },
-      { cat:'Defensivos',  custoHa:900, dica:'Ferrugem, bicho-mineiro e broca são as principais pragas. Monitoramento regular economiza muito.' },
-      { cat:'Colheita',    custoHa:1200,dica:'Maior custo do café. Colheita seletiva (só cereja) garante qualidade mas custa mais que derriça.' },
-      { cat:'Irrigação',   custoHa:600, dica:'Irrigação suplementar na seca aumenta produção e regulariza a florada para melhor qualidade.' },
-    ]
-  },
-  arroz: {
-    cat:'graos', emoji:'🍚', nome:'Arroz',
-    desc:'Alimento básico do brasileiro. Sul do país é referência em produtividade.',
-    unidade:'sc 50kg', prodMedia:100,
-    precos:{ sul:58, sudeste:62, centroeste:60, nordeste:65, norte:63 },
-    safras:{ sul:1, sudeste:2, centroeste:1, nordeste:2, norte:2 },
-    perdaPC:15,
-    insumos:[
-      { cat:'Semente',     custoHa:280,  dica:'Arroz irrigado usa mais semente que o de terras altas. Certifique-se da procedência da semente.' },
-      { cat:'Fertilizante',custoHa:680,  dica:'Nitrogênio é o principal. Lâmina d\'água controla algumas pragas e reduz uso de defensivos.' },
-      { cat:'Defensivos',  custoHa:420,  dica:'Arroz-vermelho (planta daninha) é a principal ameaça — exige herbicida específico e rotação.' },
-      { cat:'Irrigação',   custoHa:380,  dica:'Nivelamento a laser economiza até 30% da água e uniformiza a germinação.' },
-    ]
-  },
-  feijao: {
-    cat:'graos', emoji:'🫘', nome:'Feijão',
-    desc:'Alimento essencial. Ciclo curto permite até 3 safras/ano em regiões quentes.',
-    unidade:'sc 60kg', prodMedia:30,
-    precos:{ sul:320, sudeste:340, centroeste:330, nordeste:350, norte:360 },
-    safras:{ sul:2, sudeste:3, centroeste:2, nordeste:3, norte:3 },
-    perdaPC:18,
-    insumos:[
-      { cat:'Semente',     custoHa:320,  dica:'Feijão tem ciclo curto (90 dias). Variedades carioca e preto têm maior demanda de mercado.' },
-      { cat:'Fertilizante',custoHa:560,  dica:'Inoculação com rizóbio pode reduzir 30% do nitrogênio. Análise de solo antes de adubar.' },
-      { cat:'Defensivos',  custoHa:480,  dica:'Ferrugem e mosca-branca são as principais ameaças. Controle preventivo é mais barato.' },
-      { cat:'Mão de obra', custoHa:220,  dica:'Colheita manual em pequenas áreas ou trilhadeira tratorizada em áreas maiores.' },
-    ]
-  },
-  cana: {
-    cat:'graos', emoji:'🎋', nome:'Cana-de-açúcar',
-    desc:'Maior área plantada do Brasil. Matéria-prima do açúcar e do etanol.',
-    unidade:'tonelada (t)', prodMedia:80,
-    precos:{ sul:80, sudeste:85, centroeste:78, nordeste:72, norte:70 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
-    perdaPC:10,
-    insumos:[
-      { cat:'Mudas (tolete)',custoHa:800, dica:'No plantio novo. Ratoon (rebrota) não tem esse custo — por isso a cana dura 5–6 cortes.' },
-      { cat:'Fertilizante', custoHa:620, dica:'Vinhaça e torta de filtro da usina podem substituir parte do fertilizante — converse com a usina.' },
-      { cat:'Defensivos',   custoHa:380, dica:'Herbicidas pré e pós-emergentes são o maior custo com defensivos na cana.' },
-      { cat:'Colheita',     custoHa:900, dica:'Colheita mecanizada terceirizada ou própria. Custo alto mas evita queimada e perdas.' },
-    ]
-  },
-
-  /* ─── HORTALIÇAS ─── */
-  tomate: {
-    cat:'hortalicas', emoji:'🍅', nome:'Tomate',
-    desc:'Uma das hortaliças mais cultivadas no Brasil. Alta rentabilidade e demanda constante.',
-    unidade:'cx 23kg', prodMedia:3500,
-    precos:{ sul:28, sudeste:35, centroeste:32, nordeste:38, norte:42 },
-    safras:{ sul:2, sudeste:3, centroeste:3, nordeste:3, norte:3 },
-    perdaPC:35,
-    insumos:[
-      { cat:'Mudas',       custoHa:3500, dica:'Mudas de bandeja de sementeira especializada garantem uniformidade e início rápido de produção.' },
-      { cat:'Fertilizante',custoHa:2200, dica:'Fertirrigação é padrão — tomate é muito exigente em nutrição ao longo de todo o ciclo.' },
-      { cat:'Defensivos',  custoHa:2800, dica:'Requeima, vírus e traça são os maiores problemas. Alta pressão de pragas exige manejo rigoroso.' },
-      { cat:'Tutoragem',   custoHa:1500, dica:'Bambu, estaca ou fitilho são obrigatórios para tomate rasteiro. Estaqueamento garante mais qualidade.' },
-      { cat:'Irrigação',   custoHa:800,  dica:'Gotejamento é padrão. Déficit hídrico causa lóculo seco e biossíntese irregular — perde qualidade.' },
-    ]
-  },
-  alface: {
-    cat:'hortalicas', emoji:'🥬', nome:'Alface',
-    desc:'Ciclo curtíssimo (45 dias). Alta rotatividade permite muitos ciclos por ano.',
-    unidade:'mil cabeças', prodMedia:120,
-    precos:{ sul:800, sudeste:1200, centroeste:1000, nordeste:900, norte:950 },
-    safras:{ sul:5, sudeste:6, centroeste:6, nordeste:6, norte:6 },
-    perdaPC:40,
-    insumos:[
-      { cat:'Sementes',    custoHa:600,  dica:'Sementes peletizadas facilitam o plantio direto no lugar e reduzem mão de obra.' },
-      { cat:'Fertilizante',custoHa:800,  dica:'Nitrogênio em abundância garante folhas tenras e verdes. Fertirrigação é o padrão.' },
-      { cat:'Defensivos',  custoHa:400,  dica:'Tripes e pulgões são as principais pragas. Telas antiafídeo são bom investimento preventivo.' },
-      { cat:'Irrigação',   custoHa:500,  dica:'Irrigação frequente é obrigatória. Déficit hídrico causa subida do pendão (florescimento precoce).' },
-      { cat:'Mão de obra', custoHa:1200, dica:'Transplante, colheita e embalagem são intensivos. Organização da equipe define a eficiência.' },
-    ]
-  },
-  pimentao: {
-    cat:'hortalicas', emoji:'🫑', nome:'Pimentão',
-    desc:'Alta valorização. Colorido (vermelho, amarelo) vale 2–3× mais que o verde.',
-    unidade:'cx 10kg', prodMedia:3000,
-    precos:{ sul:45, sudeste:60, centroeste:52, nordeste:50, norte:55 },
-    safras:{ sul:2, sudeste:3, centroeste:2, nordeste:3, norte:3 },
-    perdaPC:30,
-    insumos:[
-      { cat:'Mudas',       custoHa:2000, dica:'Mudas de sementeira especializada. Pimentão leva 40 dias na sementeira antes de ir ao campo.' },
-      { cat:'Fertilizante',custoHa:2500, dica:'Uma das hortaliças mais exigentes em nutrição. Fertirrigação ao longo de todo o ciclo de 150 dias.' },
-      { cat:'Defensivos',  custoHa:1800, dica:'Mosca-branca, vírus e bactérias são os principais problemas. Controle integrado é fundamental.' },
-      { cat:'Irrigação',   custoHa:700,  dica:'Gotejamento é padrão. Estresse hídrico na floração causa queda de flores e redução de produção.' },
-      { cat:'Mão de obra', custoHa:2000, dica:'Colheita seletiva (só frutos maduros) em 5–6 vezes ao longo do ciclo. Alto custo de mão de obra.' },
-    ]
-  },
-
-  /* ─── OUTROS ─── */
-  caju: {
-    cat:'outros', emoji:'🟠', nome:'Caju',
-    desc:'Nordeste brasileiro produz 95% do caju nacional. Fruto e castanha valorizados.',
-    unidade:'kg (pedúnculo)', prodMedia:8000,
-    precos:{ sul:2.0, sudeste:2.5, centroeste:2.2, nordeste:1.8, norte:2.0 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
-    perdaPC:40,
-    insumos:[
-      { cat:'Mudas (clone)', custoHa:2500,dica:'Clones anões precoces produzem até 3× mais que o cajueiro comum. Valha o investimento.' },
-      { cat:'Fertilizante',  custoHa:600, dica:'Solo pobre do Nordeste exige adubação, especialmente K e P no início de produção.' },
-      { cat:'Defensivos',    custoHa:400, dica:'Resinose (fungo) e antracnose são os principais problemas. Poda sanitária é fundamental.' },
-      { cat:'Mão de obra',   custoHa:900, dica:'Colheita de pedúnculo e castanha exigem processos separados e cuidadosos.' },
-    ]
-  },
-  mandioca: {
-    cat:'outros', emoji:'🟤', nome:'Mandioca',
-    desc:'Alta tolerância à seca. Base da alimentação e da indústria de amido no Brasil.',
-    unidade:'tonelada (t)', prodMedia:20,
-    precos:{ sul:280, sudeste:320, centroeste:300, nordeste:250, norte:260 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
-    perdaPC:15,
-    insumos:[
-      { cat:'Manivas (ramas)',custoHa:400,dica:'Manivas do próprio roçado reduzem custo. Use ramas sadias da parte mediana da planta.' },
-      { cat:'Fertilizante',   custoHa:600,dica:'Mandioca tolera solo pobre mas responde bem ao K. Análise de solo indica o mínimo necessário.' },
-      { cat:'Defensivos',     custoHa:250,dica:'Ácaros e mosca-branca são as principais pragas. Mandioca tem resistência natural a muitas doenças.' },
-      { cat:'Mão de obra',    custoHa:700,dica:'Plantio, capinas e colheita (arrancamento) são as operações mais demandantes de mão de obra.' },
-    ]
-  },
-  algodao: {
-    cat:'outros', emoji:'🤍', nome:'Algodão',
-    desc:'Fibra têxtil com alta demanda. Cerrado é referência mundial em produtividade.',
-    unidade:'@ 15kg', prodMedia:270,
-    precos:{ sul:680, sudeste:690, centroeste:670, nordeste:660, norte:650 },
-    safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
-    perdaPC:8,
-    insumos:[
-      { cat:'Semente',     custoHa:450,  dica:'Sementes transgênicas dominam o mercado. Royalties estão incluídos no preço da semente.' },
-      { cat:'Fertilizante',custoHa:1100, dica:'Algodão exige muito potássio para qualidade de fibra. Deficiência causa fibra curta e fraca.' },
-      { cat:'Defensivos',  custoHa:1400, dica:'Um dos maiores custos com defensivos do agro. Manejo integrado de pragas reduz muito.' },
-      { cat:'Colheita',    custoHa:800,  dica:'Colheitadeiras específicas de alto custo. Regulagem correta evita perdas e contaminação por palha.' },
-    ]
-  },
-};
-
-/* ─── Regiões ─── */
-const REGIOES = {
-  sul:        { nome:'Sul',         clima:'Clima temperado com invernos frios e geadas. Favorece grãos e frutas de clima frio. Verão quente e chuvoso.' },
-  sudeste:    { nome:'Sudeste',     clima:'Clima tropical de altitude. Permite 2–3 colheitas/ano para muitas culturas. Alta diversidade de produção.' },
-  centroeste: { nome:'Centro-Oeste',clima:'Cerrado com chuvas bem distribuídas de out–mar. Verão úmido e inverno seco — excelente para grãos e frutas irrigadas.' },
-  nordeste:   { nome:'Nordeste',    clima:'Interior semiárido exige irrigação. Litoral e Cerrado baiano têm boa produtividade. Alta temperatura favorece frutas tropicais.' },
-  norte:      { nome:'Norte',       clima:'Clima equatorial com chuvas intensas durante boa parte do ano. Alta umidade favorece pragas — logística é o maior desafio.' },
-};
-
-/* ─── Categorias ─── */
-const CATS = {
-  'frutas-tropicais': 'Frutas tropicais',
-  'frutas-temperadas':'Frutas de clima frio',
-  'graos':            'Grãos e cereais',
-  'hortalicas':       'Hortaliças',
-  'outros':           'Outras culturas',
-};
-
-/* ═══════════════════════════════════════════════════
-   ESTADO
-═══════════════════════════════════════════════════ */
-let catAtual    = 'frutas-tropicais';
-let cultAtual   = null;
-let currentStep = 0;
-
-/* ═══════════════════════════════════════════════════
-   SELETOR VISUAL
-═══════════════════════════════════════════════════ */
-function renderCultGrid(cat) {
-  const grid = document.getElementById('cult-grid');
-  const items = Object.entries(CULTURAS).filter(([,v]) => v.cat === cat);
-  grid.innerHTML = items.map(([key, v]) => `
-    <div class="cult-item ${cultAtual===key?'selected':''}" data-key="${key}"
-      onclick="selecionarCultura('${key}')">
-      <div class="cult-item-emoji">${v.emoji}</div>
-      <div class="cult-item-name">${v.nome}</div>
-    </div>`).join('');
-}
-
-function selecionarCultura(key) {
-  cultAtual = key;
-  document.getElementById('sel-cultura').value = key;
-  const c = CULTURAS[key];
-
-  /* Atualiza grid */
-  document.querySelectorAll('.cult-item').forEach(el => {
-    el.classList.toggle('selected', el.dataset.key === key);
-  });
-
-  /* Banner */
-  const banner = document.getElementById('cult-banner');
-  banner.classList.add('show');
-  document.getElementById('banner-emoji').textContent = c.emoji;
-  document.getElementById('banner-name').textContent  = `${c.emoji} ${c.nome}`;
-  document.getElementById('banner-desc').textContent  = c.desc;
-
-  /* Habilita botão */
-  const btn = document.getElementById('btn-p1');
-  btn.disabled = false;
-  btn.style.opacity = '1';
-  btn.style.cursor  = 'pointer';
-
-  atualizarInfoRegiao();
-}
-
-/* Categorias */
-document.querySelectorAll('.cult-cat').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.cult-cat').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    catAtual = btn.dataset.cat;
-    renderCultGrid(catAtual);
-  });
-});
-
-/* Render inicial */
-renderCultGrid(catAtual);
-
-/* Área */
-document.getElementById('sl-area').addEventListener('input', () => {
-  document.getElementById('lv-area').textContent = document.getElementById('sl-area').value + ' ha';
-  atualizarInfoRegiao();
-});
-
-/* Região */
-document.getElementById('sel-regiao').addEventListener('change', atualizarInfoRegiao);
-
-function atualizarInfoRegiao() {
-  const reg = document.getElementById('sel-regiao').value;
-  const r   = REGIOES[reg];
-  const ha  = document.getElementById('sl-area').value;
-
-  let safrasInfo = '';
-  if (cultAtual) {
-    const c   = CULTURAS[cultAtual];
-    const saf = c.safras[reg];
-    safrasInfo = `<br><strong>Colheitas possíveis para ${c.emoji} ${c.nome}:</strong> <strong style="color:var(--sky-700)">${saf} por ano</strong> nessa região.`;
-  }
-  document.getElementById('info-regiao').innerHTML =
-    `<strong>📍 ${r.nome}:</strong> ${r.clima}${safrasInfo}`;
-}
-
-/* ═══════════════════════════════════════════════════
-   STEPPER
-═══════════════════════════════════════════════════ */
-function goStep(n) {
-  document.querySelectorAll('.calc-panel').forEach((p,i) => p.classList.toggle('active', i===n));
-  document.querySelectorAll('.step').forEach((s,i) => {
-    s.classList.remove('active','done');
-    if (i===n) s.classList.add('active');
-    if (i<n)   s.classList.add('done');
-  });
-  currentStep = n;
-  document.getElementById('calculadora').scrollIntoView({behavior:'smooth',block:'start'});
-  if (n===1) renderInsumos();
-  if (n===2) renderProducao();
-}
-
-document.querySelectorAll('.step').forEach(s => {
-  s.addEventListener('click', () => {
-    const t = +s.dataset.step;
-    if (t <= currentStep || t === currentStep+1) goStep(t);
-  });
-});
-
-function irPasso1() {
-  if (!cultAtual) return;
-  goStep(1);
-}
-
-/* ═══════════════════════════════════════════════════
-   HELPERS
-═══════════════════════════════════════════════════ */
-const fmt  = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
-const fmtN = v => Math.round(v).toLocaleString('pt-BR');
-
-function regiao()    { return document.getElementById('sel-regiao').value; }
-function area()      { return +document.getElementById('sl-area').value; }
-function nSafras()   { return +document.getElementById('sl-safras').value; }
-function prodHa()    { return +document.getElementById('sl-prodha').value; }
-function precoUnit() { return +document.getElementById('sl-saca').value; }
-function perdaPC()   { return +document.getElementById('sl-pc').value / 100; }
-
-/* ═══════════════════════════════════════════════════
-   PASSO 2 — Tabela de insumos
-═══════════════════════════════════════════════════ */
-function renderInsumos() {
-  if (!cultAtual) return;
-  const c  = CULTURAS[cultAtual];
-  const ha = area();
-
-  let rows = '';
-  c.insumos.forEach((it, i) => {
-    const total = Math.round(it.custoHa * ha);
-    rows += `<tr>
-      <td class="cat">${it.cat}</td>
-      <td class="tip">${it.dica}</td>
-      <td class="num">${fmt(it.custoHa)}/ha</td>
-      <td><input type="number" class="fn" id="ins-${i}" value="${total}" min="0"
-        style="max-width:140px;padding:8px 10px;font-size:.86rem" oninput="recalcTotal()"/></td>
-    </tr>`;
-  });
-
-  document.getElementById('tbody-insumos').innerHTML = rows;
-  document.getElementById('lv-area2').textContent   = ha;
-  document.getElementById('lv-cult2').textContent   = `${c.emoji} ${c.nome}`;
-  document.getElementById('insumos-note').innerHTML =
-    `📌 <strong>Como descobrir o que você gasta?</strong> Some todas as notas de compra de insumos do último ano e divida pela área plantada em hectares. Se não tiver esse controle, use os valores da tabela — são médias da EMBRAPA para <strong>${c.nome}</strong> na <strong>${REGIOES[regiao()].nome}</strong>.`;
-  recalcTotal();
-}
-
-function recalcTotal() {
-  let t = 0;
-  document.querySelectorAll('#tbody-insumos input').forEach(i => t += (+i.value || 0));
-  document.getElementById('total-insumos').textContent = fmt(t);
-}
-
-/* ═══════════════════════════════════════════════════
-   PASSO 3 — Produção e preço
-═══════════════════════════════════════════════════ */
-function renderProducao() {
-  if (!cultAtual) return;
-  const c   = CULTURAS[cultAtual];
-  const reg = regiao();
-  const maxS = c.safras[reg];
-  const prec = c.precos[reg];
-  const prod = c.prodMedia;
-
-  const slSaf = document.getElementById('sl-safras');
-  slSaf.max   = Math.max(1, maxS);
-  slSaf.value = Math.min(+slSaf.value || maxS, maxS);
-  document.getElementById('lv-safras').textContent = slSaf.value;
-  document.getElementById('ds-cult').textContent   = `${c.emoji} ${c.nome}`;
-  document.getElementById('ds-reg').textContent    = REGIOES[reg].nome;
-  document.getElementById('ds-max').textContent    = maxS;
-  slSaf.oninput = () => document.getElementById('lv-safras').textContent = slSaf.value;
-
-  const slProd = document.getElementById('sl-prodha');
-  const maxProd = Math.max(prod * 3, 100);
-  slProd.min   = 1;
-  slProd.max   = maxProd;
-  slProd.value = prod;
-  document.getElementById('lv-prodha').textContent = fmtN(prod) + ' ' + c.unidade + '/ha';
-  document.getElementById('ds-prod').textContent   = fmtN(prod * 0.85) + '–' + fmtN(prod * 1.15) + ' ' + c.unidade + '/ha';
-  slProd.oninput = () => document.getElementById('lv-prodha').textContent =
-    fmtN(+slProd.value) + ' ' + c.unidade + '/ha';
-
-  const slSaca = document.getElementById('sl-saca');
-  const maxPreco = Math.max(prec * 4, 100);
-  slSaca.min   = 1;
-  slSaca.max   = maxPreco;
-  slSaca.value = prec;
-  document.getElementById('lv-saca').textContent    = fmt(prec) + ' / ' + c.unidade;
-  document.getElementById('ds-regiao2').textContent = REGIOES[reg].nome;
-  document.getElementById('ds-preco').textContent   = fmt(prec * 0.9) + ' – ' + fmt(prec * 1.1) + ' / ' + c.unidade;
-  slSaca.oninput = () => document.getElementById('lv-saca').textContent =
-    fmt(+slSaca.value) + ' / ' + c.unidade;
-
-  const slPc = document.getElementById('sl-pc');
-  slPc.value = c.perdaPC;
-  document.getElementById('lv-pc').textContent = c.perdaPC + '%';
-  slPc.oninput = () => document.getElementById('lv-pc').textContent = slPc.value + '%';
-  document.getElementById('dica-pc').innerHTML =
-    `Média histórica para <strong>${c.nome}</strong>: <strong>${c.perdaPC}%</strong> de perda pós-colheita.
-    Com bom armazenamento e logística rápida, é possível reduzir pela metade.`;
-}
-
-/* ═══════════════════════════════════════════════════
-   PASSO 4 — Resultado
-═══════════════════════════════════════════════════ */
-function calcularFinal() {
-  if (!cultAtual) return;
-  const c    = CULTURAS[cultAtual];
-  const ha   = area();
-  const ns   = nSafras();
-  const ph   = prodHa();
-  const pu   = precoUnit();
-  const pc   = perdaPC();
-
-  let totalInsumos = 0;
-  document.querySelectorAll('#tbody-insumos input').forEach(i => totalInsumos += (+i.value || 0));
-
-  const prodTot     = ha * ph * ns;
-  const receitaBruta= prodTot * pu;
-  const perdaPCval  = receitaBruta * pc;
-  const insumosAno  = totalInsumos * ns;
-  const econPC      = perdaPCval * 0.50;
-  const econInsumo  = insumosAno  * 0.25;
-  const econTotal   = econPC + econInsumo;
-  const perdaResid  = (perdaPCval - econPC) + (insumosAno - econInsumo);
-  const liquidoPoss = receitaBruta - perdaResid;
-
-  const pctBefore = Math.min(98, Math.round((perdaPCval + insumosAno) / Math.max(receitaBruta,1) * 100));
-  const pctAfter  = Math.max(2,  Math.round(pctBefore * 0.50));
-
-  document.getElementById('r-economia').textContent  = fmt(econTotal);
-  document.getElementById('r-sublabel').textContent  = `aplicando práticas recomendadas para ${c.emoji} ${c.nome}`;
-  document.getElementById('r-receita').textContent   = fmt(receitaBruta);
-  document.getElementById('r-perdapc').textContent   = fmt(perdaPCval);
-  document.getElementById('r-insumos').textContent   = fmt(insumosAno);
-  document.getElementById('r-liquido').textContent   = fmt(liquidoPoss);
-  document.getElementById('r-prodtotal').textContent = fmtN(prodTot) + ' ' + c.unidade;
-  document.getElementById('r-prodsub').textContent   = `${ns} colheita(s) · ${ha} ha · ${fmtN(ph)} ${c.unidade}/ha`;
-  document.getElementById('r-saca').textContent      = fmt(pu);
-  document.getElementById('r-unidade').textContent   = 'por ' + c.unidade + ' · ' + REGIOES[regiao()].nome;
-  document.getElementById('r-perdido').textContent   = fmt(perdaPCval);
-  document.getElementById('r-perdidoval').textContent= `${pc*100|0}% da produção · ${fmtN(prodTot*pc)} ${c.unidade}`;
-  document.getElementById('r-5anos').textContent     = fmt(econTotal * 5);
-
-  document.getElementById('bar-before').style.width    = pctBefore + '%';
-  document.getElementById('bar-after').style.width     = pctAfter  + '%';
-  document.getElementById('bar-before-val').textContent= pctBefore + '% comprometido';
-  document.getElementById('bar-after-val').textContent = pctAfter  + '% comprometido';
-
-  const itens = [
-    { label:'📦 Redução de perda pós-colheita',  val:econPC,     desc:`Colheita no ponto certo, embalagem e armazenamento adequado para ${c.nome}` },
-    { label:'🌾 Otimização do uso de insumos',   val:econInsumo, desc:'Análise de solo + aplicação de precisão — comprando só o que a cultura precisa' },
-  ];
-  document.getElementById('economia-detalhe').innerHTML = itens.map(it => `
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;
-      padding:12px 0;border-bottom:var(--border);gap:16px">
-      <div>
-        <div style="font-weight:700;font-size:.88rem;color:var(--ink-800);margin-bottom:3px">${it.label}</div>
-        <div style="font-size:.76rem;color:var(--ink-400);line-height:1.5">${it.desc}</div>
-      </div>
-      <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;
-        color:var(--forest-600);white-space:nowrap">${fmt(it.val)}/ano</div>
-    </div>`).join('') + `
-    <div style="display:flex;justify-content:space-between;align-items:center;
-      padding:14px 0;gap:16px;margin-top:4px">
-      <div style="font-weight:700;font-size:.9rem;color:var(--forest-900)">Total de economia possível por ano</div>
-      <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;
-        color:var(--forest-700);white-space:nowrap">${fmt(econTotal)}</div>
-    </div>`;
-}
 </script>
+
 </body>
 </html>
