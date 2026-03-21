@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dados e Indicadores | AgroVerde Brasil</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+/* ── Hero interno ── */
+.page-hero{background:var(--forest-900);color:var(--white);padding:64px 0 56px;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 60% at 80% 50%,rgba(46,122,72,.18) 0%,transparent 55%);
+  pointer-events:none}
+.page-hero-inner{position:relative;z-index:1;display:flex;align-items:flex-end;
+  justify-content:space-between;gap:32px;flex-wrap:wrap}
+.page-crumb{font-size:.74rem;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px}
+.page-crumb a{color:rgba(255,255,255,.45);text-decoration:none;transition:color .18s}
+.page-crumb a:hover{color:rgba(255,255,255,.8)}
+.page-hero h1{font-family:var(--font-display);font-size:clamp(1.9rem,3.5vw,3rem);
+  font-weight:700;color:var(--white);letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
+.page-hero-lead{font-size:.95rem;color:rgba(255,255,255,.58);line-height:1.8;max-width:56ch}
+.page-hero-meta{display:flex;gap:24px;flex-wrap:wrap;flex-shrink:0}
+.page-meta-item strong{display:block;font-family:var(--font-display);font-size:1.6rem;
+  font-weight:700;color:var(--white);letter-spacing:-.04em;line-height:1;margin-bottom:3px}
+.page-meta-item span{font-size:.72rem;color:rgba(255,255,255,.4);
+  font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+
+/* ── Conteúdo ── */
+.dados-wrap{padding:72px 0 88px;background:var(--ink-50)}
+
+/* métricas */
+.ind-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.ind-metric{background:var(--white);border:var(--border);border-radius:var(--radius-md);
+  padding:20px 18px;box-shadow:var(--shadow-xs);position:relative;overflow:hidden}
+.ind-metric::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
+.ind-metric.m-bad::after{background:var(--danger-600)}
+.ind-metric.m-warn::after{background:var(--sun-500)}
+.ind-metric.m-ok::after{background:var(--forest-500)}
+.ind-metric-label{font-size:.72rem;color:var(--ink-400);font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px}
+.ind-metric-value{font-family:var(--font-display);font-size:1.9rem;color:var(--ink-950);
+  font-weight:700;letter-spacing:-.04em;line-height:1;margin-bottom:6px}
+.ind-metric-trend{font-size:.75rem;font-weight:600;display:inline-flex;align-items:center;gap:3px}
+.trend-bad{color:var(--danger-600)}
+.trend-warn{color:var(--sun-500)}
+.trend-ok{color:var(--forest-600)}
+.ind-metric-desc{font-size:.73rem;color:var(--ink-300);margin-top:2px;line-height:1.4}
+
+/* Linhas de gráfico */
+.ind-row-a{display:grid;grid-template-columns:1.45fr 1fr;gap:16px;margin-bottom:16px}
+.ind-row-b{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ind-card{background:var(--white);border:var(--border);border-radius:var(--radius-md);
+  padding:24px 22px;box-shadow:var(--shadow-sm)}
+.ind-card-head{margin-bottom:16px}
+.ind-card-head h3{font-family:var(--font-display);font-size:1rem;color:var(--forest-950);
+  font-weight:600;letter-spacing:-.01em;margin-bottom:3px}
+.ind-card-head p{font-size:.78rem;color:var(--ink-400)}
+.ind-insight{margin-top:14px;padding:12px 14px;background:var(--forest-50);
+  border-radius:var(--radius-xs);border-left:3px solid var(--forest-400);
+  font-size:.8rem;color:var(--forest-800);line-height:1.65}
+.ind-insight strong{color:var(--forest-700);font-weight:700}
+
+.ind-tabs{display:flex;gap:6px;margin-bottom:14px}
+.ind-tab{font-size:.75rem;padding:5px 12px;border-radius:var(--radius-xs);
+  border:var(--border-md);background:transparent;color:var(--ink-500);
+  cursor:pointer;font-family:var(--font-body);font-weight:600;transition:all .18s}
+.ind-tab:hover{background:var(--forest-50);color:var(--forest-700)}
+.ind-tab.active{background:var(--forest-900);color:var(--white);border-color:var(--forest-900)}
+
+.ind-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;
+  font-size:.75rem;color:var(--ink-500);font-weight:500}
+.ind-dot{width:9px;height:9px;border-radius:2px;display:inline-block;
+  margin-right:4px;vertical-align:middle}
+.ind-canvas-wrap{position:relative;width:100%}
+
+@media(max-width:1024px){
+  .ind-metrics{grid-template-columns:repeat(2,1fr)}
+  .ind-row-a,.ind-row-b{grid-template-columns:1fr}
+  .page-hero-inner{flex-direction:column;gap:24px}
+}
+@media(max-width:600px){
+  .ind-metrics{grid-template-columns:1fr 1fr}
+  .dados-wrap{padding:48px 0 64px}
+}
+  </style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="container">
+    <a href="index.html" class="logo-area" style="text-decoration:none">
+      <div class="logo-icon">🌱</div>
+      <div><div class="logo-text">AgroVerde Brasil</div><p class="logo-subtitle">Sustentabilidade no agronegócio</p></div>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="menu" id="menu-nav">
+      <ul>
+        <li><a href="index.html"    class="menu-link">Início</a></li>
+        <li><a href="problema.html" class="menu-link">O Problema</a></li>
+        <li><a href="parceiros.html"class="menu-link">Parceiros</a></li>
+        <li><a href="proposta.html" class="menu-link menu-link-highlight">Para Agricultores</a></li>
+        <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner">
+      <div>
+        <div class="page-crumb"><a href="index.html">Início</a> / Dados e Indicadores</div>
+        <h1>Os números por trás do desperdício</h1>
+        <p class="page-hero-lead">Gráficos com dados reais de perdas, uso de água e evolução histórica — cada um acompanhado de explicação em linguagem simples. Fontes: EMBRAPA e FAO.</p>
+      </div>
+      <div class="page-hero-meta">
+        <div class="page-meta-item"><strong>4</strong><span>gráficos interativos</span></div>
+        <div class="page-meta-item"><strong>2</strong><span>fontes oficiais</span></div>
+        <div class="page-meta-item"><strong>2024</strong><span>dados atualizados</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dados-wrap">
+  <div class="container">
+
+    <!-- Métricas de destaque -->
+    <div class="ind-metrics">
+      <div class="ind-metric m-bad">
+        <div class="ind-metric-label">Perda pós-colheita</div>
+        <div class="ind-metric-value">46 Mt</div>
+        <div class="ind-metric-trend trend-bad">▲ 12% desde 2018</div>
+        <div class="ind-metric-desc">Alimentos que saem da fazenda mas nunca chegam à mesa</div>
+      </div>
+      <div class="ind-metric m-bad">
+        <div class="ind-metric-label">Água desperdiçada / ano</div>
+        <div class="ind-metric-value">750 km³</div>
+        <div class="ind-metric-trend trend-bad">▲ na irrigação ineficiente</div>
+        <div class="ind-metric-desc">Equivalente a 300 mil piscinas olímpicas por hora</div>
+      </div>
+      <div class="ind-metric m-warn">
+        <div class="ind-metric-label">Emissão de CO₂ evitável</div>
+        <div class="ind-metric-value">3,3 Gt</div>
+        <div class="ind-metric-trend trend-warn">↔ se não houvesse desperdício</div>
+        <div class="ind-metric-desc">Mais do que toda a aviação comercial global emite</div>
+      </div>
+      <div class="ind-metric m-ok">
+        <div class="ind-metric-label">Meta global ODS 12.3</div>
+        <div class="ind-metric-value">−50%</div>
+        <div class="ind-metric-trend trend-ok">▼ redução até 2030</div>
+        <div class="ind-metric-desc">Meta da ONU para cortar perdas de alimentos pela metade</div>
+      </div>
+    </div>
+
+    <!-- Linha A -->
+    <div class="ind-row-a">
+      <div class="ind-card">
+        <div class="ind-card-head">
+          <h3>Onde o alimento se perde — por etapa</h3>
+          <p>% do total desperdiçado em cada fase da cadeia alimentar brasileira</p>
+        </div>
+        <div class="ind-tabs">
+          <button class="ind-tab active" data-set="all">Visão geral</button>
+          <button class="ind-tab" data-set="grains">Grãos</button>
+          <button class="ind-tab" data-set="hortic">Frutas e verduras</button>
+        </div>
+        <div class="ind-canvas-wrap" style="height:230px"><canvas id="chainChart"></canvas></div>
+        <div class="ind-insight">
+          <strong>O que isso significa?</strong> Barras em vermelho indicam etapas críticas. O <em>armazenamento inadequado</em> é historicamente o maior problema — silos improvisados causam perdas de até 28% nos grãos.
+        </div>
+      </div>
+      <div class="ind-card">
+        <div class="ind-card-head">
+          <h3>Cada alimento perdido carrega junto...</h3>
+          <p>Quando jogamos comida fora, outros recursos vão junto</p>
+        </div>
+        <div class="ind-legend">
+          <span><span class="ind-dot" style="background:#2176b5"></span>Água — 45%</span>
+          <span><span class="ind-dot" style="background:#3e9a5e"></span>Solo — 25%</span>
+          <span><span class="ind-dot" style="background:#c98a1a"></span>Energia — 20%</span>
+          <span><span class="ind-dot" style="background:#718077"></span>Insumos — 10%</span>
+        </div>
+        <div class="ind-canvas-wrap" style="height:195px"><canvas id="donutChart"></canvas></div>
+        <div class="ind-insight">
+          <strong>Traduzindo:</strong> jogar fora um tomate significa desperdiçar também a água que o irrigou, a energia do transporte e o fertilizante do solo. Passe o mouse em cada fatia para ver exemplos.
+        </div>
+      </div>
+    </div>
+
+    <!-- Linha B -->
+    <div class="ind-row-b" style="margin-top:16px">
+      <div class="ind-card">
+        <div class="ind-card-head">
+          <h3>Produzimos mais — e perdemos mais também</h3>
+          <p>Evolução histórica no Brasil (2010 = índice base 100)</p>
+        </div>
+        <div class="ind-legend">
+          <span><span class="ind-dot" style="background:#2176b5"></span>Produção total</span>
+          <span><span class="ind-dot" style="background:#922020"></span>Perdas pós-colheita</span>
+          <span><span class="ind-dot" style="background:#3e9a5e"></span>Aproveitamento real</span>
+        </div>
+        <div class="ind-canvas-wrap" style="height:205px"><canvas id="lineChart"></canvas></div>
+        <div class="ind-insight">
+          <strong>O problema está crescendo:</strong> a produção cresceu 52% em 14 anos, mas as perdas acompanharam o ritmo. Produzir mais sem reduzir o desperdício só aumenta o impacto ambiental.
+        </div>
+      </div>
+      <div class="ind-card">
+        <div class="ind-card-head">
+          <h3>Quem bebe mais água no campo?</h3>
+          <p>Participação de cada cultura no consumo hídrico agrícola total</p>
+        </div>
+        <div class="ind-canvas-wrap" style="height:255px"><canvas id="hbarChart"></canvas></div>
+        <div class="ind-insight">
+          <strong>Cana e soja concentram quase metade</strong> de toda a água agrícola. Quando essas culturas têm perdas, o impacto hídrico atinge bacias inteiras — passe o mouse para ver o contexto.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA para calculadora -->
+<div style="background:var(--forest-900);padding:56px 0;text-align:center">
+  <div class="container" style="max-width:600px">
+    <div style="font-family:var(--font-display);font-size:1.6rem;font-weight:700;
+      color:var(--white);letter-spacing:-.02em;margin-bottom:12px;line-height:1.2">
+      Você é agricultor? Veja quanto você perde na sua propriedade
+    </div>
+    <div style="font-size:.9rem;color:rgba(255,255,255,.55);margin-bottom:24px;line-height:1.7">
+      Calculadora personalizada com 30+ culturas, preço por região e guia de insumos.
+    </div>
+    <a href="proposta.html" style="display:inline-flex;align-items:center;gap:8px;
+      background:var(--white);color:var(--forest-900);font-weight:700;
+      padding:12px 28px;border-radius:var(--radius-xs);font-size:.92rem;
+      transition:all .2s;text-decoration:none">
+      Abrir calculadora →
+    </a>
+  </div>
+</div>
+
+</main>
+
+<footer class="rodape">
+  <div class="container footer-grid">
+    <div><h3>AgroVerde Brasil</h3><p>Projeto acadêmico sobre sustentabilidade no agronegócio. Dados baseados em FAO e EMBRAPA.</p></div>
+    <div><h4>Páginas</h4><ul class="footer-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="problema.html">O Problema</a></li>
+      <li><a href="parceiros.html">ONGs Parceiras</a></li>
+      <li><a href="proposta.html">Para Agricultores</a></li>
+      <li><a href="cadastro.html">Cadastro</a></li>
+    </ul></div>
+    <div><h4>Fontes</h4><ul class="footer-links">
+      <li><a href="https://www.fao.org" target="_blank" rel="noopener">FAO — fao.org</a></li>
+      <li><a href="https://www.embrapa.br" target="_blank" rel="noopener">EMBRAPA — embrapa.br</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 AgroVerde Brasil — Projeto para a disciplina de Programação Web Front-end.</p></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const hamburger=document.getElementById('hamburger'),menuNav=document.getElementById('menu-nav');
+document.querySelectorAll('.menu-link,.btn-nav').forEach(l=>l.addEventListener('click',()=>{menuNav.classList.remove('menu-open');hamburger.classList.remove('hamburger-open');hamburger.setAttribute('aria-expanded','false')}));
+hamburger.addEventListener('click',()=>{const o=menuNav.classList.toggle('menu-open');hamburger.classList.toggle('hamburger-open',o);hamburger.setAttribute('aria-expanded',o)});
+
+(function(){
+  const gC='rgba(0,0,0,0.055)',tC='#718077',lC='#2d3d37';
+  Chart.defaults.font.family='"Plus Jakarta Sans",system-ui,sans-serif';
+  Chart.defaults.font.size=11;Chart.defaults.color=tC;
+
+  const chain={
+    all:   {labels:['Produção\n& Colheita','Armazenamento','Processamento','Distribuição','Varejo','Consumidor'],data:[14,22,9,11,8,19]},
+    grains:{labels:['Produção\n& Colheita','Armazenamento','Processamento','Distribuição','Varejo','Consumidor'],data:[8,28,12,7,5,6]},
+    hortic:{labels:['Produção\n& Colheita','Armazenamento','Processamento','Distribuição','Varejo','Consumidor'],data:[22,18,6,16,14,30]}
+  };
+  const bc=d=>d.map(v=>v>=20?'#922020':v>=14?'#c98a1a':'#3e9a5e');
+
+  const cc=new Chart(document.getElementById('chainChart'),{
+    type:'bar',
+    data:{labels:chain.all.labels,datasets:[{label:'Perda (%)',data:chain.all.data,backgroundColor:bc(chain.all.data),borderRadius:5,borderSkipped:false}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        label:c=>` ${c.parsed.y}% do total desperdiçado`,
+        afterLabel:c=>c.parsed.y>=20?'⚠ etapa crítica':c.parsed.y>=14?'⚡ impacto moderado':'✓ impacto menor'
+      }}},
+      scales:{x:{grid:{color:gC},ticks:{color:tC,maxRotation:0,font:{size:10}}},y:{grid:{color:gC},ticks:{color:tC,callback:v=>v+'%'},min:0,max:35}}
+    }
+  });
+
+  document.querySelectorAll('.ind-tab').forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('.ind-tab').forEach(t=>t.classList.remove('active'));
+      b.classList.add('active');
+      const k=b.dataset.set;
+      cc.data.labels=chain[k].labels;cc.data.datasets[0].data=chain[k].data;
+      cc.data.datasets[0].backgroundColor=bc(chain[k].data);cc.update('active');
+    });
+  });
+
+  new Chart(document.getElementById('donutChart'),{
+    type:'doughnut',
+    data:{labels:['Água','Solo','Energia','Insumos'],datasets:[{data:[45,25,20,10],backgroundColor:['#2176b5','#3e9a5e','#c98a1a','#718077'],borderWidth:0,hoverOffset:10}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        label:c=>` ${c.label}: ${c.parsed}% do impacto total`,
+        afterLabel:c=>({'Água':'Ex: 1 kg de arroz exige ~2.500 L de água','Solo':'O solo leva séculos para se formar','Energia':'Transporte, refrigeração e processamento','Insumos':'Fertilizantes e sementes desperdiçados'})[c.label]||''
+      }}}
+    }
+  });
+
+  new Chart(document.getElementById('lineChart'),{
+    type:'line',
+    data:{labels:['2010','2012','2014','2016','2018','2020','2022','2024'],datasets:[
+      {label:'Produção total',data:[100,108,116,124,133,138,146,152],borderColor:'#2176b5',backgroundColor:'transparent',tension:0.4,pointRadius:3,borderWidth:2.5},
+      {label:'Perdas pós-colheita',data:[100,104,109,115,122,128,134,138],borderColor:'#922020',backgroundColor:'transparent',tension:0.4,pointRadius:3,borderWidth:2.5},
+      {label:'Aproveitamento real',data:[100,104,107,109,111,110,112,114],borderColor:'#3e9a5e',backgroundColor:'transparent',tension:0.4,pointRadius:3,borderWidth:2,borderDash:[5,4]}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: índice ${c.parsed.y}`}}},
+      scales:{x:{grid:{color:gC},ticks:{color:tC}},y:{grid:{color:gC},ticks:{color:tC},min:90}}
+    }
+  });
+
+  new Chart(document.getElementById('hbarChart'),{
+    type:'bar',
+    data:{labels:['Cana-de-açúcar','Soja','Milho','Arroz irrigado','Algodão','Laranja','Trigo'],
+      datasets:[{label:'Uso hídrico (%)',data:[31,18,15,14,9,8,5],backgroundColor:['#154e80','#1c6096','#2176b5','#5e9ec7','#97c3dc','#c0dd97','#eaf3de'],borderRadius:4,borderSkipped:false}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        label:c=>` ${c.parsed.x}% do consumo hídrico agrícola total`,
+        afterLabel:c=>({'Cana-de-açúcar':'Mais intensiva em água do Brasil','Soja':'Principal exportação — depende de chuva','Milho':'Irrigação no Cerrado','Arroz irrigado':'Inundação no Sul','Algodão':'Alto consumo no Nordeste','Laranja':'Gotejamento já reduz muito','Trigo':'Menor consumo — regiões úmidas'})[c.label]||''
+      }}},
+      scales:{x:{grid:{color:gC},ticks:{color:tC,callback:v=>v+'%'},min:0,max:35},y:{grid:{display:false},ticks:{color:lC,font:{size:11}}}}
+    }
+  });
+})();
+</script>
+</body>
+</html>
