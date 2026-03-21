@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>O Problema | AgroVerde Brasil</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+/* ── Hero ── */
+.page-hero{background:var(--forest-900);color:var(--white);padding:64px 0 56px;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 60% at 80% 50%,rgba(46,122,72,.18) 0%,transparent 55%);
+  pointer-events:none}
+.page-hero-inner{position:relative;z-index:1}
+.page-crumb{font-size:.74rem;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px}
+.page-crumb a{color:rgba(255,255,255,.45);text-decoration:none;transition:color .18s}
+.page-crumb a:hover{color:rgba(255,255,255,.8)}
+.page-hero h1{font-family:var(--font-display);font-size:clamp(1.9rem,3.5vw,3rem);
+  font-weight:700;color:var(--white);letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
+.page-hero-lead{font-size:.95rem;color:rgba(255,255,255,.58);line-height:1.8;max-width:58ch}
+
+/* ── Cards de problema com imagem ── */
+.prob-section{padding:72px 0;background:var(--white);border-bottom:var(--border)}
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.info-card{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
+  overflow:hidden;box-shadow:var(--shadow-sm);transition:all .22s var(--ease)}
+.info-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.info-card img{width:100%;height:200px;object-fit:cover}
+.info-card-body{padding:22px}
+.info-card h3{font-family:var(--font-display);font-size:1.08rem;color:var(--forest-950);
+  margin-bottom:10px;font-weight:600;letter-spacing:-.01em}
+.info-card p{color:var(--ink-500);font-size:.88rem;line-height:1.75;margin-bottom:14px}
+.info-card a{color:var(--forest-600);font-weight:700;font-size:.84rem;
+  display:inline-flex;align-items:center;gap:4px;text-decoration:none;transition:color .18s}
+.info-card a:hover{color:var(--forest-800)}
+
+/* ── Timeline de perda por etapa ── */
+.timeline-section{padding:72px 0;background:var(--ink-50);border-bottom:var(--border)}
+.timeline{display:grid;gap:0;position:relative}
+.timeline::before{content:'';position:absolute;left:31px;top:40px;bottom:40px;
+  width:2px;background:linear-gradient(180deg,var(--forest-200),var(--forest-500))}
+.timeline-item{display:flex;gap:24px;align-items:flex-start;padding:0 0 36px;position:relative;z-index:1}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-dot{width:62px;height:62px;border-radius:50%;background:var(--white);
+  border:2px solid var(--forest-300);display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;flex-shrink:0;box-shadow:var(--shadow-sm)}
+.timeline-dot.hot{border-color:var(--danger-600);background:var(--danger-600)}
+.timeline-dot.warn{border-color:var(--sun-500);background:var(--sun-100)}
+.timeline-dot.ok{border-color:var(--forest-400);background:var(--forest-50)}
+.timeline-body{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
+  padding:20px 22px;box-shadow:var(--shadow-xs);flex:1}
+.timeline-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-400);margin-bottom:6px}
+.timeline-body h3{font-family:var(--font-display);font-size:1.05rem;color:var(--forest-950);
+  font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
+.timeline-body p{font-size:.86rem;color:var(--ink-500);line-height:1.72;margin-bottom:10px}
+.timeline-perda{display:inline-flex;align-items:center;gap:6px;
+  background:var(--danger-600);color:var(--white);border-radius:var(--radius-xs);
+  padding:4px 11px;font-size:.75rem;font-weight:700;letter-spacing:.02em}
+.timeline-perda.warn{background:var(--sun-500)}
+.timeline-perda.ok{background:var(--forest-500)}
+
+/* ── Cadeia completa — visual ── */
+.cadeia-section{padding:72px 0;background:var(--white)}
+.cadeia-flow{display:flex;align-items:center;gap:0;overflow-x:auto;padding-bottom:8px}
+.cadeia-step{display:flex;flex-direction:column;align-items:center;text-align:center;
+  min-width:120px;padding:0 8px;position:relative}
+.cadeia-icon{width:64px;height:64px;border-radius:50%;background:var(--forest-100);
+  border:2px solid var(--forest-200);display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;margin-bottom:10px;transition:all .2s}
+.cadeia-step:hover .cadeia-icon{background:var(--forest-200);transform:scale(1.05)}
+.cadeia-name{font-size:.78rem;font-weight:700;color:var(--ink-700);margin-bottom:4px}
+.cadeia-pct{font-family:var(--font-display);font-size:1rem;font-weight:700;
+  color:var(--danger-600);letter-spacing:-.02em}
+.cadeia-pct.low{color:var(--forest-600)}
+.cadeia-pct.mid{color:var(--sun-500)}
+.cadeia-arrow{font-size:1.2rem;color:var(--ink-200);flex-shrink:0;padding:0 2px;margin-top:-24px}
+
+/* ── Impacto em outras áreas ── */
+.impacto-section{padding:72px 0;background:var(--earth-50);border-top:var(--border);border-bottom:var(--border)}
+.impacto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+.impacto-card{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
+  padding:24px 22px;box-shadow:var(--shadow-sm)}
+.impacto-icon{font-size:2rem;margin-bottom:14px;display:block}
+.impacto-card h3{font-family:var(--font-display);font-size:1rem;color:var(--forest-950);
+  font-weight:600;letter-spacing:-.01em;margin-bottom:10px}
+.impacto-card p{font-size:.86rem;color:var(--ink-500);line-height:1.72}
+.impacto-stat{display:inline-block;margin-top:12px;font-family:var(--font-display);
+  font-size:1.5rem;font-weight:700;color:var(--danger-600);letter-spacing:-.03em}
+
+@media(max-width:1024px){.cards-3{grid-template-columns:1fr}.impacto-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.prob-section,.timeline-section,.cadeia-section,.impacto-section{padding:48px 0}}
+  </style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="container">
+    <a href="index.html" class="logo-area" style="text-decoration:none">
+      <div class="logo-icon">🌱</div>
+      <div><div class="logo-text">AgroVerde Brasil</div><p class="logo-subtitle">Sustentabilidade no agronegócio</p></div>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="menu" id="menu-nav">
+      <ul>
+        <li><a href="index.html"    class="menu-link">Início</a></li>
+        <li><a href="dados.html"    class="menu-link">Dados</a></li>
+        <li><a href="parceiros.html"class="menu-link">Parceiros</a></li>
+        <li><a href="proposta.html" class="menu-link menu-link-highlight">Para Agricultores</a></li>
+        <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner">
+      <div class="page-crumb"><a href="index.html">Início</a> / O Problema</div>
+      <h1>Por que o desperdício acontece — e por que todos perdem</h1>
+      <p class="page-hero-lead">O desperdício não começa no consumidor. Ele começa no campo, cresce no transporte, explode no armazenamento e termina no lixo. Entender cada etapa é o primeiro passo para mudar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Cards principais -->
+<section class="prob-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">As três faces do problema</span>
+      <h2>O desperdício não é um só — são vários somados</h2>
+      <p>Cada tipo de perda tem causas diferentes e soluções diferentes. Conhecer cada uma é essencial para agir no lugar certo.</p>
+    </div>
+    <div class="cards-3">
+      <article class="info-card">
+        <img src="img/alimentos.webp" alt="Alimentos frescos em campo agrícola"/>
+        <div class="info-card-body">
+          <h3>Desperdício de alimentos</h3>
+          <p>Frutas, verduras e grãos que levam meses para crescer são perdidos em horas por falhas simples: caixas mal protegidas, silos mal vedados, caminhões sem refrigeração. Estima-se que <strong>30% da colheita</strong> nunca chega ao consumidor.</p>
+          <a href="proposta.html">Ver como reduzir na calculadora →</a>
+        </div>
+      </article>
+      <article class="info-card">
+        <img src="img/agua.jpg" alt="Sistema de irrigação em plantação"/>
+        <div class="info-card-body">
+          <h3>Uso ineficiente da água</h3>
+          <p>A irrigação consome mais água do que qualquer outra atividade humana. Sem tecnologia ou planejamento, grande parte evapora ou escorre sem chegar às raízes — pressionando rios e represas em todo o país.</p>
+          <a href="dados.html">Ver dados de consumo hídrico →</a>
+        </div>
+      </article>
+      <article class="info-card">
+        <img src="img/solo.webp" alt="Solo agrícola fértil sendo analisado"/>
+        <div class="info-card-body">
+          <h3>Degradação dos recursos</h3>
+          <p>Quando um alimento é descartado, vai junto tudo que foi investido nele: terra fértil, fertilizante, combustível, horas de trabalho. É como jogar fora dinheiro, esforço e natureza de uma vez.</p>
+          <a href="cadastro.html">Fazer parte da solução →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline por etapa -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Onde acontece</span>
+      <h2>A jornada do alimento — e onde ele some</h2>
+      <p>O alimento passa por várias mãos antes de chegar à mesa. Em cada etapa, uma parte se perde. Veja onde o problema é mais grave.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot warn">🌾</div>
+        <div class="timeline-body">
+          <div class="timeline-label">Etapa 1</div>
+          <h3>Produção e colheita</h3>
+          <p>Colheita fora do ponto certo, equipamentos mal regulados e falta de mão de obra qualificada causam as primeiras perdas — ainda no campo. Frutas machucadas na colheita apodrecem antes de chegar ao galpão.</p>
+          <span class="timeline-perda warn">⚡ 14% do total perdido nesta etapa</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot hot">📦</div>
+        <div class="timeline-body">
+          <div class="timeline-label">Etapa 2 — Maior perda</div>
+          <h3>Armazenamento pós-colheita</h3>
+          <p>Silos mal vedados criam umidade e atraem pragas. Galpões sem temperatura controlada aceleram a deterioração. Para grãos como milho e soja, silos improvisados destroem até 28% do que foi colhido com esforço.</p>
+          <span class="timeline-perda">⚠ 22% do total — etapa mais crítica</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot ok">🏭</div>
+        <div class="timeline-body">
+          <div class="timeline-label">Etapa 3</div>
+          <h3>Processamento e beneficiamento</h3>
+          <p>Equipamentos mal calibrados na indústria desperdiçam matéria-prima. Produtos que não passam no controle de qualidade são descartados mesmo estando aptos para consumo.</p>
+          <span class="timeline-perda ok">9% do total perdido nesta etapa</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot warn">🚛</div>
+        <div class="timeline-body">
+          <div class="timeline-label">Etapa 4</div>
+          <h3>Transporte e distribuição</h3>
+          <p>Caminhões sem refrigeração, estradas ruins e percursos longos são inimigos dos alimentos frescos. Uma banana amassada no caminhão perde metade do valor antes de chegar ao mercado.</p>
+          <span class="timeline-perda warn">⚡ 11% do total perdido nesta etapa</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot ok">🛒</div>
+        <div class="timeline-body">
+          <div class="timeline-label">Etapa 5</div>
+          <h3>Varejo e consumidor final</h3>
+          <p>Supermercados descartam alimentos com aparência "imperfeita". Consumidores compram mais do que precisam. O desperdício doméstico no Brasil representa cerca de 19% de todas as perdas da cadeia.</p>
+          <span class="timeline-perda ok">27% somando varejo + consumidor</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Fluxo visual da cadeia -->
+<section class="cadeia-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Visão geral</span>
+      <h2>De 100 kg colhidos, quantos chegam à mesa?</h2>
+      <p>Cada estágio retém uma parte. O que sobra ao final é bem menos do que parece no começo.</p>
+    </div>
+    <div class="cadeia-flow">
+      <div class="cadeia-step">
+        <div class="cadeia-icon">🌱</div>
+        <div class="cadeia-name">Plantado</div>
+        <div class="cadeia-pct low">100 kg</div>
+      </div>
+      <div class="cadeia-arrow">›</div>
+      <div class="cadeia-step">
+        <div class="cadeia-icon">🌾</div>
+        <div class="cadeia-name">Colhido</div>
+        <div class="cadeia-pct mid">−14%</div>
+      </div>
+      <div class="cadeia-arrow">›</div>
+      <div class="cadeia-step">
+        <div class="cadeia-icon">📦</div>
+        <div class="cadeia-name">Armazenado</div>
+        <div class="cadeia-pct">−22%</div>
+      </div>
+      <div class="cadeia-arrow">›</div>
+      <div class="cadeia-step">
+        <div class="cadeia-icon">🏭</div>
+        <div class="cadeia-name">Processado</div>
+        <div class="cadeia-pct mid">−9%</div>
+      </div>
+      <div class="cadeia-arrow">›</div>
+      <div class="cadeia-step">
+        <div class="cadeia-icon">🚛</div>
+        <div class="cadeia-name">Transportado</div>
+        <div class="cadeia-pct mid">−11%</div>
+      </div>
+      <div class="cadeia-arrow">›</div>
+      <div class="cadeia-step">
+        <div class="cadeia-icon">🛒</div>
+        <div class="cadeia-name">No varejo</div>
+        <div class="cadeia-pct mid">−8%</div>
+      </div>
+      <div class="cadeia-arrow">›</div>
+      <div class="cadeia-step">
+        <div class="cadeia-icon">🍽️</div>
+        <div class="cadeia-name">Na mesa</div>
+        <div class="cadeia-pct low">~36 kg</div>
+      </div>
+    </div>
+    <p style="margin-top:20px;font-size:.82rem;color:var(--ink-400);text-align:center">
+      Estimativa ilustrativa baseada em dados médios da cadeia alimentar brasileira (FAO/EMBRAPA). Varia conforme cultura e região.
+    </p>
+  </div>
+</section>
+
+<!-- Impacto em outras áreas -->
+<section class="impacto-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Efeito cascata</span>
+      <h2>Desperdiçar comida é desperdiçar muito mais</h2>
+      <p>Cada alimento perdido carrega consigo recursos que custaram anos para se acumular e dinheiro que poderia ter ficado no bolso do produtor.</p>
+    </div>
+    <div class="impacto-grid">
+      <div class="impacto-card">
+        <span class="impacto-icon">💧</span>
+        <h3>Impacto hídrico</h3>
+        <p>Cada quilo de alimento desperdiçado representa centenas de litros de água que foram usados na produção. 1 kg de carne bovina desperdiçada = até 15.000 litros de água jogados fora.</p>
+        <span class="impacto-stat">750 km³</span>
+        <p style="font-size:.76rem;color:var(--ink-400);margin-top:4px">de água desperdiçada por ano na irrigação ineficiente</p>
+      </div>
+      <div class="impacto-card">
+        <span class="impacto-icon">🌡️</span>
+        <h3>Impacto climático</h3>
+        <p>Alimentos em decomposição liberam metano — gás 25× mais potente que o CO₂. Se o desperdício de comida fosse um país, seria o 3º maior emissor de gases do efeito estufa do mundo.</p>
+        <span class="impacto-stat">3,3 Gt</span>
+        <p style="font-size:.76rem;color:var(--ink-400);margin-top:4px">de CO₂ equivalente emitido anualmente em vão</p>
+      </div>
+      <div class="impacto-card">
+        <span class="impacto-icon">💸</span>
+        <h3>Impacto econômico</h3>
+        <p>No Brasil, o desperdício de alimentos representa bilhões de reais perdidos a cada ano — dinheiro que poderia ter ficado com produtores, reduzido o preço ao consumidor ou sido investido em melhoria da cadeia.</p>
+        <span class="impacto-stat">R$ 61 bi</span>
+        <p style="font-size:.76rem;color:var(--ink-400);margin-top:4px">estimativa de perdas econômicas anuais no Brasil (FGV)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA para calculadora -->
+<div style="background:var(--forest-900);padding:56px 0;text-align:center">
+  <div class="container" style="max-width:600px">
+    <div style="font-family:var(--font-display);font-size:1.6rem;font-weight:700;
+      color:var(--white);letter-spacing:-.02em;margin-bottom:12px;line-height:1.2">
+      Você é produtor? Calcule quanto isso custa para você
+    </div>
+    <p style="font-size:.9rem;color:rgba(255,255,255,.55);margin-bottom:24px;line-height:1.7">
+      Nossa calculadora mostra, cultura por cultura, quanto você perde em insumos e pós-colheita — e como recuperar.
+    </p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="proposta.html" style="display:inline-flex;align-items:center;gap:8px;
+        background:var(--white);color:var(--forest-900);font-weight:700;
+        padding:12px 28px;border-radius:var(--radius-xs);font-size:.9rem;text-decoration:none;transition:all .2s">
+        Abrir calculadora →
+      </a>
+      <a href="dados.html" style="display:inline-flex;align-items:center;gap:8px;
+        background:transparent;color:rgba(255,255,255,.7);
+        border:1px solid rgba(255,255,255,.22);font-weight:600;
+        padding:12px 28px;border-radius:var(--radius-xs);font-size:.9rem;text-decoration:none;transition:all .2s">
+        Ver os dados →
+      </a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer class="rodape">
+  <div class="container footer-grid">
+    <div><h3>AgroVerde Brasil</h3><p>Projeto acadêmico sobre sustentabilidade no agronegócio. Dados baseados em FAO, EMBRAPA e FGV.</p></div>
+    <div><h4>Páginas</h4><ul class="footer-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="dados.html">Dados e Indicadores</a></li>
+      <li><a href="parceiros.html">ONGs Parceiras</a></li>
+      <li><a href="proposta.html">Para Agricultores</a></li>
+      <li><a href="cadastro.html">Cadastro</a></li>
+    </ul></div>
+    <div><h4>Fontes</h4><ul class="footer-links">
+      <li><a href="https://www.fao.org" target="_blank" rel="noopener">FAO</a></li>
+      <li><a href="https://www.embrapa.br" target="_blank" rel="noopener">EMBRAPA</a></li>
+      <li><a href="https://portal.fgv.br" target="_blank" rel="noopener">FGV</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 AgroVerde Brasil — Projeto para a disciplina de Programação Web Front-end.</p></div>
+</footer>
+
+<script>
+const hamburger=document.getElementById('hamburger'),menuNav=document.getElementById('menu-nav');
+document.querySelectorAll('.menu-link,.btn-nav').forEach(l=>l.addEventListener('click',()=>{menuNav.classList.remove('menu-open');hamburger.classList.remove('hamburger-open');hamburger.setAttribute('aria-expanded','false')}));
+hamburger.addEventListener('click',()=>{const o=menuNav.classList.toggle('menu-open');hamburger.classList.toggle('hamburger-open',o);hamburger.setAttribute('aria-expanded',o)});
+</script>
+</body>
+</html>
