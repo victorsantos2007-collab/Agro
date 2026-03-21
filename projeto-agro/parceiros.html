@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ONGs Parceiras | AgroVerde Brasil</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+/* ── Hero ── */
+.page-hero{background:var(--forest-900);color:var(--white);padding:64px 0 56px;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 60% at 80% 50%,rgba(46,122,72,.18) 0%,transparent 55%);pointer-events:none}
+.page-hero-inner{position:relative;z-index:1;display:flex;align-items:flex-end;
+  justify-content:space-between;gap:32px;flex-wrap:wrap}
+.page-crumb{font-size:.74rem;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px}
+.page-crumb a{color:rgba(255,255,255,.45);text-decoration:none;transition:color .18s}
+.page-crumb a:hover{color:rgba(255,255,255,.8)}
+.page-hero h1{font-family:var(--font-display);font-size:clamp(1.9rem,3.5vw,3rem);
+  font-weight:700;color:var(--white);letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
+.page-hero-lead{font-size:.95rem;color:rgba(255,255,255,.58);line-height:1.8;max-width:56ch}
+.page-hero-meta{display:flex;gap:24px;flex-wrap:wrap;flex-shrink:0}
+.page-meta-item strong{display:block;font-family:var(--font-display);font-size:1.6rem;
+  font-weight:700;color:var(--white);letter-spacing:-.04em;line-height:1;margin-bottom:3px}
+.page-meta-item span{font-size:.72rem;color:rgba(255,255,255,.4);
+  font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+
+/* ── Filtro de categoria ── */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.filter-btn{padding:7px 16px;border-radius:var(--radius-xs);border:var(--border-md);
+  background:var(--white);color:var(--ink-600);font-weight:600;font-size:.8rem;
+  cursor:pointer;transition:all .18s;font:inherit}
+.filter-btn:hover{background:var(--forest-50);border-color:var(--forest-300);color:var(--forest-700)}
+.filter-btn.active{background:var(--forest-900);border-color:var(--forest-900);color:var(--white)}
+
+/* ── Grid de ONGs ── */
+.ongs-wrap{padding:72px 0 88px;background:var(--ink-50)}
+.ongs-main-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ong-full-card{background:var(--white);border:var(--border);border-radius:var(--radius-xl);
+  overflow:hidden;box-shadow:var(--shadow-sm);transition:all .22s var(--ease);display:flex;flex-direction:column}
+.ong-full-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.ong-card-header{padding:24px 22px 20px;border-bottom:var(--border)}
+.ong-card-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.ong-avatar{width:52px;height:52px;border-radius:var(--radius-md);
+  background:var(--forest-100);border:1px solid var(--forest-200);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.ong-name{font-family:var(--font-display);font-size:1.05rem;font-weight:700;
+  color:var(--forest-950);letter-spacing:-.01em;margin-bottom:4px;line-height:1.2}
+.ong-type{font-size:.72rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-400)}
+.ong-badges{display:flex;gap:6px;flex-wrap:wrap}
+.ong-badge{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 9px;border-radius:var(--radius-xs);border:1px solid}
+.badge-green{background:rgba(62,154,94,.1);color:var(--forest-700);border-color:rgba(62,154,94,.25)}
+.badge-blue{background:var(--sky-100);color:var(--sky-700);border-color:var(--sky-300)}
+.badge-gold{background:var(--sun-100);color:var(--earth-700);border-color:var(--sun-300)}
+.badge-earth{background:var(--earth-100);color:var(--earth-700);border-color:var(--earth-200)}
+.ong-desc{font-size:.86rem;color:var(--ink-500);line-height:1.75;margin-bottom:0}
+.ong-card-body{padding:18px 22px;flex:1;display:flex;flex-direction:column;gap:12px}
+.ong-focus-row{display:flex;gap:6px;flex-wrap:wrap}
+.ong-focus-tag{font-size:.72rem;font-weight:600;color:var(--ink-500);
+  background:var(--ink-50);border:1px solid var(--ink-100);
+  border-radius:99px;padding:3px 10px}
+.ong-card-footer{padding:16px 22px;border-top:var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto}
+.ong-site-link{display:inline-flex;align-items:center;gap:6px;
+  font-size:.8rem;font-weight:700;color:var(--forest-600);text-decoration:none;transition:color .18s}
+.ong-site-link svg{width:13px;height:13px;transition:transform .2s,opacity .2s;opacity:.6}
+.ong-full-card:hover .ong-site-link{color:var(--forest-800)}
+.ong-full-card:hover .ong-site-link svg{transform:translate(2px,-2px);opacity:1}
+.ong-year{font-size:.74rem;color:var(--ink-300);font-weight:500}
+
+/* ── Disclaimer ── */
+.disclaimer-box{margin-top:28px;padding:16px 20px;
+  background:var(--white);border:var(--border);border-radius:var(--radius-sm);
+  font-size:.8rem;color:var(--ink-500);line-height:1.65}
+
+/* ── Seção de como apoiar ── */
+.apoiar-section{padding:72px 0;background:var(--white);border-top:var(--border);border-bottom:var(--border)}
+.apoiar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.apoiar-card{background:var(--ink-50);border:var(--border);border-radius:var(--radius-lg);
+  padding:24px 20px;text-align:center}
+.apoiar-icon{font-size:2rem;display:block;margin-bottom:12px}
+.apoiar-card h3{font-family:var(--font-display);font-size:.98rem;font-weight:600;
+  color:var(--ink-950);margin-bottom:8px;letter-spacing:-.01em}
+.apoiar-card p{font-size:.84rem;color:var(--ink-500);line-height:1.7}
+
+/* hidden */
+.ong-full-card.hidden{display:none}
+
+@media(max-width:1024px){.ongs-main-grid{grid-template-columns:repeat(2,1fr)}.page-hero-inner{flex-direction:column;gap:24px}}
+@media(max-width:768px){.ongs-main-grid{grid-template-columns:1fr}.apoiar-grid{grid-template-columns:1fr}.ongs-wrap{padding:48px 0 64px}}
+  </style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="container">
+    <a href="index.html" class="logo-area" style="text-decoration:none">
+      <div class="logo-icon">🌱</div>
+      <div><div class="logo-text">AgroVerde Brasil</div><p class="logo-subtitle">Sustentabilidade no agronegócio</p></div>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="menu" id="menu-nav">
+      <ul>
+        <li><a href="index.html"    class="menu-link">Início</a></li>
+        <li><a href="dados.html"    class="menu-link">Dados</a></li>
+        <li><a href="problema.html" class="menu-link">O Problema</a></li>
+        <li><a href="proposta.html" class="menu-link menu-link-highlight">Para Agricultores</a></li>
+        <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner">
+      <div>
+        <div class="page-crumb"><a href="index.html">Início</a> / ONGs Parceiras</div>
+        <h1>Organizações que lutam pelo meio ambiente</h1>
+        <p class="page-hero-lead">Conheça as principais ONGs brasileiras e internacionais que trabalham pela preservação ambiental, uso sustentável dos recursos e combate ao desperdício no campo.</p>
+      </div>
+      <div class="page-hero-meta">
+        <div class="page-meta-item"><strong>6</strong><span>organizações</span></div>
+        <div class="page-meta-item"><strong>30+</strong><span>anos de atuação</span></div>
+        <div class="page-meta-item"><strong>100%</strong><span>links oficiais</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ongs-wrap">
+  <div class="container">
+
+    <!-- Filtros -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">Todas</button>
+      <button class="filter-btn" data-filter="global">🌍 Global</button>
+      <button class="filter-btn" data-filter="nacional">🇧🇷 Nacional</button>
+      <button class="filter-btn" data-filter="ciencia">🔬 Ciência</button>
+      <button class="filter-btn" data-filter="territorio">🗺️ Território</button>
+    </div>
+
+    <div class="ongs-main-grid" id="ongs-grid">
+
+      <!-- WWF -->
+      <div class="ong-full-card" data-cats="global">
+        <div class="ong-card-header">
+          <div class="ong-card-top">
+            <div class="ong-avatar">🐼</div>
+            <div>
+              <div class="ong-name">WWF Brasil</div>
+              <div class="ong-type">Organização ambiental global</div>
+            </div>
+          </div>
+          <div class="ong-badges">
+            <span class="ong-badge badge-green">Global</span>
+            <span class="ong-badge badge-green">Biodiversidade</span>
+            <span class="ong-badge badge-blue">Clima</span>
+          </div>
+        </div>
+        <div class="ong-card-body">
+          <p class="ong-desc">Pioneira na conservação da biodiversidade brasileira. Monitora o desmatamento, apoia práticas agrícolas sustentáveis e desenvolve políticas de proteção dos biomas — Amazônia, Cerrado e Pantanal.</p>
+          <div class="ong-focus-row">
+            <span class="ong-focus-tag">Biodiversidade</span>
+            <span class="ong-focus-tag">Desmatamento</span>
+            <span class="ong-focus-tag">Clima</span>
+            <span class="ong-focus-tag">Agronegócio sustentável</span>
+          </div>
+        </div>
+        <div class="ong-card-footer">
+          <a href="https://www.wwf.org.br" target="_blank" rel="noopener" class="ong-site-link">
+            wwf.org.br
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+          </a>
+          <span class="ong-year">Desde 1996 no Brasil</span>
+        </div>
+      </div>
+
+      <!-- Greenpeace -->
+      <div class="ong-full-card" data-cats="global">
+        <div class="ong-card-header">
+          <div class="ong-card-top">
+            <div class="ong-avatar">☮️</div>
+            <div>
+              <div class="ong-name">Greenpeace Brasil</div>
+              <div class="ong-type">Organização independente global</div>
+            </div>
+          </div>
+          <div class="ong-badges">
+            <span class="ong-badge badge-green">Global</span>
+            <span class="ong-badge badge-earth">Floresta</span>
+          </div>
+        </div>
+        <div class="ong-card-body">
+          <p class="ong-desc">Organização independente que pressiona empresas e governos por práticas responsáveis. Combate o desmatamento da Amazônia e a agricultura predatória com campanhas, pesquisa e ação direta.</p>
+          <div class="ong-focus-row">
+            <span class="ong-focus-tag">Amazônia</span>
+            <span class="ong-focus-tag">Agronegócio</span>
+            <span class="ong-focus-tag">Oceanos</span>
+            <span class="ong-focus-tag">Energia limpa</span>
+          </div>
+        </div>
+        <div class="ong-card-footer">
+          <a href="https://www.greenpeace.org/brasil" target="_blank" rel="noopener" class="ong-site-link">
+            greenpeace.org/brasil
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+          </a>
+          <span class="ong-year">Desde 1999 no Brasil</span>
+        </div>
+      </div>
+
+      <!-- SOS Mata Atlântica -->
+      <div class="ong-full-card" data-cats="nacional">
+        <div class="ong-card-header">
+          <div class="ong-card-top">
+            <div class="ong-avatar">🌳</div>
+            <div>
+              <div class="ong-name">SOS Mata Atlântica</div>
+              <div class="ong-type">Fundação nacional</div>
+            </div>
+          </div>
+          <div class="ong-badges">
+            <span class="ong-badge badge-blue">Nacional</span>
+            <span class="ong-badge badge-green">Restauração</span>
+          </div>
+        </div>
+        <div class="ong-card-body">
+          <p class="ong-desc">Desde os anos 1980, luta pela conservação do bioma mais ameaçado do Brasil. Realiza monitoramento anual do desmatamento e projetos de restauração florestal com comunidades locais em mais de 17 estados.</p>
+          <div class="ong-focus-row">
+            <span class="ong-focus-tag">Mata Atlântica</span>
+            <span class="ong-focus-tag">Restauração</span>
+            <span class="ong-focus-tag">Educação ambiental</span>
+            <span class="ong-focus-tag">Monitoramento</span>
+          </div>
+        </div>
+        <div class="ong-card-footer">
+          <a href="https://www.sosma.org.br" target="_blank" rel="noopener" class="ong-site-link">
+            sosma.org.br
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+          </a>
+          <span class="ong-year">Fundada em 1986</span>
+        </div>
+      </div>
+
+      <!-- ISA -->
+      <div class="ong-full-card" data-cats="nacional territorio">
+        <div class="ong-card-header">
+          <div class="ong-card-top">
+            <div class="ong-avatar">🏞️</div>
+            <div>
+              <div class="ong-name">Instituto Socioambiental (ISA)</div>
+              <div class="ong-type">Instituto nacional de direitos</div>
+            </div>
+          </div>
+          <div class="ong-badges">
+            <span class="ong-badge badge-blue">Nacional</span>
+            <span class="ong-badge badge-gold">Direitos</span>
+            <span class="ong-badge badge-earth">Território</span>
+          </div>
+        </div>
+        <div class="ong-card-body">
+          <p class="ong-desc">Fundado em 1994, defende os direitos socioambientais de povos indígenas e comunidades tradicionais. Monitora áreas protegidas e propõe alternativas sustentáveis ao uso dos recursos naturais.</p>
+          <div class="ong-focus-row">
+            <span class="ong-focus-tag">Povos indígenas</span>
+            <span class="ong-focus-tag">Terras protegidas</span>
+            <span class="ong-focus-tag">Cerrado</span>
+            <span class="ong-focus-tag">Políticas públicas</span>
+          </div>
+        </div>
+        <div class="ong-card-footer">
+          <a href="https://www.socioambiental.org" target="_blank" rel="noopener" class="ong-site-link">
+            socioambiental.org
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+          </a>
+          <span class="ong-year">Fundado em 1994</span>
+        </div>
+      </div>
+
+      <!-- IPÊ -->
+      <div class="ong-full-card" data-cats="nacional ciencia">
+        <div class="ong-card-header">
+          <div class="ong-card-top">
+            <div class="ong-avatar">🔬</div>
+            <div>
+              <div class="ong-name">IPÊ — Pesquisas Ecológicas</div>
+              <div class="ong-type">Instituto científico nacional</div>
+            </div>
+          </div>
+          <div class="ong-badges">
+            <span class="ong-badge badge-blue">Nacional</span>
+            <span class="ong-badge badge-green">Ciência aplicada</span>
+          </div>
+        </div>
+        <div class="ong-card-body">
+          <p class="ong-desc">Referência em ciência aplicada à conservação. Desenvolve modelos que geram benefícios socioeconômicos para comunidades rurais enquanto protegem a biodiversidade. Capacita lideranças ambientais em todo o Brasil.</p>
+          <div class="ong-focus-row">
+            <span class="ong-focus-tag">Pesquisa científica</span>
+            <span class="ong-focus-tag">Biodiversidade</span>
+            <span class="ong-focus-tag">Comunidades rurais</span>
+            <span class="ong-focus-tag">Capacitação</span>
+          </div>
+        </div>
+        <div class="ong-card-footer">
+          <a href="https://www.ipe.org.br" target="_blank" rel="noopener" class="ong-site-link">
+            ipe.org.br
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+          </a>
+          <span class="ong-year">Fundado em 1992</span>
+        </div>
+      </div>
+
+      <!-- CI Brasil -->
+      <div class="ong-full-card" data-cats="global territorio ciencia">
+        <div class="ong-card-header">
+          <div class="ong-card-top">
+            <div class="ong-avatar">🗺️</div>
+            <div>
+              <div class="ong-name">Conservação Internacional</div>
+              <div class="ong-type">Organização científica global</div>
+            </div>
+          </div>
+          <div class="ong-badges">
+            <span class="ong-badge badge-green">Global</span>
+            <span class="ong-badge badge-earth">Cerrado</span>
+            <span class="ong-badge badge-gold">Políticas</span>
+          </div>
+        </div>
+        <div class="ong-card-body">
+          <p class="ong-desc">Atua na proteção do Cerrado e da Amazônia com foco em políticas públicas e ciência. Desenvolve projetos educacionais para disseminar práticas sustentáveis em toda a cadeia do agronegócio brasileiro.</p>
+          <div class="ong-focus-row">
+            <span class="ong-focus-tag">Cerrado</span>
+            <span class="ong-focus-tag">Amazônia</span>
+            <span class="ong-focus-tag">Políticas públicas</span>
+            <span class="ong-focus-tag">Agronegócio</span>
+          </div>
+        </div>
+        <div class="ong-card-footer">
+          <a href="https://www.conservation.org/brasil" target="_blank" rel="noopener" class="ong-site-link">
+            conservation.org/brasil
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+          </a>
+          <span class="ong-year">Desde 1987 no mundo</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="disclaimer-box">
+      <strong>ℹ️ Aviso:</strong> Os links direcionam para os sites oficiais das organizações. O AgroVerde Brasil não possui vínculo institucional formal com nenhuma das ONGs listadas. As informações foram compiladas com fins exclusivamente educativos e de conscientização ambiental.
+    </div>
+  </div>
+</section>
+
+<!-- Como apoiar -->
+<section class="apoiar-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Engajamento</span>
+      <h2>Como você pode apoiar a causa ambiental</h2>
+      <p>Não é preciso ser especialista para fazer diferença. Pequenas ações, somadas, mudam o resultado.</p>
+    </div>
+    <div class="apoiar-grid">
+      <div class="apoiar-card">
+        <span class="apoiar-icon">💻</span>
+        <h3>Siga e compartilhe</h3>
+        <p>Acompanhe as ONGs nas redes sociais e compartilhe as campanhas. Visibilidade é o combustível de quem não tem marketing milionário.</p>
+      </div>
+      <div class="apoiar-card">
+        <span class="apoiar-icon">💰</span>
+        <h3>Doe o que puder</h3>
+        <p>Todas as ONGs desta página aceitam doações. Qualquer valor ajuda a financiar pesquisas, ações legais e projetos de conservação.</p>
+      </div>
+      <div class="apoiar-card">
+        <span class="apoiar-icon">🌱</span>
+        <h3>Reduza seu impacto</h3>
+        <p>Desperdice menos comida, consuma com consciência, apoie produtores locais. O elo mais poderoso da cadeia é o consumidor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div style="background:var(--forest-900);padding:56px 0;text-align:center">
+  <div class="container" style="max-width:600px">
+    <div style="font-family:var(--font-display);font-size:1.6rem;font-weight:700;
+      color:var(--white);letter-spacing:-.02em;margin-bottom:12px;line-height:1.2">
+      Você produz no campo? A solução começa em você
+    </div>
+    <p style="font-size:.9rem;color:rgba(255,255,255,.55);margin-bottom:24px;line-height:1.7">
+      Descubra quanto você perde em insumos e pós-colheita com nossa calculadora gratuita.
+    </p>
+    <a href="proposta.html" style="display:inline-flex;align-items:center;gap:8px;
+      background:var(--white);color:var(--forest-900);font-weight:700;
+      padding:12px 28px;border-radius:var(--radius-xs);font-size:.9rem;text-decoration:none">
+      Abrir calculadora →
+    </a>
+  </div>
+</div>
+
+</main>
+
+<footer class="rodape">
+  <div class="container footer-grid">
+    <div><h3>AgroVerde Brasil</h3><p>Projeto acadêmico sobre sustentabilidade no agronegócio. Dados baseados em publicações da FAO e EMBRAPA.</p></div>
+    <div><h4>Páginas</h4><ul class="footer-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="dados.html">Dados e Indicadores</a></li>
+      <li><a href="problema.html">O Problema</a></li>
+      <li><a href="proposta.html">Para Agricultores</a></li>
+      <li><a href="cadastro.html">Cadastro</a></li>
+    </ul></div>
+    <div><h4>Fontes</h4><ul class="footer-links">
+      <li><a href="https://www.fao.org" target="_blank" rel="noopener">FAO</a></li>
+      <li><a href="https://www.embrapa.br" target="_blank" rel="noopener">EMBRAPA</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 AgroVerde Brasil — Projeto para a disciplina de Programação Web Front-end.</p></div>
+</footer>
+
+<script>
+const hamburger=document.getElementById('hamburger'),menuNav=document.getElementById('menu-nav');
+document.querySelectorAll('.menu-link,.btn-nav').forEach(l=>l.addEventListener('click',()=>{menuNav.classList.remove('menu-open');hamburger.classList.remove('hamburger-open');hamburger.setAttribute('aria-expanded','false')}));
+hamburger.addEventListener('click',()=>{const o=menuNav.classList.toggle('menu-open');hamburger.classList.toggle('hamburger-open',o);hamburger.setAttribute('aria-expanded',o)});
+
+/* Filtro de ONGs */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    document.querySelectorAll('.ong-full-card').forEach(card=>{
+      const cats=(card.dataset.cats||'').split(' ');
+      card.classList.toggle('hidden', f!=='all' && !cats.includes(f));
+    });
+  });
+});
+</script>
+</body>
+</html>
