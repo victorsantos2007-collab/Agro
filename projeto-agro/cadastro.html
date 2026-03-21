@@ -1,140 +1,346 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cadastro | AgroVerde Brasil</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body class="auth-body">
-    <header class="topo topo-simples">
-      <div class="container">
-        <div class="logo-area">
-          <div class="logo-icon">🌱</div>
-          <div>
-            <h1 class="logo-text">AgroVerde Brasil</h1>
-            <p class="logo-subtitle">Cadastro de participantes</p>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro | AgroVerde Brasil</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+.cad-page{min-height:calc(100vh - 68px);background:var(--ink-50);
+  display:flex;align-items:flex-start;padding:64px 0 88px}
+.cad-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:52px;align-items:start;width:100%}
+
+/* Coluna esquerda — contexto */
+.cad-context{}
+.cad-tag{display:inline-flex;align-items:center;gap:6px;
+  background:var(--forest-100);color:var(--forest-700);
+  border:1px solid var(--forest-200);padding:5px 13px;
+  border-radius:var(--radius-xs);font-weight:700;font-size:.72rem;
+  letter-spacing:.09em;text-transform:uppercase;margin-bottom:20px}
+.cad-context h1{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);
+  font-weight:700;color:var(--forest-950);letter-spacing:-.03em;
+  line-height:1.1;margin-bottom:16px}
+.cad-context p{font-size:.92rem;color:var(--ink-500);line-height:1.8;margin-bottom:28px}
+.cad-benefits{display:grid;gap:12px}
+.cad-benefit{display:flex;align-items:flex-start;gap:12px;
+  padding:14px 16px;background:var(--white);border:var(--border);
+  border-radius:var(--radius-md);box-shadow:var(--shadow-xs)}
+.cad-benefit-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px}
+.cad-benefit-title{font-weight:700;font-size:.86rem;color:var(--ink-800);margin-bottom:2px}
+.cad-benefit-desc{font-size:.78rem;color:var(--ink-400);line-height:1.5}
+.cad-already{margin-top:20px;font-size:.84rem;color:var(--ink-500)}
+.cad-already a{color:var(--forest-600);font-weight:700;text-decoration:none}
+.cad-already a:hover{color:var(--forest-800)}
+
+/* Formulário */
+.form-card{background:var(--white);border:var(--border);border-radius:var(--radius-xl);
+  padding:40px 36px;box-shadow:var(--shadow-lg)}
+.form-title{font-family:var(--font-display);font-size:1.4rem;color:var(--forest-950);
+  font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.form-subtitle{font-size:.84rem;color:var(--ink-400);margin-bottom:28px;line-height:1.6}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:grid;gap:7px}
+.form-group-full{grid-column:1/-1}
+.form-group label{font-size:.8rem;font-weight:700;color:var(--ink-700);letter-spacing:.01em}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;border:var(--border-md);border-radius:var(--radius-sm);
+  padding:11px 14px;font:inherit;font-size:max(16px,.9em);color:var(--ink-800);
+  background:var(--white);outline:none;transition:border-color .2s,box-shadow .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+  border-color:var(--forest-500);box-shadow:0 0 0 3px rgba(62,154,94,.12)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--ink-300)}
+.form-group select{appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23718077' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+
+.form-divider{grid-column:1/-1;height:1px;background:var(--ink-100);margin:6px 0}
+.form-section-label{grid-column:1/-1;font-size:.72rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-400);margin-bottom:-4px}
+
+.checkbox-group{display:flex;align-items:flex-start;gap:10px;
+  grid-column:1/-1;cursor:pointer}
+.checkbox-group input{width:18px;height:18px;margin-top:2px;
+  accent-color:var(--forest-700);flex-shrink:0;cursor:pointer}
+.checkbox-group span{font-size:.84rem;color:var(--ink-600);line-height:1.55;font-weight:500}
+.checkbox-group span a{color:var(--forest-600);font-weight:700;text-decoration:none}
+
+.form-actions{grid-column:1/-1;display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.btn-submit{background:var(--forest-900);color:var(--white);
+  padding:13px 28px;border-radius:var(--radius-sm);font-weight:700;font-size:.9rem;
+  cursor:pointer;transition:all .2s;border:none;font:inherit;letter-spacing:.02em;
+  display:inline-flex;align-items:center;gap:8px}
+.btn-submit:hover{background:var(--forest-700);transform:translateY(-1px)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* Sucesso */
+.success-card{display:none;text-align:center;padding:40px 32px}
+.success-icon{font-size:3rem;margin-bottom:16px}
+.success-title{font-family:var(--font-display);font-size:1.6rem;font-weight:700;
+  color:var(--forest-950);letter-spacing:-.02em;margin-bottom:10px}
+.success-desc{font-size:.9rem;color:var(--ink-500);line-height:1.75;margin-bottom:24px}
+.success-links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+@media(max-width:1024px){.cad-grid{grid-template-columns:1fr}.cad-context{display:none}}
+@media(max-width:768px){.cad-page{padding:40px 0 64px}.form-card{padding:28px 22px}.form-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.form-card{padding:22px 16px}.form-actions{flex-direction:column}.btn-submit{width:100%;justify-content:center}}
+  </style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="container">
+    <a href="index.html" class="logo-area" style="text-decoration:none">
+      <div class="logo-icon">🌱</div>
+      <div><div class="logo-text">AgroVerde Brasil</div><p class="logo-subtitle">Sustentabilidade no agronegócio</p></div>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="menu" id="menu-nav">
+      <ul>
+        <li><a href="index.html"    class="menu-link">Início</a></li>
+        <li><a href="dados.html"    class="menu-link">Dados</a></li>
+        <li><a href="problema.html" class="menu-link">O Problema</a></li>
+        <li><a href="proposta.html" class="menu-link menu-link-highlight">Para Agricultores</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="cad-page">
+  <div class="container">
+    <div class="cad-grid">
+
+      <!-- Contexto -->
+      <div class="cad-context">
+        <div class="cad-tag">🌱 Cadastro gratuito</div>
+        <h1>Faça parte da mudança no agro brasileiro</h1>
+        <p>Ao se cadastrar, você passa a receber conteúdos sobre sustentabilidade, dicas práticas para reduzir perdas e atualizações do projeto AgroVerde Brasil. Sem spam, sem cobrança.</p>
+
+        <div class="cad-benefits">
+          <div class="cad-benefit">
+            <span class="cad-benefit-icon">📊</span>
+            <div>
+              <div class="cad-benefit-title">Acesso aos dados completos</div>
+              <div class="cad-benefit-desc">Relatórios com indicadores reais de desperdício por região e cultura</div>
+            </div>
+          </div>
+          <div class="cad-benefit">
+            <span class="cad-benefit-icon">🚜</span>
+            <div>
+              <div class="cad-benefit-title">Plano de ação personalizado</div>
+              <div class="cad-benefit-desc">Práticas específicas para a sua cultura e região, baseadas na calculadora</div>
+            </div>
+          </div>
+          <div class="cad-benefit">
+            <span class="cad-benefit-icon">📬</span>
+            <div>
+              <div class="cad-benefit-title">Conteúdo educativo</div>
+              <div class="cad-benefit-desc">Artigos, guias e vídeos sobre sustentabilidade no campo em linguagem simples</div>
+            </div>
+          </div>
+          <div class="cad-benefit">
+            <span class="cad-benefit-icon">🤝</span>
+            <div>
+              <div class="cad-benefit-title">Rede de produtores</div>
+              <div class="cad-benefit-desc">Conexão com outros produtores e comunidades com o mesmo objetivo</div>
+            </div>
           </div>
         </div>
 
-        <nav class="menu" aria-label="Menu principal">
-          <ul>
-            <li><a href="index.html">Início</a></li>
-            <li><a href="login.html">Login</a></li>
-          </ul>
-        </nav>
+        <p class="cad-already">Já tem cadastro? <a href="login.html">Entrar na conta</a></p>
       </div>
-    </header>
 
-    <main class="auth-main">
-      <section class="form-section">
-        <div class="form-card">
-          <span class="section-tag">Cadastro</span>
-          <h2>Crie seu cadastro</h2>
-          <p>
-            Preencha os campos abaixo para participar do projeto e receber
-            informações sobre sustentabilidade no agronegócio.
-          </p>
+      <!-- Formulário -->
+      <div class="form-card" id="form-card">
+        <div class="form-title">Criar sua conta</div>
+        <div class="form-subtitle">Preencha os dados abaixo. Leva menos de 2 minutos e é completamente gratuito.</div>
 
-          <form action="login.html" method="get" class="form-grid">
+        <form id="cad-form" novalidate>
+          <div class="form-grid">
+
+            <div class="form-section-label">Seus dados</div>
+
             <div class="form-group">
-              <label for="nome">Nome completo</label>
-              <input
-                type="text"
-                id="nome"
-                name="nome"
-                placeholder="Digite seu nome completo"
-                required
-              />
+              <label for="nome">Nome completo *</label>
+              <input type="text" id="nome" name="nome" placeholder="Ex: João da Silva" required autocomplete="name"/>
             </div>
-
             <div class="form-group">
-              <label for="email">E-mail</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Digite seu e-mail"
-                required
-              />
+              <label for="email">E-mail *</label>
+              <input type="email" id="email" name="email" placeholder="seuemail@email.com" required autocomplete="email"/>
             </div>
-
             <div class="form-group">
-              <label for="telefone">Telefone</label>
-              <input
-                type="tel"
-                id="telefone"
-                name="telefone"
-                placeholder="(00) 00000-0000"
-                required
-              />
+              <label for="telefone">Telefone / WhatsApp</label>
+              <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" autocomplete="tel"/>
             </div>
-
             <div class="form-group">
-              <label for="cidade">Cidade</label>
-              <input
-                type="text"
-                id="cidade"
-                name="cidade"
-                placeholder="Digite sua cidade"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="perfil">Perfil</label>
-              <select id="perfil" name="perfil" required>
-                <option value="">Selecione uma opção</option>
-                <option value="estudante">Estudante</option>
-                <option value="produtor">Produtor rural</option>
-                <option value="pesquisador">Pesquisador</option>
-                <option value="comunidade">Membro da comunidade</option>
+              <label for="estado">Estado (UF)</label>
+              <select id="estado" name="estado">
+                <option value="">Selecione seu estado</option>
+                <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+                <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+                <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+                <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+                <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+                <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+                <option>SP</option><option>SE</option><option>TO</option>
               </select>
             </div>
 
+            <div class="form-divider"></div>
+            <div class="form-section-label">Sobre você</div>
+
             <div class="form-group">
-              <label for="senha">Senha</label>
-              <input
-                type="password"
-                id="senha"
-                name="senha"
-                placeholder="Crie uma senha"
-                required
-              />
+              <label for="perfil">Qual é o seu perfil? *</label>
+              <select id="perfil" name="perfil" required>
+                <option value="">Selecione seu perfil</option>
+                <option value="agricultor-pequeno">Agricultor(a) — pequena propriedade (até 20 ha)</option>
+                <option value="agricultor-medio">Agricultor(a) — propriedade média (20–150 ha)</option>
+                <option value="agricultor-grande">Agricultor(a) — grande propriedade (acima de 150 ha)</option>
+                <option value="estudante">Estudante (graduação, técnico ou ensino médio)</option>
+                <option value="pesquisador">Pesquisador(a) ou professor(a)</option>
+                <option value="profissional">Profissional do agronegócio</option>
+                <option value="ong">Membro de ONG ou entidade</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cultura">Principal cultura (se agricultor)</label>
+              <select id="cultura" name="cultura">
+                <option value="">Não se aplica</option>
+                <option>Soja</option><option>Milho</option><option>Café</option>
+                <option>Cana-de-açúcar</option><option>Laranja</option><option>Banana</option>
+                <option>Manga</option><option>Mamão</option><option>Pitaya</option>
+                <option>Melancia</option><option>Tomate</option><option>Alface</option>
+                <option>Feijão</option><option>Arroz</option><option>Algodão</option>
+                <option>Outra</option>
+              </select>
             </div>
 
             <div class="form-group form-group-full">
-              <label for="interesse">Área de interesse</label>
-              <textarea
-                id="interesse"
-                name="interesse"
-                rows="5"
-                placeholder="Descreva seu interesse no projeto"
-              ></textarea>
+              <label for="como-conheceu">Como você conheceu o AgroVerde Brasil?</label>
+              <select id="como-conheceu" name="como-conheceu">
+                <option value="">Selecione</option>
+                <option>Indicação de amigo ou familiar</option>
+                <option>Redes sociais</option>
+                <option>Google / busca na internet</option>
+                <option>Escola ou universidade</option>
+                <option>Cooperativa ou sindicato rural</option>
+                <option>Outro</option>
+              </select>
             </div>
 
-            <div class="form-group form-group-full">
-              <label class="checkbox-line">
-                <input type="checkbox" required />
-                <span
-                  >Declaro que li e concordo com os objetivos do projeto.</span
-                >
-              </label>
+            <div class="form-divider"></div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="aceite-termos" name="aceite-termos" required/>
+              <span>Concordo com os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a> do AgroVerde Brasil. *</span>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="aceite-email" name="aceite-email" checked/>
+              <span>Aceito receber e-mails com conteúdos sobre sustentabilidade no agronegócio. Posso cancelar quando quiser.</span>
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="btn-primary">Enviar cadastro</button>
-              <a href="index.html" class="btn-secondary">Voltar ao início</a>
+              <button type="submit" class="btn-submit" id="btn-submit">
+                Criar minha conta gratuita →
+              </button>
             </div>
-          </form>
-        </div>
-      </section>
-    </main>
 
-    <footer class="rodape">
-      <div class="footer-bottom">
-        <p>© 2026 AgroVerde Brasil - Página de cadastro.</p>
+          </div>
+        </form>
+
+        <!-- Tela de sucesso -->
+        <div class="success-card" id="success-card">
+          <div class="success-icon">🌱</div>
+          <div class="success-title">Cadastro realizado!</div>
+          <div class="success-desc">
+            Bem-vindo(a) ao AgroVerde Brasil.<br>
+            Em breve você receberá um e-mail de confirmação com os próximos passos.
+          </div>
+          <div class="success-links">
+            <a href="proposta.html" style="display:inline-flex;align-items:center;gap:6px;
+              background:var(--forest-900);color:var(--white);font-weight:700;
+              padding:11px 22px;border-radius:var(--radius-sm);font-size:.88rem;
+              text-decoration:none;transition:all .2s">
+              Abrir calculadora →
+            </a>
+            <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;
+              background:var(--white);color:var(--ink-700);border:var(--border-md);
+              font-weight:600;padding:11px 22px;border-radius:var(--radius-sm);
+              font-size:.88rem;text-decoration:none;transition:all .2s">
+              Ir para o início
+            </a>
+          </div>
+        </div>
       </div>
-    </footer>
-  </body>
+
+    </div>
+  </div>
+</main>
+
+<footer class="rodape">
+  <div class="container footer-grid">
+    <div><h3>AgroVerde Brasil</h3><p>Projeto acadêmico sobre sustentabilidade no agronegócio. Dados baseados em FAO e EMBRAPA.</p></div>
+    <div><h4>Páginas</h4><ul class="footer-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="dados.html">Dados e Indicadores</a></li>
+      <li><a href="problema.html">O Problema</a></li>
+      <li><a href="parceiros.html">ONGs Parceiras</a></li>
+      <li><a href="proposta.html">Para Agricultores</a></li>
+    </ul></div>
+    <div><h4>Conta</h4><ul class="footer-links">
+      <li><a href="login.html">Entrar</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 AgroVerde Brasil — Projeto para a disciplina de Programação Web Front-end.</p></div>
+</footer>
+
+<script>
+const hamburger=document.getElementById('hamburger'),menuNav=document.getElementById('menu-nav');
+document.querySelectorAll('.menu-link,.btn-nav').forEach(l=>l.addEventListener('click',()=>{menuNav.classList.remove('menu-open');hamburger.classList.remove('hamburger-open');hamburger.setAttribute('aria-expanded','false')}));
+hamburger.addEventListener('click',()=>{const o=menuNav.classList.toggle('menu-open');hamburger.classList.toggle('hamburger-open',o);hamburger.setAttribute('aria-expanded',o)});
+
+/* Telefone — máscara simples */
+document.getElementById('telefone').addEventListener('input',function(){
+  let v=this.value.replace(/\D/g,'');
+  if(v.length>11)v=v.slice(0,11);
+  if(v.length>6) v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);
+  else if(v.length>2) v='('+v.slice(0,2)+') '+v.slice(2);
+  else if(v.length>0) v='('+v;
+  this.value=v;
+});
+
+/* Submit */
+document.getElementById('cad-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  const nome   = document.getElementById('nome').value.trim();
+  const email  = document.getElementById('email').value.trim();
+  const perfil = document.getElementById('perfil').value;
+  const termos = document.getElementById('aceite-termos').checked;
+
+  if(!nome||!email||!perfil||!termos){
+    alert('Por favor, preencha os campos obrigatórios (marcados com *) e aceite os termos.');
+    return;
+  }
+
+  const btn=document.getElementById('btn-submit');
+  btn.disabled=true;
+  btn.textContent='Cadastrando...';
+
+  setTimeout(()=>{
+    document.getElementById('cad-form').style.display='none';
+    document.getElementById('success-card').style.display='block';
+    document.querySelector('.form-title').style.display='none';
+    document.querySelector('.form-subtitle').style.display='none';
+  },1200);
+});
+</script>
+</body>
 </html>
