@@ -1267,18 +1267,33 @@ const CATS = {
 /* ═══════════════════════════════════════════════════
    ESTADO
 ═══════════════════════════════════════════════════ */
-let catAtual    = 'frutas-tropicais';
+/* ═══════════════════════════════════════════════════
+   ESTADO CENTRAL — única fonte de verdade
+═══════════════════════════════════════════════════ */
 let cultAtual   = null;
 let currentStep = 0;
 
+/* ── helpers de formatação ── */
+const fmt  = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+const fmtN = v => Math.round(v).toLocaleString('pt-BR');
+
+/* ── leitores de estado que sempre buscam do DOM ── */
+function regiao()    { return document.getElementById('sel-regiao').value || 'centroeste'; }
+function area()      { return Math.max(1, +document.getElementById('sl-area').value || 50); }
+function nSafras()   { return Math.max(1, +document.getElementById('sl-safras').value || 1); }
+function prodHa()    { return Math.max(1, +document.getElementById('sl-prodha').value || 1); }
+function precoUnit() { return Math.max(0.01, +document.getElementById('sl-saca').value || 1); }
+function perdaPC()   { return Math.max(0.01, +document.getElementById('sl-pc').value / 100); }
+function unidadeAtual() { return cultAtual ? CULTURAS[cultAtual].unidade : ''; }
+
 /* ═══════════════════════════════════════════════════
-   SELETOR VISUAL
+   SELETOR VISUAL DE CULTURA
 ═══════════════════════════════════════════════════ */
 function renderCultGrid(cat) {
   const grid = document.getElementById('cult-grid');
   const items = Object.entries(CULTURAS).filter(([,v]) => v.cat === cat);
   grid.innerHTML = items.map(([key, v]) => `
-    <div class="cult-item ${cultAtual===key?'selected':''}" data-key="${key}"
+    <div class="cult-item ${cultAtual === key ? 'selected' : ''}" data-key="${key}"
       onclick="selecionarCultura('${key}')">
       <div class="cult-item-emoji">${v.emoji}</div>
       <div class="cult-item-name">${v.nome}</div>
@@ -1290,19 +1305,15 @@ function selecionarCultura(key) {
   document.getElementById('sel-cultura').value = key;
   const c = CULTURAS[key];
 
-  /* Atualiza grid */
-  document.querySelectorAll('.cult-item').forEach(el => {
-    el.classList.toggle('selected', el.dataset.key === key);
-  });
+  document.querySelectorAll('.cult-item').forEach(el =>
+    el.classList.toggle('selected', el.dataset.key === key));
 
-  /* Banner */
   const banner = document.getElementById('cult-banner');
   banner.classList.add('show');
   document.getElementById('banner-emoji').textContent = c.emoji;
   document.getElementById('banner-name').textContent  = `${c.emoji} ${c.nome}`;
   document.getElementById('banner-desc').textContent  = c.desc;
 
-  /* Habilita botão */
   const btn = document.getElementById('btn-p1');
   btn.disabled = false;
   btn.style.opacity = '1';
@@ -1311,7 +1322,8 @@ function selecionarCultura(key) {
   atualizarInfoRegiao();
 }
 
-/* Categorias */
+/* ── bind de categorias ── */
+let catAtual = 'frutas-tropicais';
 document.querySelectorAll('.cult-cat').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.cult-cat').forEach(b => b.classList.remove('active'));
@@ -1320,27 +1332,28 @@ document.querySelectorAll('.cult-cat').forEach(btn => {
     renderCultGrid(catAtual);
   });
 });
-
-/* Render inicial */
 renderCultGrid(catAtual);
 
-/* Área */
-document.getElementById('sl-area').addEventListener('input', () => {
-  document.getElementById('lv-area').textContent = document.getElementById('sl-area').value + ' ha';
+/* ── área ── */
+document.getElementById('sl-area').addEventListener('input', function() {
+  const v = +this.value;
+  document.getElementById('lv-area').textContent = v + ' ha';
+  const num = document.getElementById('num-area');
+  if (num) num.value = v;
   atualizarInfoRegiao();
 });
 
-/* Região */
+/* ── região ── */
 document.getElementById('sel-regiao').addEventListener('change', atualizarInfoRegiao);
 
 function atualizarInfoRegiao() {
   const reg = document.getElementById('sel-regiao').value;
   if (!reg) {
     document.getElementById('info-regiao').innerHTML =
-      `<span style="color:var(--sky-600)">📍 Busque seu CEP ou selecione sua região para ver as informações de clima e colheitas.</span>`;
+      `<span style="color:var(--sky-700)">📍 Busque seu CEP ou selecione sua região para ver as informações de clima e colheitas.</span>`;
     return;
   }
-  const r   = REGIOES[reg];
+  const r = REGIOES[reg];
   let safrasInfo = '';
   if (cultAtual) {
     const c   = CULTURAS[cultAtual];
@@ -1352,25 +1365,27 @@ function atualizarInfoRegiao() {
 }
 
 /* ═══════════════════════════════════════════════════
-   STEPPER
+   STEPPER — navegação entre painéis
 ═══════════════════════════════════════════════════ */
 function goStep(n) {
-  document.querySelectorAll('.calc-panel').forEach((p,i) => p.classList.toggle('active', i===n));
-  document.querySelectorAll('.step').forEach((s,i) => {
-    s.classList.remove('active','done');
-    if (i===n) s.classList.add('active');
-    if (i<n)   s.classList.add('done');
+  document.querySelectorAll('.calc-panel').forEach((p, i) =>
+    p.classList.toggle('active', i === n));
+  document.querySelectorAll('.step').forEach((s, i) => {
+    s.classList.remove('active', 'done');
+    if (i === n) s.classList.add('active');
+    if (i < n)   s.classList.add('done');
   });
   currentStep = n;
-  document.getElementById('calculadora').scrollIntoView({behavior:'smooth',block:'start'});
-  if (n===1) renderInsumos();
-  if (n===2) renderProducao();
+  document.getElementById('calculadora').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  if (n === 1) renderInsumos();
+  if (n === 2) renderProducao();
 }
 
 document.querySelectorAll('.step').forEach(s => {
   s.addEventListener('click', () => {
     const t = +s.dataset.step;
-    if (t <= currentStep || t === currentStep+1) goStep(t);
+    if (t <= currentStep || t === currentStep + 1) goStep(t);
   });
 });
 
@@ -1380,20 +1395,7 @@ function irPasso1() {
 }
 
 /* ═══════════════════════════════════════════════════
-   HELPERS
-═══════════════════════════════════════════════════ */
-const fmt  = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
-const fmtN = v => Math.round(v).toLocaleString('pt-BR');
-
-function regiao()    { return document.getElementById('sel-regiao').value; }
-function area()      { return +document.getElementById('sl-area').value; }
-function nSafras()   { return +document.getElementById('sl-safras').value; }
-function prodHa()    { return +document.getElementById('sl-prodha').value; }
-function precoUnit() { return +document.getElementById('sl-saca').value; }
-function perdaPC()   { return +document.getElementById('sl-pc').value / 100; }
-
-/* ═══════════════════════════════════════════════════
-   PASSO 2 — Tabela de insumos
+   PASSO 2 — tabela de insumos
 ═══════════════════════════════════════════════════ */
 function renderInsumos() {
   if (!cultAtual) return;
@@ -1413,10 +1415,10 @@ function renderInsumos() {
   });
 
   document.getElementById('tbody-insumos').innerHTML = rows;
-  document.getElementById('lv-area2').textContent   = ha;
-  document.getElementById('lv-cult2').textContent   = `${c.emoji} ${c.nome}`;
+  document.getElementById('lv-area2').textContent  = ha;
+  document.getElementById('lv-cult2').textContent  = `${c.emoji} ${c.nome}`;
   document.getElementById('insumos-note').innerHTML =
-    `📌 <strong>Como descobrir o que você gasta?</strong> Some todas as notas de compra de insumos do último ano e divida pela área plantada em hectares. Se não tiver esse controle, use os valores da tabela — são médias da EMBRAPA para <strong>${c.nome}</strong> na <strong>${REGIOES[regiao()].nome}</strong>.`;
+    `📌 <strong>Como descobrir o que você gasta?</strong> Some todas as notas de compra de insumos do último ano e divida pela área em hectares. Se não tiver o controle, use os valores pré-preenchidos — são médias da EMBRAPA para <strong>${c.nome}</strong> na região <strong>${REGIOES[regiao()].nome}</strong>.`;
   recalcTotal();
 }
 
@@ -1427,124 +1429,217 @@ function recalcTotal() {
 }
 
 /* ═══════════════════════════════════════════════════
-   PASSO 3 — Produção e preço
+   PASSO 3 — produção e preço
+   Sempre reseta os sliders com os valores corretos
+   para a cultura + região selecionadas.
 ═══════════════════════════════════════════════════ */
 function renderProducao() {
   if (!cultAtual) return;
-  const c   = CULTURAS[cultAtual];
-  const reg = regiao();
-  const maxS = c.safras[reg];
+
+  const c    = CULTURAS[cultAtual];
+  const reg  = regiao();
+  /* safras: usa o valor do DB para a combinação cultura×região */
+  const maxS = c.safras[reg] || 1;
+  /* preço: usa o valor do DB para a região */
   const prec = c.precos[reg];
+  /* produtividade: usa a média da cultura */
   const prod = c.prodMedia;
 
+  /* ── Safras ── */
+  setSliderNum('sl-safras', 'num-safras', 'lv-safras',
+    maxS,          /* valor a setar */
+    1,             /* min */
+    maxS,          /* max */
+    v => String(v)
+  );
+  document.getElementById('ds-cult').textContent = `${c.emoji} ${c.nome}`;
+  document.getElementById('ds-reg').textContent  = REGIOES[reg].nome;
+  document.getElementById('ds-max').textContent  = maxS;
+  document.getElementById('dica-safras').innerHTML =
+    `Para <strong>${c.emoji} ${c.nome}</strong> na <strong>${REGIOES[reg].nome}</strong>: <strong>${maxS} colheita(s)/ano</strong> são possíveis com boas condições climáticas.`;
+
+  /* ── Produtividade ── */
+  const maxProd = Math.max(prod * 4, 100);
+  setSliderNum('sl-prodha', 'num-prodha', 'lv-prodha',
+    prod, 1, maxProd,
+    v => fmtN(v) + ' ' + c.unidade + '/ha'
+  );
+  document.getElementById('ds-prod').textContent =
+    fmtN(Math.round(prod * 0.85)) + '–' + fmtN(Math.round(prod * 1.15)) + ' ' + c.unidade + '/ha';
+
+  /* ── Preço ── */
+  const maxPreco = Math.max(prec * 5, 100);
+  setSliderNum('sl-saca', 'num-saca', 'lv-saca',
+    prec, 0.01, maxPreco,
+    v => fmt(v) + ' / ' + c.unidade
+  );
+  document.getElementById('ds-regiao2').textContent = REGIOES[reg].nome;
+  document.getElementById('ds-preco').textContent   =
+    fmt(Math.round(prec * 0.9)) + ' – ' + fmt(Math.round(prec * 1.1)) + ' / ' + c.unidade;
+  document.getElementById('dica-saca').innerHTML =
+    `Preço médio na <strong>${REGIOES[reg].nome}</strong> para <strong>${c.nome}</strong>: <strong>${fmt(Math.round(prec * 0.9))} – ${fmt(Math.round(prec * 1.1))}</strong> / ${c.unidade}.`;
+
+  /* ── Perda pós-colheita ── */
+  setSliderNum('sl-pc', 'num-pc', 'lv-pc',
+    c.perdaPC, 1, 80,
+    v => v + '%'
+  );
+  document.getElementById('dica-pc').innerHTML =
+    `Média histórica para <strong>${c.nome}</strong>: <strong>${c.perdaPC}%</strong> de perda pós-colheita. Com bom armazenamento, é possível reduzir pela metade.`;
+
+  /* ── Re-bind dos sliders após setar valores ── */
+  bindSliderPasso3();
+}
+
+/* Define valor em slider + input numérico + label ao mesmo tempo */
+function setSliderNum(slId, numId, lvId, valor, min, max, labelFn) {
+  const sl  = document.getElementById(slId);
+  const num = document.getElementById(numId);
+  const lv  = document.getElementById(lvId);
+
+  if (!sl) return;
+  sl.min   = min;
+  sl.max   = max;
+  sl.value = valor;
+  if (num) num.value = Math.round(valor * 100) / 100;
+  if (lv)  lv.textContent = labelFn(valor);
+}
+
+/* Rebinda os eventos dos sliders do passo 3 */
+function bindSliderPasso3() {
+  const c = CULTURAS[cultAtual];
+
   const slSaf = document.getElementById('sl-safras');
-  slSaf.max   = Math.max(1, maxS);
-  slSaf.value = Math.min(+slSaf.value || maxS, maxS);
-  document.getElementById('lv-safras').textContent = slSaf.value;
-  document.getElementById('ds-cult').textContent   = `${c.emoji} ${c.nome}`;
-  document.getElementById('ds-reg').textContent    = REGIOES[reg].nome;
-  document.getElementById('ds-max').textContent    = maxS;
   const numSaf = document.getElementById('num-safras');
-  if (numSaf) numSaf.value = slSaf.value;
   slSaf.oninput = () => {
     document.getElementById('lv-safras').textContent = slSaf.value;
     if (numSaf) numSaf.value = slSaf.value;
   };
+  if (numSaf) numSaf.oninput = () =>
+    sincronizarNum('sl-safras', 'num-safras', 'lv-safras', v => String(v), 1, 10);
 
   const slProd = document.getElementById('sl-prodha');
-  const maxProd = Math.max(prod * 3, 100);
-  slProd.min   = 1;
-  slProd.max   = maxProd;
-  slProd.value = prod;
-  document.getElementById('lv-prodha').textContent = fmtN(prod) + ' ' + c.unidade + '/ha';
-  document.getElementById('ds-prod').textContent   = fmtN(prod * 0.85) + '–' + fmtN(prod * 1.15) + ' ' + c.unidade + '/ha';
   const numProd = document.getElementById('num-prodha');
-  if (numProd) numProd.value = prod;
   slProd.oninput = () => {
     document.getElementById('lv-prodha').textContent = fmtN(+slProd.value) + ' ' + c.unidade + '/ha';
     if (numProd) numProd.value = slProd.value;
   };
+  if (numProd) numProd.oninput = () =>
+    sincronizarNum('sl-prodha', 'num-prodha', 'lv-prodha', v => fmtN(v) + ' ' + c.unidade + '/ha', 1, 999999);
 
   const slSaca = document.getElementById('sl-saca');
-  const maxPreco = Math.max(prec * 4, 100);
-  slSaca.min   = 1;
-  slSaca.max   = maxPreco;
-  slSaca.value = prec;
-  document.getElementById('lv-saca').textContent    = fmt(prec) + ' / ' + c.unidade;
-  document.getElementById('ds-regiao2').textContent = REGIOES[reg].nome;
-  document.getElementById('ds-preco').textContent   = fmt(prec * 0.9) + ' – ' + fmt(prec * 1.1) + ' / ' + c.unidade;
   const numSaca = document.getElementById('num-saca');
-  if (numSaca) numSaca.value = prec;
   slSaca.oninput = () => {
     document.getElementById('lv-saca').textContent = fmt(+slSaca.value) + ' / ' + c.unidade;
     if (numSaca) numSaca.value = slSaca.value;
   };
+  if (numSaca) numSaca.oninput = () =>
+    sincronizarNum('sl-saca', 'num-saca', 'lv-saca', v => fmt(v) + ' / ' + c.unidade, 0.01, 999999);
 
   const slPc = document.getElementById('sl-pc');
-  slPc.value = c.perdaPC;
-  document.getElementById('lv-pc').textContent = c.perdaPC + '%';
   const numPc = document.getElementById('num-pc');
-  if (numPc) numPc.value = c.perdaPC;
   slPc.oninput = () => {
     document.getElementById('lv-pc').textContent = slPc.value + '%';
     if (numPc) numPc.value = slPc.value;
   };
-  document.getElementById('dica-pc').innerHTML =
-    `Média histórica para <strong>${c.nome}</strong>: <strong>${c.perdaPC}%</strong> de perda pós-colheita.
-    Com bom armazenamento e logística rápida, é possível reduzir pela metade.`;
+  if (numPc) numPc.oninput = () =>
+    sincronizarNum('sl-pc', 'num-pc', 'lv-pc', v => v + '%', 1, 80);
 }
 
 /* ═══════════════════════════════════════════════════
-   PASSO 4 — Resultado
+   SINCRONIZAÇÃO input numérico → slider
+═══════════════════════════════════════════════════ */
+function sincronizarNum(slId, numId, lvId, labelFn, min, max) {
+  const sl  = document.getElementById(slId);
+  const num = document.getElementById(numId);
+  const lv  = document.getElementById(lvId);
+  if (!sl || !num) return;
+
+  let v = parseFloat(num.value);
+  if (isNaN(v)) return;
+  v = Math.max(min, Math.min(max, v));
+
+  if (v > +sl.max) sl.max = v;
+  sl.value  = v;
+  num.value = v;
+  if (lv) lv.textContent = labelFn(v);
+
+  if (slId === 'sl-area') {
+    const a2 = document.getElementById('lv-area2');
+    if (a2) a2.textContent = Math.round(v);
+    atualizarInfoRegiao();
+  }
+}
+
+/* Bind do slider de área com input numérico */
+function bindSliderArea() {
+  const sl  = document.getElementById('sl-area');
+  const num = document.getElementById('num-area');
+  if (!sl || !num) return;
+  sl.addEventListener('input', () => {
+    num.value = sl.value;
+    document.getElementById('lv-area').textContent = sl.value + ' ha';
+    atualizarInfoRegiao();
+  });
+  if (num) num.oninput = () =>
+    sincronizarNum('sl-area', 'num-area', 'lv-area', v => v + ' ha', 1, 5000);
+}
+bindSliderArea();
+
+/* ═══════════════════════════════════════════════════
+   PASSO 4 — resultado final
 ═══════════════════════════════════════════════════ */
 function calcularFinal() {
   if (!cultAtual) return;
-  const c    = CULTURAS[cultAtual];
-  const ha   = area();
-  const ns   = nSafras();
-  const ph   = prodHa();
-  const pu   = precoUnit();
-  const pc   = perdaPC();
+  const c   = CULTURAS[cultAtual];
+  const ha  = area();
+  const ns  = nSafras();
+  const ph  = prodHa();
+  const pu  = precoUnit();
+  const pc  = perdaPC();
 
   let totalInsumos = 0;
   document.querySelectorAll('#tbody-insumos input').forEach(i => totalInsumos += (+i.value || 0));
 
-  const prodTot     = ha * ph * ns;
-  const receitaBruta= prodTot * pu;
-  const perdaPCval  = receitaBruta * pc;
-  const insumosAno  = totalInsumos * ns;
-  const econPC      = perdaPCval * 0.50;
-  const econInsumo  = insumosAno  * 0.25;
-  const econTotal   = econPC + econInsumo;
-  const perdaResid  = (perdaPCval - econPC) + (insumosAno - econInsumo);
-  const liquidoPoss = receitaBruta - perdaResid;
+  const prodTot      = ha * ph * ns;
+  const receitaBruta = prodTot * pu;
+  const perdaPCval   = receitaBruta * pc;
+  const insumosAno   = totalInsumos * ns;
+  const econPC       = perdaPCval * 0.50;
+  const econInsumo   = insumosAno  * 0.25;
+  const econTotal    = econPC + econInsumo;
+  const perdaResid   = (perdaPCval - econPC) + (insumosAno - econInsumo);
+  const liquidoPoss  = receitaBruta - perdaResid;
 
-  const pctBefore = Math.min(98, Math.round((perdaPCval + insumosAno) / Math.max(receitaBruta,1) * 100));
+  const pctBefore = Math.min(98, Math.round((perdaPCval + insumosAno) / Math.max(receitaBruta, 1) * 100));
   const pctAfter  = Math.max(2,  Math.round(pctBefore * 0.50));
 
-  document.getElementById('r-economia').textContent  = fmt(econTotal);
-  document.getElementById('r-sublabel').textContent  = `aplicando práticas recomendadas para ${c.emoji} ${c.nome}`;
-  document.getElementById('r-receita').textContent   = fmt(receitaBruta);
-  document.getElementById('r-perdapc').textContent   = fmt(perdaPCval);
-  document.getElementById('r-insumos').textContent   = fmt(insumosAno);
-  document.getElementById('r-liquido').textContent   = fmt(liquidoPoss);
-  document.getElementById('r-prodtotal').textContent = fmtN(prodTot) + ' ' + c.unidade;
-  document.getElementById('r-prodsub').textContent   = `${ns} colheita(s) · ${ha} ha · ${fmtN(ph)} ${c.unidade}/ha`;
-  document.getElementById('r-saca').textContent      = fmt(pu);
-  document.getElementById('r-unidade').textContent   = 'por ' + c.unidade + ' · ' + REGIOES[regiao()].nome;
-  document.getElementById('r-perdido').textContent   = fmt(perdaPCval);
-  document.getElementById('r-perdidoval').textContent= `${pc*100|0}% da produção · ${fmtN(prodTot*pc)} ${c.unidade}`;
-  document.getElementById('r-5anos').textContent     = fmt(econTotal * 5);
+  document.getElementById('r-economia').textContent   = fmt(econTotal);
+  document.getElementById('r-sublabel').textContent   = `aplicando práticas recomendadas para ${c.emoji} ${c.nome}`;
+  document.getElementById('r-receita').textContent    = fmt(receitaBruta);
+  document.getElementById('r-perdapc').textContent    = fmt(perdaPCval);
+  document.getElementById('r-insumos').textContent    = fmt(insumosAno);
+  document.getElementById('r-liquido').textContent    = fmt(liquidoPoss);
+  document.getElementById('r-prodtotal').textContent  = fmtN(prodTot) + ' ' + c.unidade;
+  document.getElementById('r-prodsub').textContent    = `${ns} colheita(s) · ${ha} ha · ${fmtN(ph)} ${c.unidade}/ha`;
+  document.getElementById('r-saca').textContent       = fmt(pu);
+  document.getElementById('r-unidade').textContent    = 'por ' + c.unidade + ' · ' + REGIOES[regiao()].nome;
+  document.getElementById('r-perdido').textContent    = fmt(perdaPCval);
+  document.getElementById('r-perdidoval').textContent = `${Math.round(pc * 100)}% da produção · ${fmtN(Math.round(prodTot * pc))} ${c.unidade}`;
+  document.getElementById('r-5anos').textContent      = fmt(econTotal * 5);
 
-  document.getElementById('bar-before').style.width    = pctBefore + '%';
-  document.getElementById('bar-after').style.width     = pctAfter  + '%';
-  document.getElementById('bar-before-val').textContent= pctBefore + '% comprometido';
-  document.getElementById('bar-after-val').textContent = pctAfter  + '% comprometido';
+  document.getElementById('bar-before').style.width     = pctBefore + '%';
+  document.getElementById('bar-after').style.width      = pctAfter  + '%';
+  document.getElementById('bar-before-val').textContent = pctBefore + '% comprometido';
+  document.getElementById('bar-after-val').textContent  = pctAfter  + '% comprometido';
 
   const itens = [
-    { label:'📦 Redução de perda pós-colheita',  val:econPC,     desc:`Colheita no ponto certo, embalagem e armazenamento adequado para ${c.nome}` },
-    { label:'🌾 Otimização do uso de insumos',   val:econInsumo, desc:'Análise de solo + aplicação de precisão — comprando só o que a cultura precisa' },
+    { label:'📦 Redução de perda pós-colheita', val: econPC,
+      desc: `Colheita no ponto certo, embalagem e armazenamento adequado para ${c.nome}` },
+    { label:'🌾 Otimização do uso de insumos',  val: econInsumo,
+      desc: 'Análise de solo + aplicação de precisão — comprando só o que a cultura precisa' },
   ];
+
   document.getElementById('economia-detalhe').innerHTML = itens.map(it => `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;
       padding:12px 0;border-bottom:var(--border);gap:16px">
@@ -1564,91 +1659,34 @@ function calcularFinal() {
 }
 
 /* ═══════════════════════════════════════════════════
-   SINCRONIZAÇÃO SLIDER ↔ INPUT NUMÉRICO
+   BUSCA DE CEP — ViaCEP
 ═══════════════════════════════════════════════════ */
-function unidadeAtual() {
-  return cultAtual ? CULTURAS[cultAtual].unidade : '';
-}
-
-function sincronizarNum(sliderId, numId, lvId, labelFn, min, max) {
-  const sl  = document.getElementById(sliderId);
-  const num = document.getElementById(numId);
-  const lv  = document.getElementById(lvId);
-  if (!sl || !num) return;
-
-  let v = parseFloat(num.value);
-  if (isNaN(v)) return;
-  v = Math.max(min, Math.min(max, v));
-
-  /* Ajusta o max do slider se o valor digitado for maior */
-  if (v > +sl.max) sl.max = v;
-  sl.value = v;
-  num.value = v;
-  if (lv) lv.textContent = labelFn(v);
-
-  /* Atualiza área2 se for o campo de área */
-  if (sliderId === 'sl-area') {
-    const a2 = document.getElementById('lv-area2');
-    if (a2) a2.textContent = Math.round(v);
-    atualizarInfoRegiao();
-  }
-}
-
-function bindSliderNum(sliderId, numId, lvId, labelFn) {
-  const sl  = document.getElementById(sliderId);
-  const num = document.getElementById(numId);
-  if (!sl || !num) return;
-  sl.addEventListener('input', () => {
-    num.value = sl.value;
-    const lv = document.getElementById(lvId);
-    if (lv) lv.textContent = labelFn(+sl.value);
-  });
-}
-
-/* Bind inicial dos sliders com seus inputs */
-setTimeout(() => {
-  bindSliderNum('sl-area',  'num-area',   'lv-area',   v => v + ' ha');
-  bindSliderNum('sl-safras','num-safras', 'lv-safras', v => v);
-  bindSliderNum('sl-prodha','num-prodha', 'lv-prodha', v => fmtN(v) + ' ' + unidadeAtual());
-  bindSliderNum('sl-saca',  'num-saca',   'lv-saca',   v => 'R$ ' + fmtN(v));
-  bindSliderNum('sl-pc',    'num-pc',     'lv-pc',     v => v + '%');
-}, 100);
-
-/* ═══════════════════════════════════════════════════
-   BUSCA DE CEP — via ViaCEP (API gratuita)
-═══════════════════════════════════════════════════ */
-
-/* Mapa UF → região da calculadora */
 const UF_REGIAO = {
-  RS:'sul', SC:'sul', PR:'sul',
-  SP:'sudeste', MG:'sudeste', RJ:'sudeste', ES:'sudeste',
-  MT:'centroeste', MS:'centroeste', GO:'centroeste', DF:'centroeste',
-  BA:'nordeste', MA:'nordeste', PI:'nordeste', CE:'nordeste',
-  RN:'nordeste', PB:'nordeste', PE:'nordeste', AL:'nordeste',
-  SE:'nordeste',
-  PA:'norte', TO:'norte', RO:'norte', AC:'norte',
-  AM:'norte', RR:'norte', AP:'norte',
+  RS:'sul',SC:'sul',PR:'sul',
+  SP:'sudeste',MG:'sudeste',RJ:'sudeste',ES:'sudeste',
+  MT:'centroeste',MS:'centroeste',GO:'centroeste',DF:'centroeste',
+  BA:'nordeste',MA:'nordeste',PI:'nordeste',CE:'nordeste',
+  RN:'nordeste',PB:'nordeste',PE:'nordeste',AL:'nordeste',SE:'nordeste',
+  PA:'norte',TO:'norte',RO:'norte',AC:'norte',AM:'norte',RR:'norte',AP:'norte',
 };
 
-/* Mapa UF → nome do estado */
 const UF_ESTADO = {
-  AC:'Acre', AL:'Alagoas', AP:'Amapá', AM:'Amazonas', BA:'Bahia',
-  CE:'Ceará', DF:'Distrito Federal', ES:'Espírito Santo', GO:'Goiás',
-  MA:'Maranhão', MT:'Mato Grosso', MS:'Mato Grosso do Sul', MG:'Minas Gerais',
-  PA:'Pará', PB:'Paraíba', PR:'Paraná', PE:'Pernambuco', PI:'Piauí',
-  RJ:'Rio de Janeiro', RN:'Rio Grande do Norte', RS:'Rio Grande do Sul',
-  RO:'Rondônia', RR:'Roraima', SC:'Santa Catarina', SP:'São Paulo',
-  SE:'Sergipe', TO:'Tocantins',
+  AC:'Acre',AL:'Alagoas',AP:'Amapá',AM:'Amazonas',BA:'Bahia',CE:'Ceará',
+  DF:'Distrito Federal',ES:'Espírito Santo',GO:'Goiás',MA:'Maranhão',
+  MT:'Mato Grosso',MS:'Mato Grosso do Sul',MG:'Minas Gerais',PA:'Pará',
+  PB:'Paraíba',PR:'Paraná',PE:'Pernambuco',PI:'Piauí',RJ:'Rio de Janeiro',
+  RN:'Rio Grande do Norte',RS:'Rio Grande do Sul',RO:'Rondônia',RR:'Roraima',
+  SC:'Santa Catarina',SP:'São Paulo',SE:'Sergipe',TO:'Tocantins',
 };
 
 function formatarCep(inp) {
-  let v = inp.value.replace(/\D/g,'');
-  if (v.length > 5) v = v.slice(0,5) + '-' + v.slice(5,8);
+  let v = inp.value.replace(/\D/g, '');
+  if (v.length > 5) v = v.slice(0, 5) + '-' + v.slice(5, 8);
   inp.value = v;
 }
 
 async function buscarCep() {
-  const raw = document.getElementById('inp-cep').value.replace(/\D/g,'');
+  const raw    = document.getElementById('inp-cep').value.replace(/\D/g, '');
   const status = document.getElementById('cep-status');
   const card   = document.getElementById('cep-card');
   const spin   = document.getElementById('cep-spinner');
@@ -1673,35 +1711,27 @@ async function buscarCep() {
     } else {
       const uf     = data.uf;
       const cidade = data.localidade;
-      const regiao = UF_REGIAO[uf];
+      const regStr = UF_REGIAO[uf];
       const estado = UF_ESTADO[uf] || uf;
       const bairro = data.bairro ? ` · ${data.bairro}` : '';
 
-      /* Preenche o card de confirmação */
-      document.getElementById('cep-cidade').textContent =
-        cidade + (bairro ? bairro : '');
+      document.getElementById('cep-cidade').textContent = cidade + bairro;
       document.getElementById('cep-estado').textContent =
-        estado + ' · ' + (regiao ? nomeRegiao(regiao) : 'Região não mapeada');
+        estado + ' · ' + (regStr ? nomeRegiao(regStr) : 'Região não mapeada');
 
       card.style.display = 'block';
 
-      /* Seleciona a região no select */
-      if (regiao) {
+      if (regStr) {
         const sel = document.getElementById('sel-regiao');
-        sel.value = regiao;
-        sel.dispatchEvent(new Event('change'));
-        mostrarStatus('success',
-          '✅ Localização encontrada! Sua região foi selecionada automaticamente.');
+        sel.value = regStr;
+        atualizarInfoRegiao();
+        mostrarStatus('success', '✅ Localização encontrada! Sua região foi selecionada automaticamente.');
       } else {
-        mostrarStatus('warn',
-          '⚠ Município encontrado, mas selecione sua região manualmente no campo abaixo.');
+        mostrarStatus('warn', '⚠ Município encontrado — selecione sua região manualmente abaixo.');
       }
-
-      atualizarInfoRegiao();
     }
   } catch(e) {
-    mostrarStatus('error',
-      '🔌 Não foi possível conectar ao serviço de CEP. Verifique sua internet ou selecione a região manualmente.');
+    mostrarStatus('error', '🔌 Sem conexão com o serviço de CEP. Selecione sua região manualmente.');
   } finally {
     spin.style.display = 'none';
     btn.disabled = false;
@@ -1711,16 +1741,16 @@ async function buscarCep() {
 function mostrarStatus(tipo, msg) {
   const el = document.getElementById('cep-status');
   const estilos = {
-    success: 'background:var(--forest-50);border:1px solid var(--forest-200);color:var(--forest-800)',
-    error:   'background:#fef2f2;border:1px solid #fca5a5;color:var(--danger-600)',
-    warn:    'background:var(--sun-100);border:1px solid var(--sun-300);color:var(--earth-700)',
+    success:'background:var(--forest-50);border:1px solid var(--forest-200);color:var(--forest-800)',
+    error:  'background:#fef2f2;border:1px solid #fca5a5;color:var(--danger-600)',
+    warn:   'background:var(--sun-100);border:1px solid var(--sun-300);color:var(--earth-700)',
   };
   el.style.cssText = 'display:block;margin-bottom:10px;padding:10px 14px;border-radius:var(--radius-xs);font-size:.82rem;line-height:1.5;' + (estilos[tipo] || estilos.warn);
   el.textContent = msg;
 }
 
 function limparCep() {
-  document.getElementById('inp-cep').value    = '';
+  document.getElementById('inp-cep').value = '';
   document.getElementById('cep-card').style.display   = 'none';
   document.getElementById('cep-status').style.display = 'none';
   document.getElementById('sel-regiao').value = '';
