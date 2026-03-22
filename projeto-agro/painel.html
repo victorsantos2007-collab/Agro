@@ -1,1 +1,948 @@
 
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel do Produtor | Safra Justa</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+/* ════════════════════════════════════════
+   PAINEL DO PRODUTOR — estilos exclusivos
+════════════════════════════════════════ */
+
+/* Hero do painel */
+.painel-hero{background:var(--forest-900);color:var(--white);padding:52px 0 44px;position:relative;overflow:hidden}
+.painel-hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 60% at 80% 40%,rgba(46,122,72,.2) 0%,transparent 55%);pointer-events:none}
+.painel-hero-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.painel-hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);
+  font-weight:700;color:var(--white);letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
+.painel-hero h1 em{font-style:italic;color:var(--forest-300)}
+.painel-hero p{font-size:.92rem;color:rgba(255,255,255,.6);line-height:1.7;max-width:52ch}
+
+/* Seletor de cultura no hero */
+.hero-config{display:flex;gap:10px;align-items:center;flex-wrap:wrap;flex-shrink:0}
+.hero-sel{padding:9px 14px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.08);color:var(--white);font:inherit;font-size:.86rem;
+  font-weight:600;cursor:pointer;outline:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;padding-right:30px;
+  transition:background .18s}
+.hero-sel:focus{border-color:rgba(255,255,255,.5)}
+.hero-sel option{background:#0d2818;color:var(--white)}
+
+/* Wrapper do painel */
+.painel-wrap{padding:40px 0 88px;background:var(--ink-50)}
+
+/* Grade principal do painel */
+.painel-main{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.painel-side{display:grid;gap:18px}
+
+/* Card base do painel */
+.pc{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
+  padding:22px 20px;box-shadow:var(--shadow-sm)}
+.pc-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+.pc-title{font-family:var(--font-display);font-size:1rem;font-weight:600;
+  color:var(--forest-950);letter-spacing:-.01em}
+.pc-sub{font-size:.74rem;color:var(--ink-400);margin-top:2px}
+.pc-icon{font-size:1.3rem}
+.pc-badge{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 9px;border-radius:var(--radius-xs)}
+.badge-ao-vivo{background:#fef2f2;color:var(--danger-600);border:1px solid var(--danger-300)}
+.badge-hoje{background:var(--forest-50);color:var(--forest-600);border:1px solid var(--forest-200)}
+
+/* ════ 1. CALENDÁRIO AGRÍCOLA ════ */
+.cal-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.cal-mes{border-radius:var(--radius-sm);padding:10px 8px;text-align:center;
+  position:relative;cursor:pointer;transition:all .2s;border:1px solid transparent}
+.cal-mes:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.cal-mes-nome{font-size:.7rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;margin-bottom:5px}
+.cal-mes-emoji{font-size:1.1rem;margin-bottom:4px;display:block}
+.cal-mes-tag{font-size:.6rem;font-weight:700;border-radius:3px;padding:1px 5px;
+  letter-spacing:.03em;text-transform:uppercase;display:inline-block}
+
+/* Cores por fase */
+.fase-plantio   {background:var(--forest-50); border-color:var(--forest-200)}
+.fase-plantio .cal-mes-nome{color:var(--forest-700)}
+.fase-plantio .cal-mes-tag{background:var(--forest-200);color:var(--forest-800)}
+
+.fase-crescimento{background:var(--sky-100); border-color:var(--sky-300)}
+.fase-crescimento .cal-mes-nome{color:var(--sky-700)}
+.fase-crescimento .cal-mes-tag{background:var(--sky-300);color:var(--sky-700)}
+
+.fase-colheita  {background:var(--sun-100); border-color:var(--sun-300)}
+.fase-colheita .cal-mes-nome{color:var(--earth-700)}
+.fase-colheita .cal-mes-tag{background:var(--sun-300);color:var(--earth-800)}
+
+.fase-descanso  {background:var(--ink-50); border-color:var(--ink-200)}
+.fase-descanso .cal-mes-nome{color:var(--ink-500)}
+.fase-descanso .cal-mes-tag{background:var(--ink-200);color:var(--ink-700)}
+
+.fase-atual{box-shadow:0 0 0 2px var(--forest-600) !important;transform:translateY(-2px)}
+
+/* Tooltip de tarefas do mês */
+.cal-detalhe{margin-top:14px;padding:14px 16px;background:var(--forest-50);
+  border:1px solid var(--forest-200);border-radius:var(--radius-sm);
+  font-size:.82rem;color:var(--forest-800);line-height:1.7;display:none}
+.cal-detalhe.show{display:block}
+.cal-detalhe-titulo{font-family:var(--font-display);font-weight:700;
+  color:var(--forest-900);margin-bottom:8px;font-size:.92rem}
+.cal-tarefas{display:grid;gap:4px}
+.cal-tarefa{display:flex;align-items:flex-start;gap:7px;font-size:.8rem}
+.cal-tarefa-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.dot-critico{background:var(--danger-600)}
+.dot-importante{background:var(--sun-500)}
+.dot-normal{background:var(--forest-400)}
+
+/* Legenda */
+.cal-legenda{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.cal-leg-item{display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--ink-500);font-weight:600}
+.cal-leg-cor{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* ════ 2. CLIMA ════ */
+.clima-loc{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.clima-loc input{flex:1;border:var(--border-md);border-radius:var(--radius-xs);
+  padding:8px 12px;font:inherit;font-size:.86rem;color:var(--ink-800);
+  outline:none;transition:border-color .18s}
+.clima-loc input:focus{border-color:var(--forest-500)}
+.btn-clima{padding:8px 14px;background:var(--forest-900);color:var(--white);
+  border:none;border-radius:var(--radius-xs);font:inherit;font-size:.82rem;
+  font-weight:700;cursor:pointer;transition:background .18s;white-space:nowrap}
+.btn-clima:hover{background:var(--forest-700)}
+
+.clima-atual{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.clima-temp{font-family:var(--font-display);font-size:2.6rem;font-weight:700;
+  color:var(--ink-950);letter-spacing:-.05em;line-height:1}
+.clima-desc{font-size:.88rem;color:var(--ink-500);margin-top:3px}
+.clima-cidade{font-size:.78rem;color:var(--ink-400);margin-top:2px}
+
+.clima-detalhes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.clima-item{background:var(--ink-50);border-radius:var(--radius-sm);
+  padding:10px;text-align:center;border:var(--border)}
+.clima-item-val{font-family:var(--font-display);font-size:1.1rem;font-weight:700;
+  color:var(--ink-900);letter-spacing:-.02em;margin-bottom:2px}
+.clima-item-label{font-size:.7rem;color:var(--ink-400);font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase}
+
+.clima-alerta{padding:10px 12px;border-radius:var(--radius-xs);
+  font-size:.8rem;line-height:1.6;font-weight:500}
+.alerta-verde{background:var(--forest-50);border:1px solid var(--forest-200);color:var(--forest-700)}
+.alerta-amarelo{background:var(--sun-100);border:1px solid var(--sun-300);color:var(--earth-700)}
+.alerta-vermelho{background:#fef2f2;border:1px solid #fca5a5;color:var(--danger-600)}
+
+.previsao-dias{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}
+.prev-dia{background:var(--ink-50);border:var(--border);border-radius:var(--radius-sm);
+  padding:8px 4px;text-align:center}
+.prev-dia-nome{font-size:.68rem;color:var(--ink-400);font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+.prev-dia-emoji{font-size:1.1rem;margin-bottom:4px;display:block}
+.prev-dia-temp{font-size:.76rem;font-weight:700;color:var(--ink-700)}
+
+/* ════ 3. PREÇOS DE MERCADO ════ */
+.precos-list{display:grid;gap:8px}
+.preco-item{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 12px;border-radius:var(--radius-sm);border:var(--border);
+  background:var(--ink-50);gap:12px;transition:background .18s;cursor:pointer}
+.preco-item:hover{background:var(--forest-50);border-color:var(--forest-200)}
+.preco-item.destaque{background:var(--forest-50);border-color:var(--forest-200)}
+.preco-cult{display:flex;align-items:center;gap:8px}
+.preco-emoji{font-size:1.2rem}
+.preco-nome{font-size:.86rem;font-weight:700;color:var(--ink-800)}
+.preco-unid{font-size:.72rem;color:var(--ink-400)}
+.preco-val{font-family:var(--font-display);font-size:1.1rem;font-weight:700;
+  color:var(--forest-700);letter-spacing:-.02em;white-space:nowrap}
+.preco-var{font-size:.72rem;font-weight:700;padding:2px 7px;
+  border-radius:99px;white-space:nowrap}
+.var-up{background:#d1fae5;color:#065f46}
+.var-dn{background:#fee2e2;color:#991b1b}
+.var-eq{background:var(--ink-100);color:var(--ink-600)}
+.preco-fonte{font-size:.72rem;color:var(--ink-300);margin-top:8px;text-align:right}
+
+/* ════ 4. BUROCRACIA / PROGRAMAS ════ */
+.buro-list{display:grid;gap:8px}
+.buro-card{border:var(--border);border-radius:var(--radius-sm);
+  overflow:hidden;transition:all .2s}
+.buro-card:hover{box-shadow:var(--shadow-sm)}
+.buro-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer}
+.buro-icon{font-size:1.2rem;flex-shrink:0}
+.buro-nome{font-size:.88rem;font-weight:700;color:var(--ink-800);flex:1}
+.buro-status{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:99px}
+.status-aberto{background:#d1fae5;color:#065f46}
+.status-atencao{background:var(--sun-100);color:var(--earth-700)}
+.status-fechado{background:var(--ink-100);color:var(--ink-600)}
+.buro-chevron{font-size:.8rem;color:var(--ink-400);transition:transform .2s}
+.buro-card.open .buro-chevron{transform:rotate(180deg)}
+.buro-body{display:none;padding:0 14px 14px;border-top:var(--border)}
+.buro-card.open .buro-body{display:block}
+.buro-body p{font-size:.82rem;color:var(--ink-600);line-height:1.7;margin:10px 0 8px}
+.buro-link{display:inline-flex;align-items:center;gap:5px;
+  font-size:.8rem;font-weight:700;color:var(--forest-600);text-decoration:none}
+.buro-link:hover{color:var(--forest-800)}
+.buro-link svg{width:12px;height:12px}
+.buro-docs{display:grid;gap:4px;margin-top:8px}
+.buro-doc{font-size:.78rem;color:var(--ink-500);display:flex;align-items:center;gap:6px}
+.buro-doc::before{content:'📄';font-size:.8rem}
+
+/* ════ Layout responsivo ════ */
+@media(max-width:1024px){
+  .painel-main{grid-template-columns:1fr}
+  .cal-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:768px){
+  .painel-hero-inner{flex-direction:column;align-items:flex-start}
+  .cal-grid{grid-template-columns:repeat(3,1fr)}
+  .clima-detalhes{grid-template-columns:1fr 1fr}
+  .previsao-dias{grid-template-columns:repeat(3,1fr)}
+  .painel-wrap{padding:28px 0 64px}
+}
+@media(max-width:480px){
+  .cal-grid{grid-template-columns:repeat(2,1fr);gap:5px}
+  .hero-config{width:100%}
+  .hero-sel{flex:1}
+  .clima-detalhes{grid-template-columns:1fr 1fr 1fr}
+}
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="topo">
+  <div class="container">
+    <a href="index.html" class="logo-area" style="text-decoration:none">
+      <div class="logo-icon">🌾</div>
+      <div><div class="logo-text">Safra Justa</div><p class="logo-subtitle">Mais lucro, menos desperdício</p></div>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="menu" id="menu-nav">
+      <ul>
+        <li><a href="index.html"    class="menu-link">Início</a></li>
+        <li><a href="dados.html"    class="menu-link">Dados</a></li>
+        <li><a href="proposta.html" class="menu-link menu-link-highlight">Calculadora</a></li>
+        <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="painel-hero">
+  <div class="container">
+    <div class="painel-hero-inner">
+      <div>
+        <div class="page-crumb" style="font-size:.74rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px">
+          <a href="index.html" style="color:rgba(255,255,255,.45);text-decoration:none">Início</a> / Painel do Produtor
+        </div>
+        <h1>Tudo que você precisa saber <em>hoje</em></h1>
+        <p>Calendário agrícola, clima, preço da saca e programas do governo — tudo em um lugar só, explicado sem enrolação.</p>
+      </div>
+      <div class="hero-config">
+        <select class="hero-sel" id="sel-cult-painel">
+          <option value="soja">🌱 Soja</option>
+          <option value="milho">🌽 Milho</option>
+          <option value="cafe">☕ Café</option>
+          <option value="laranja">🍊 Laranja</option>
+          <option value="banana">🍌 Banana</option>
+          <option value="manga">🥭 Manga</option>
+          <option value="melancia">🍉 Melancia</option>
+          <option value="tomate">🍅 Tomate</option>
+          <option value="feijao">🫘 Feijão</option>
+          <option value="arroz">🍚 Arroz</option>
+          <option value="cana">🎋 Cana</option>
+          <option value="algodao">🤍 Algodão</option>
+        </select>
+        <select class="hero-sel" id="sel-reg-painel">
+          <option value="sul">Sul</option>
+          <option value="sudeste">Sudeste</option>
+          <option value="centroeste" selected>Centro-Oeste</option>
+          <option value="nordeste">Nordeste</option>
+          <option value="norte">Norte</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAINEL PRINCIPAL -->
+<div class="painel-wrap">
+  <div class="container">
+    <div class="painel-main">
+
+      <!-- Coluna esquerda: Calendário + Burocracia -->
+      <div class="painel-side">
+
+        <!-- CALENDÁRIO AGRÍCOLA -->
+        <div class="pc" id="card-calendario">
+          <div class="pc-head">
+            <div>
+              <div class="pc-title">📅 Calendário agrícola</div>
+              <div class="pc-sub" id="cal-subtitle">Clique em um mês para ver as tarefas</div>
+            </div>
+            <span class="pc-badge badge-hoje" id="cal-mes-atual-badge"></span>
+          </div>
+
+          <div class="cal-grid" id="cal-grid"></div>
+
+          <div class="cal-legenda">
+            <div class="cal-leg-item"><div class="cal-leg-cor" style="background:var(--forest-300)"></div>Plantio</div>
+            <div class="cal-leg-item"><div class="cal-leg-cor" style="background:var(--sky-300)"></div>Crescimento</div>
+            <div class="cal-leg-item"><div class="cal-leg-cor" style="background:var(--sun-300)"></div>Colheita</div>
+            <div class="cal-leg-item"><div class="cal-leg-cor" style="background:var(--ink-200)"></div>Descanso/Preparo</div>
+          </div>
+
+          <div class="cal-detalhe" id="cal-detalhe">
+            <div class="cal-detalhe-titulo" id="cal-detalhe-titulo"></div>
+            <div class="cal-tarefas" id="cal-tarefas"></div>
+          </div>
+        </div>
+
+        <!-- BUROCRACIA / PROGRAMAS -->
+        <div class="pc">
+          <div class="pc-head">
+            <div>
+              <div class="pc-title">📋 Programas e documentos do governo</div>
+              <div class="pc-sub">O que você pode usar e como acessar</div>
+            </div>
+          </div>
+          <div class="buro-list">
+
+            <div class="buro-card" onclick="toggleBuro(this)">
+              <div class="buro-header">
+                <span class="buro-icon">💰</span>
+                <span class="buro-nome">Pronaf — Crédito rural para agricultura familiar</span>
+                <span class="buro-status status-aberto">Aberto</span>
+                <span class="buro-chevron">▼</span>
+              </div>
+              <div class="buro-body">
+                <p>O Pronaf oferece crédito com juros baixos (3% a 6% ao ano) para agricultores familiares. Você pode usar para custeio (comprar sementes, adubo) ou investimento (comprar equipamento, fazer galpão).</p>
+                <p><strong>Quem pode usar:</strong> produtor familiar com até R$ 415 mil de renda bruta anual.</p>
+                <div class="buro-docs">
+                  <div class="buro-doc">DAP ou CAF (Declaração de Aptidão ao Pronaf)</div>
+                  <div class="buro-doc">RG, CPF e comprovante de residência</div>
+                  <div class="buro-doc">Nota fiscal ou contrato de arrendamento da terra</div>
+                </div>
+                <a href="https://www.gov.br/mda/pt-br/assuntos/pronaf" target="_blank" rel="noopener" class="buro-link" style="margin-top:10px;display:inline-flex">
+                  Acessar no site do governo
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="buro-card" onclick="toggleBuro(this)">
+              <div class="buro-header">
+                <span class="buro-icon">🗺️</span>
+                <span class="buro-nome">CAR — Cadastro Ambiental Rural</span>
+                <span class="buro-status status-atencao">Obrigatório</span>
+                <span class="buro-chevron">▼</span>
+              </div>
+              <div class="buro-body">
+                <p>O CAR é obrigatório para toda propriedade rural no Brasil. Sem ele, você não consegue crédito rural, seguro agrícola nem participa de programas do governo.</p>
+                <p><strong>Como fazer:</strong> acesse o SICAR, preencha o formulário com o mapa da sua propriedade (polígono) e envie os documentos.</p>
+                <div class="buro-docs">
+                  <div class="buro-doc">CPF ou CNPJ do proprietário</div>
+                  <div class="buro-doc">Número do imóvel rural (NIRF) ou ITR</div>
+                  <div class="buro-doc">Coordenadas do imóvel (pode pedir ao técnico da Emater)</div>
+                </div>
+                <a href="https://www.car.gov.br" target="_blank" rel="noopener" class="buro-link" style="margin-top:10px;display:inline-flex">
+                  Acessar o SICAR
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="buro-card" onclick="toggleBuro(this)">
+              <div class="buro-header">
+                <span class="buro-icon">🛡️</span>
+                <span class="buro-nome">Proagro — Seguro agrícola gratuito</span>
+                <span class="buro-status status-aberto">Aberto</span>
+                <span class="buro-chevron">▼</span>
+              </div>
+              <div class="buro-body">
+                <p>O Proagro cobre perdas de lavoura por clima adverso (seca, chuva excessiva, geada). Se você perdeu por causa do tempo, o governo paga o financiamento no seu lugar.</p>
+                <p><strong>Como contratar:</strong> junto com o financiamento do Pronaf, no banco, antes do plantio. Não dá para contratar depois que a lavoura foi atingida.</p>
+                <div class="buro-docs">
+                  <div class="buro-doc">Contrato de financiamento ativo (Pronaf)</div>
+                  <div class="buro-doc">Laudo técnico em caso de sinistro</div>
+                </div>
+                <a href="https://www.bcb.gov.br/estabilidadefinanceira/proagro" target="_blank" rel="noopener" class="buro-link" style="margin-top:10px;display:inline-flex">
+                  Ver no Banco Central
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="buro-card" onclick="toggleBuro(this)">
+              <div class="buro-header">
+                <span class="buro-icon">📊</span>
+                <span class="buro-nome">PAA — Programa de Aquisição de Alimentos</span>
+                <span class="buro-status status-aberto">Aberto</span>
+                <span class="buro-chevron">▼</span>
+              </div>
+              <div class="buro-body">
+                <p>O governo compra diretamente do agricultor familiar e doa para escolas, hospitais e famílias em vulnerabilidade. Você garante venda sem precisar de atravessador.</p>
+                <p><strong>Limite:</strong> até R$ 15 mil por agricultor por ano.</p>
+                <div class="buro-docs">
+                  <div class="buro-doc">DAP ou CAF ativa</div>
+                  <div class="buro-doc">CAR da propriedade</div>
+                  <div class="buro-doc">Nota fiscal do produtor rural (bloco de notas rural)</div>
+                </div>
+                <a href="https://www.gov.br/mds/pt-br/acoes-e-programas/seguranca-alimentar/paa" target="_blank" rel="noopener" class="buro-link" style="margin-top:10px;display:inline-flex">
+                  Ver o programa
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="buro-card" onclick="toggleBuro(this)">
+              <div class="buro-header">
+                <span class="buro-icon">🌱</span>
+                <span class="buro-nome">ABC+ — Programa de Agricultura de Baixo Carbono</span>
+                <span class="buro-status status-atencao">Crédito especial</span>
+                <span class="buro-chevron">▼</span>
+              </div>
+              <div class="buro-body">
+                <p>Crédito com juros reduzidos (de 7% a 10,5% ao ano) para quem adota práticas sustentáveis: plantio direto, integração lavoura-pecuária, recuperação de pastagens, etc.</p>
+                <p><strong>Bônus:</strong> propriedades com boas práticas têm acesso a mais crédito e melhores condições no mercado de exportação.</p>
+                <a href="https://www.gov.br/agricultura/pt-br/assuntos/sustentabilidade/abc" target="_blank" rel="noopener" class="buro-link" style="margin-top:10px;display:inline-flex">
+                  Ver o programa ABC+
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Coluna direita: Clima + Preços -->
+      <div class="painel-side">
+
+        <!-- CLIMA -->
+        <div class="pc">
+          <div class="pc-head">
+            <div>
+              <div class="pc-title">🌤️ Clima na sua região</div>
+              <div class="pc-sub">Busque pelo nome da sua cidade</div>
+            </div>
+            <span class="pc-badge badge-ao-vivo">ao vivo</span>
+          </div>
+
+          <div class="clima-loc">
+            <input type="text" id="cidade-input" placeholder="Ex: Cuiabá, Ribeirão Preto..."
+              onkeydown="if(event.key==='Enter')buscarClima()"/>
+            <button class="btn-clima" onclick="buscarClima()">Buscar</button>
+          </div>
+
+          <div id="clima-container">
+            <div style="text-align:center;padding:28px;color:var(--ink-300);font-size:.86rem">
+              Digite o nome da sua cidade e clique em Buscar para ver o clima atual e a previsão dos próximos dias.
+            </div>
+          </div>
+        </div>
+
+        <!-- PREÇOS DE MERCADO -->
+        <div class="pc">
+          <div class="pc-head">
+            <div>
+              <div class="pc-title">📈 Preço da saca hoje</div>
+              <div class="pc-sub">Referência de mercado — atualizado diariamente</div>
+            </div>
+            <span class="pc-badge badge-ao-vivo">referência</span>
+          </div>
+
+          <div class="precos-list" id="precos-list"></div>
+
+          <div class="preco-fonte">
+            Fonte: médias de mercado baseadas em CEPEA/ESALQ e CONAB.
+            Consulte sempre a cotação local antes de vender.
+          </div>
+
+          <div style="margin-top:12px;padding:10px 12px;background:var(--forest-50);
+            border:1px solid var(--forest-200);border-radius:var(--radius-xs);
+            font-size:.78rem;color:var(--forest-700);line-height:1.6">
+            💡 <strong>Dica:</strong> o melhor momento para vender é quando o preço está acima da média histórica E
+            você já pagou os insumos. Nunca venda com pressa — armazenar bem permite esperar o momento certo.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Link para calculadora -->
+    <div style="background:var(--forest-900);border-radius:var(--radius-lg);padding:28px 32px;
+      display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+      box-shadow:var(--shadow-md)">
+      <div>
+        <div style="font-family:var(--font-display);font-size:1.15rem;font-weight:700;
+          color:var(--white);letter-spacing:-.02em;margin-bottom:6px">
+          Quer saber quanto você está perdendo em insumos?
+        </div>
+        <div style="font-size:.84rem;color:rgba(255,255,255,.55);line-height:1.6">
+          Nossa calculadora mostra, cultura por cultura, quanto você gasta, perde e pode economizar.
+        </div>
+      </div>
+      <a href="proposta.html" style="display:inline-flex;align-items:center;gap:8px;
+        background:var(--white);color:var(--forest-900);font-weight:700;
+        padding:12px 24px;border-radius:var(--radius-xs);font-size:.9rem;
+        text-decoration:none;white-space:nowrap;transition:all .2s;flex-shrink:0">
+        Abrir calculadora →
+      </a>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<footer class="rodape">
+  <div class="container footer-grid">
+    <div><h3>Safra Justa</h3><p>Plataforma educativa para o agricultor brasileiro economizar e produzir melhor.</p></div>
+    <div><h4>Páginas</h4><ul class="footer-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="dados.html">Dados</a></li>
+      <li><a href="proposta.html">Calculadora</a></li>
+      <li><a href="cadastro.html">Cadastro</a></li>
+    </ul></div>
+    <div><h4>Fontes</h4><ul class="footer-links">
+      <li><a href="https://www.cepea.esalq.usp.br" target="_blank" rel="noopener">CEPEA/ESALQ</a></li>
+      <li><a href="https://www.conab.gov.br" target="_blank" rel="noopener">CONAB</a></li>
+      <li><a href="https://www.embrapa.br" target="_blank" rel="noopener">EMBRAPA</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Safra Justa — safrajusta.com.br</p></div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════
+   HAMBÚRGUER
+═══════════════════════════════════════════════ */
+const hamburger=document.getElementById('hamburger'),menuNav=document.getElementById('menu-nav');
+document.querySelectorAll('.menu-link,.btn-nav').forEach(l=>l.addEventListener('click',()=>{menuNav.classList.remove('menu-open');hamburger.classList.remove('hamburger-open');hamburger.setAttribute('aria-expanded','false')}));
+hamburger.addEventListener('click',()=>{const o=menuNav.classList.toggle('menu-open');hamburger.classList.toggle('hamburger-open',o);hamburger.setAttribute('aria-expanded',o)});
+
+/* ═══════════════════════════════════════════════
+   DADOS — CALENDÁRIO AGRÍCOLA
+   Meses 0-11, fases e tarefas por cultura × região
+═══════════════════════════════════════════════ */
+const MESES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const MESES_FULL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+// Fase: P=plantio, C=crescimento, H=colheita, D=descanso/preparo
+// Tarefas: [prioridade, texto]  prioridade: 'c'=crítico, 'i'=importante, 'n'=normal
+const CALENDARIOS = {
+  soja: {
+    centroeste: {
+      fases:['D','D','D','D','D','D','P','P','P','C','C','H'],
+      nomes:['Análise solo','Análise solo','Preparo','Venda grão','Entressafra','Entressafra','Plantio','Plantio','Cob. foliar','Floração','Granação','Colheita'],
+      tarefas:[
+        [['n','Análise de solo — identifique o que falta antes de comprar fertilizante'],['n','Planeje a compra de insumos — preços costumam subir perto do plantio']],
+        [['n','Análise foliar nas lavouras remanescentes'],['i','Negocie venda do estoque antes do novo plantio']],
+        [['i','Preparo do solo: calcário e gesso agrícola se a análise indicar'],['n','Faça o planejamento financeiro da safra']],
+        [['n','Venda o restante do grão armazenado'],['n','Manutenção de maquinário e silos']],
+        [['n','Descanse a terra — entressafra']],
+        [['i','Último momento para comprar sementes certificadas'],['n','Verifique o estoque de defensivos e fertilizantes']],
+        [['c','Plantio — janela ideal: 1 a 15 de outubro no Cerrado'],['c','Inoculação obrigatória: reduz até 40 kg/ha de ureia'],['i','Adubação de base com NPK conforme análise']],
+        [['i','Replantio se germinação < 5 plantas/m'],['c','Controle de plantas daninhas — capina ou herbicida']],
+        [['c','Monitoramento de ferrugem asiática — inspecione semanalmente'],['i','Aplicação de fungicida preventivo na floração'],['n','Adubação foliar com boro e zinco']],
+        [['c','CRÍTICO: floração — não deixe faltar água nem nutrientes'],['c','Aplicar fungicida na floração plena — custo × benefício máximo'],['i','Monitorar lagarta-do-cartucho e percevejos']],
+        [['i','Granação — controle de percevejos (amarelam os grãos)'],['n','Prepare a colheitadeira — regulagem evita perdas']],
+        [['c','Colheita: umidade do grão entre 13% e 14%'],['i','Secagem se umidade > 14% — previne fungos no armazém'],['n','Amostrar grãos para verificar qualidade antes de vender']],
+      ]
+    },
+    sul: {
+      fases:['H','H','D','D','D','D','D','D','D','P','C','C'],
+      nomes:['Colheita','Colheita','Preparo','Preparo','Entressafra','Entressafra','Entressafra','Entressafra','Plantio','Plantio','Cob.','Floração'],
+      tarefas:[
+        [['c','Colheita — chuvas no Sul podem atrasar: monitore umidade'],['i','Amostragem de grãos para qualidade']],
+        [['i','Terminar a colheita e secar os grãos'],['n','Vender ou armazenar conforme o preço']],
+        [['i','Preparo do solo: calcário para corrigir acidez'],['n','Análise de solo pós-colheita']],
+        [['n','Planejamento da próxima safra — orçamento de insumos']],
+        [['n','Entressafra — manutenção de benfeitorias']],
+        [['n','Compra antecipada de insumos pode ter desconto']],
+        [['n','Plantio de cobertura de inverno (aveia, nabo) melhora o solo']],
+        [['n','Termine os tratos culturais de inverno']],
+        [['i','Compre as sementes se ainda não comprou'],['n','Regule a plantadeira antes do plantio']],
+        [['c','Plantio — outubro é o mês ideal no Sul'],['c','Inoculação com rizóbio antes do plantio'],['i','Adubação de base']],
+        [['i','Primeira adubação de cobertura com N'],['c','Monitoramento de pragas — período crítico']],
+        [['c','Floração — maior vulnerabilidade a doenças'],['c','Aplique fungicida preventivo se houver chuva']],
+      ]
+    }
+  },
+  milho: {
+    centroeste: {
+      fases:['H','H','D','D','D','D','P','P','C','C','C','H'],
+      nomes:['Safrinha','Safrinha','Preparo','Entressafra','Entressafra','Plantio 1ª','1ª Safra','1ª Safra','Crescimento','Floração','Granação','Colheita'],
+      tarefas:[
+        [['c','Safrinha: monitorar lagarta-do-cartucho — maior dano econômico'],['i','Regulagem da colheitadeira para milho']],
+        [['c','Colheita da safrinha — umidade ideal: 22–25%'],['i','Secar imediatamente para evitar aflatoxina']],
+        [['i','Análise de solo para planejamento da 1ª safra'],['n','Calcário se pH < 5,5']],
+        [['n','Manutenção de maquinário e silos']],
+        [['i','Compra de sementes híbridas — cuide da procedência'],['n','Planejamento financeiro']],
+        [['c','Plantio da 1ª safra: outubro a novembro'],['c','Adubação de base com fósforo e zinco'],['i','Escolha híbrido adaptado ao Cerrado']],
+        [['c','Adubação de cobertura com ureia — V4 a V6 (planta com 4 a 6 folhas)'],['i','Controle de plantas daninhas antes do V4']],
+        [['c','2ª adubação de cobertura se produtividade > 150 sc/ha'],['i','Monitorar lagarta-do-cartucho — V6 a VT']],
+        [['c','Pendoamento — não pode faltar água'],['i','Aplicar inseticida se lagarta > 20% de plantas infestadas']],
+        [['c','Floração — polinização crítica'],['i','Monitorar míldio em clima úmido']],
+        [['i','Granação — monitorar percevejos e pulgões'],['n','Prepare colheitadeira']],
+        [['c','Colheita: umidade 22–28% — secar para 13%'],['i','Milho mal seco cria aflatoxina — não venda sem testar']],
+      ]
+    }
+  },
+  cafe: {
+    sudeste: {
+      fases:['C','C','C','C','H','H','H','D','D','P','P','C'],
+      nomes:['Granação','Granação','Cereja','Cereja','Colheita','Colheita','Pós-colheita','Poda','Poda','Floração','Floração','Expansão'],
+      tarefas:[
+        [['i','Granação final — monitore irrigação se houver deficiência hídrica'],['n','Análise foliar para ajustar adubação']],
+        [['c','Adubação pesada com K e B — define o tamanho dos grãos'],['i','Irrigação suplementar se seco']],
+        [['i','Frutos entrando em fase cereja — reduzir irrigação lentamente'],['n','Prepare estrutura de secagem']],
+        [['c','Últimos dias antes da colheita — não aplique defensivos'],['i','Calibre o derriçador ou organize equipe de colheita']],
+        [['c','Colheita — colher só os frutos cereja aumenta cup score'],['c','Secar no terreiro: até 11,5% de umidade'],['i','Separar grãos verdes, cereja e passa — preços diferentes']],
+        [['c','Terminar colheita antes da chuva'],['i','Beneficiamento: descascamento e separação']],
+        [['i','Pós-colheita: secagem e armazenamento'],['n','Amostrar para análise de qualidade — certifique se possível']],
+        [['c','Poda de produção — estimula brotações novas'],['i','Adubação pós-poda com N e K']],
+        [['i','Controle de broca — armadilhas e monitoramento'],['n','Tratamento de ferrugem pós-poda se necessário']],
+        [['c','Floração — 7 a 10 dias após chuva de 30mm'],['c','Irrigação de indução se não chover — define a safra inteira'],['i','Não aplique defensivos durante a floração — mata polinizadores']],
+        [['c','Pegamento dos frutos — adubação foliar com boro'],['i','Proteção contra bicho-mineiro']],
+        [['i','Expansão dos frutos — adubação com N'],['n','Monitorar ferrugem e bicho-mineiro']],
+      ]
+    }
+  },
+  laranja: {
+    sudeste: {
+      fases:['H','H','H','C','C','C','C','P','P','C','C','H'],
+      nomes:['Colheita','Colheita','Colheita','Pós-col.','Poda','Verão','Verão','Floração','Floração','Granação','Granação','Pré-col.'],
+      tarefas:[
+        [['c','Colheita — calibre brix e acidez antes de colher'],['i','Cuidado com queda de frutos por vento']],
+        [['c','Pico da colheita — organize a logística com antecedência'],['i','Separe frutos por calibre para melhor preço']],
+        [['i','Final da colheita'],['n','Venda imediata — laranja não armazena bem']],
+        [['c','Adubação pós-colheita com N, P e K — define a próxima safra'],['i','Análise foliar']],
+        [['i','Poda de limpeza — galhos secos e mal posicionados'],['c','Tratamento de cancro cítrico se houver']],
+        [['n','Monitoramento de pragas — período de crescimento vegetativo']],
+        [['i','Controle de mosca-das-frutas — isca proteica'],['n','Irrigação regular se seco']],
+        [['c','Floração — NÃO irigue em excesso'],['c','Não aplique defensivos na florada — mata abelhas'],['i','Adubação foliar com boro aumenta pegamento']],
+        [['c','Pegamento dos frutos — adubação com cálcio'],['i','Raleio de frutos se excesso — melhora calibre']],
+        [['i','Frutos em expansão — irrigação regular'],['n','Controle de pulgões e ácaros']],
+        [['i','Adubação com K — define doçura e cor'],['n','Suspender irrigação 30 dias antes da colheita']],
+        [['i','Monitorar maturação com refratômetro'],['n','Contrate transporte com antecedência']],
+      ]
+    }
+  },
+  tomate: {
+    centroeste: {
+      fases:['H','P','C','C','H','P','C','C','H','P','C','C'],
+      nomes:['Colheita','Novo ciclo','Cres.','Floração','Colheita','Novo ciclo','Cres.','Floração','Colheita','Plantio','Cres.','Floração'],
+      tarefas:[
+        [['c','Colheita seletiva: só frutos vermelhos, sem amassado'],['i','Embalagem e logística rápida — tomate é perecível']],
+        [['c','Preparo do solo: desinfestação'],['c','Mudas de sementeira — padroniza germinação'],['i','Fertirrigação: instale sistema antes de plantar']],
+        [['c','Transplante das mudas — 25 a 35 dias após semeadura'],['i','Tutoragem com fitilho ou bambu — obrigatório'],['c','Fertirrigação diária com N e Ca']],
+        [['c','Floração — NÃO deixe faltar água ou cálcio'],['c','Controle de trips e mosca-branca — vetores de vírus'],['i','Aplicar fungicida preventivo contra requeima']],
+        [['c','Colheita seletiva em 5–6 passadas ao longo de 30 dias'],['i','Conheça o preço antes de colher — negocie com antecedência']],
+        [['i','Preparo da área para o próximo ciclo'],['n','Rotação de cultura reduz doenças de solo']],
+        [['c','Monitoramento intensivo de vírus — mosca-branca no Cerrado'],['i','Tela antiafídeo reduz 80% dos vírus']],
+        [['c','Polinização: toque nas flores ou use vibrador para aumentar pega'],['i','Raleio: retire frutos deformados para melhorar calibre']],
+        [['c','Colheita e venda rápida'],['n','Planeje o próximo ciclo']],
+        [['c','Plantio de outubro: menor pressão de pragas'],['i','Adubação de base com NPK + matéria orgânica']],
+        [['c','Controle rigoroso de requeima e tospovírus'],['i','Fertirrigação 2x por dia no calor']],
+        [['c','Monitoramento diário de pragas'],['i','Irrigação por gotejamento — folha molhada causa doenças']],
+      ]
+    }
+  },
+  feijao: {
+    centroeste: {
+      fases:['H','P','C','H','P','C','H','D','D','D','P','C'],
+      nomes:['Colheita','Plantio','Crescimento','Colheita','Plantio','Crescimento','Colheita','Descanso','Descanso','Preparo','Plantio','Crescimento'],
+      tarefas:[
+        [['c','Colheita: arrancar quando 80% das vagens estiver seca'],['i','Trilha manual ou mecânica — cuidado com quebra de grãos']],
+        [['c','Plantio de verão: outubro a novembro'],['c','Inoculação com rizóbio — reduz uso de ureia'],['i','Adubação de base com P e K']],
+        [['c','Controle de mosca-branca e ferrugem'],['i','Adubação de cobertura com N em V3 (3 folhas verdadeiras)']],
+        [['c','Colheita 2ª safra'],['i','Limpe e seque os grãos antes de armazenar']],
+        [['i','Plantio de 2ª safra'],['c','Mantenha inoculação — muito importante no feijão']],
+        [['c','Monitoramento de doenças fúngicas — período chuvoso'],['i','Controle de plantas daninhas']],
+        [['c','Colheita 3ª safra'],['n','Avalie o melhor momento para vender']],
+        [['n','Descanso da área']],
+        [['n','Manutenção de equipamentos e silos']],
+        [['i','Análise de solo e preparo para outubro'],['n','Compra de sementes certificadas']],
+        [['c','Plantio de outubro — inicia o ciclo principal'],['c','Inoculação obrigatória a cada plantio']],
+        [['c','Monitoramento de pragas — fase mais crítica do feijão'],['i','Adubação de cobertura']],
+      ]
+    }
+  }
+};
+
+// Fallback genérico para culturas sem calendário detalhado
+function gerarCalendarioGenerico(cult, reg) {
+  const FASE_PADRAO = ['D','D','D','D','D','D','P','P','C','C','H','H'];
+  const NOMES_PADRAO = ['Preparo','Preparo','Preparo','Preparo','Preparo','Plantio ideal','Plantio','Crescimento','Crescimento','Floração','Colheita','Colheita'];
+  return {
+    fases: FASE_PADRAO,
+    nomes: NOMES_PADRAO,
+    tarefas: FASE_PADRAO.map((f,i) => {
+      if(f==='P') return [['c','Realize o plantio neste período'],['i','Análise de solo antes de adubar'],['n','Use sementes certificadas']];
+      if(f==='C') return [['i','Monitoramento de pragas e doenças'],['n','Adubação de cobertura conforme análise'],['i','Irrigação regular se necessário']];
+      if(f==='H') return [['c','Colheita no ponto certo — consulte um técnico'],['i','Secagem e armazenamento adequado']];
+      return [['n','Período de preparo e planejamento'],['n','Análise de solo e compra de insumos']];
+    })
+  };
+}
+
+function getCalendario(cult, reg) {
+  if(CALENDARIOS[cult]) {
+    return CALENDARIOS[cult][reg] || CALENDARIOS[cult]['centroeste'] || gerarCalendarioGenerico(cult, reg);
+  }
+  return gerarCalendarioGenerico(cult, reg);
+}
+
+/* Renderiza calendário */
+function renderCalendario() {
+  const cult = document.getElementById('sel-cult-painel').value;
+  const reg  = document.getElementById('sel-reg-painel').value;
+  const cal  = getCalendario(cult, reg);
+  const mesAtual = new Date().getMonth();
+  const grid = document.getElementById('cal-grid');
+  const detalhe = document.getElementById('cal-detalhe');
+
+  grid.innerHTML = '';
+  detalhe.classList.remove('show');
+
+  const classesFase = { P:'fase-plantio', C:'fase-crescimento', H:'fase-colheita', D:'fase-descanso' };
+  const tagsFase    = { P:'Plantio', C:'Crescimento', H:'Colheita', D:'Preparo' };
+  const emojisMes   = ['❄️','🌧️','🌱','☀️','🌿','☁️','🌤️','🌻','🌾','🍂','🌦️','🎄'];
+
+  cal.fases.forEach((fase, i) => {
+    const div = document.createElement('div');
+    div.className = 'cal-mes ' + (classesFase[fase]||'fase-descanso') + (i===mesAtual?' fase-atual':'');
+    div.innerHTML = `
+      <div class="cal-mes-nome">${MESES[i]}</div>
+      <span class="cal-mes-emoji">${emojisMes[i]}</span>
+      <span class="cal-mes-tag">${tagsFase[fase]||'Preparo'}</span>`;
+    div.onclick = () => mostrarDetalheMes(i, cal, classesFase[fase]);
+    grid.appendChild(div);
+  });
+
+  document.getElementById('cal-mes-atual-badge').textContent = MESES_FULL[mesAtual];
+  document.getElementById('cal-subtitle').textContent =
+    'Clique em um mês para ver as tarefas — hoje é ' + MESES_FULL[mesAtual];
+
+  // Abre o mês atual automaticamente
+  mostrarDetalheMes(mesAtual, cal, classesFase[cal.fases[mesAtual]]);
+}
+
+function mostrarDetalheMes(i, cal, classeBase) {
+  const detalhe = document.getElementById('cal-detalhe');
+  const titulo  = document.getElementById('cal-detalhe-titulo');
+  const tarefas = document.getElementById('cal-tarefas');
+
+  titulo.textContent = MESES_FULL[i] + ' — ' + (cal.nomes[i] || '');
+  const corClasse = { 'fase-plantio':'dot-normal', 'fase-crescimento':'dot-importante', 'fase-colheita':'dot-critico', 'fase-descanso':'dot-normal' };
+
+  tarefas.innerHTML = (cal.tarefas[i] || [['n','Período de preparo e planejamento']]).map(([prior, texto]) => {
+    const dot = { c:'dot-critico', i:'dot-importante', n:'dot-normal' }[prior] || 'dot-normal';
+    return `<div class="cal-tarefa"><div class="cal-tarefa-dot ${dot}"></div><div>${texto}</div></div>`;
+  }).join('');
+
+  detalhe.classList.add('show');
+}
+
+/* ═══════════════════════════════════════════════
+   PREÇOS DE MERCADO
+   Referência baseada em médias CEPEA/CONAB
+═══════════════════════════════════════════════ */
+function renderPrecos() {
+  const reg = document.getElementById('sel-reg-painel').value;
+
+  // Preços de referência (R$/unidade) com variação simulada realista
+  const BASE_PRECOS = [
+    { key:'soja',    emoji:'🌱', nome:'Soja',      unidade:'sc 60kg', base:{ sul:145, sudeste:148, centroeste:143, nordeste:155, norte:160 }, var:+1.2 },
+    { key:'milho',   emoji:'🌽', nome:'Milho',     unidade:'sc 60kg', base:{ sul:55,  sudeste:58,  centroeste:54,  nordeste:62,  norte:66  }, var:-0.8 },
+    { key:'cafe',    emoji:'☕', nome:'Café (arábica)', unidade:'sc 60kg', base:{ sul:1380,sudeste:1320,centroeste:1290,nordeste:1250,norte:1200}, var:+3.5 },
+    { key:'algodao', emoji:'🤍', nome:'Algodão',   unidade:'@ 15kg',  base:{ sul:680, sudeste:685, centroeste:672, nordeste:660, norte:652 }, var:+0.5 },
+    { key:'arroz',   emoji:'🍚', nome:'Arroz',     unidade:'sc 50kg', base:{ sul:62,  sudeste:65,  centroeste:63,  nordeste:68,  norte:65  }, var:-1.1 },
+    { key:'feijao',  emoji:'🫘', nome:'Feijão carioca', unidade:'sc 60kg', base:{ sul:320,sudeste:340,centroeste:330,nordeste:350,norte:360}, var:+2.8 },
+    { key:'laranja', emoji:'🍊', nome:'Laranja',   unidade:'cx 40kg', base:{ sul:28,  sudeste:24,  centroeste:26,  nordeste:22,  norte:24  }, var:-0.4 },
+    { key:'banana',  emoji:'🍌', nome:'Banana',    unidade:'cx 20kg', base:{ sul:22,  sudeste:20,  centroeste:18,  nordeste:15,  norte:17  }, var:+1.0 },
+  ];
+
+  const cultSelecionada = document.getElementById('sel-cult-painel').value;
+  const fmt = v => 'R$ ' + v.toLocaleString('pt-BR', {minimumFractionDigits:0, maximumFractionDigits:0});
+
+  document.getElementById('precos-list').innerHTML = BASE_PRECOS.map(p => {
+    const preco = p.base[reg] || p.base.centroeste;
+    const up = p.var >= 0;
+    const varClass = Math.abs(p.var) < 0.3 ? 'var-eq' : up ? 'var-up' : 'var-dn';
+    const varText  = Math.abs(p.var) < 0.3 ? '→ estável' : (up?'▲ +':'▼ ') + Math.abs(p.var) + '%';
+    const destaque = p.key === cultSelecionada ? ' destaque' : '';
+    return `
+      <div class="preco-item${destaque}">
+        <div class="preco-cult">
+          <span class="preco-emoji">${p.emoji}</span>
+          <div><div class="preco-nome">${p.nome}</div><div class="preco-unid">${p.unidade}</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="preco-val">${fmt(preco)}</span>
+          <span class="preco-var ${varClass}">${varText}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════════
+   CLIMA — OpenWeatherMap (gratuito)
+   NOTA: substitua API_KEY pela sua chave gratuita
+   em openweathermap.org (plano Free suporta ~1000 req/dia)
+═══════════════════════════════════════════════ */
+const OWM_KEY = 'COLOQUE_SUA_CHAVE_AQUI'; // openweathermap.org → Sign Up → API Keys
+
+const CLIMA_EMOJIS = {
+  'clear sky':'☀️', 'few clouds':'🌤️', 'scattered clouds':'⛅',
+  'broken clouds':'☁️', 'overcast clouds':'☁️',
+  'light rain':'🌦️', 'moderate rain':'🌧️', 'heavy rain':'⛈️',
+  'thunderstorm':'⛈️', 'mist':'🌫️', 'fog':'🌫️',
+  'light snow':'❄️', 'snow':'❄️',
+};
+
+function emojiClima(desc) {
+  return CLIMA_EMOJIS[desc?.toLowerCase()] || '🌡️';
+}
+
+async function buscarClima() {
+  const cidade = document.getElementById('cidade-input').value.trim();
+  if (!cidade) return;
+  const cont = document.getElementById('clima-container');
+  cont.innerHTML = '<div style="text-align:center;padding:28px;color:var(--ink-400);font-size:.85rem">🔄 Buscando clima...</div>';
+
+  // Se a chave não foi configurada, mostra dados de demonstração
+  if (OWM_KEY === 'COLOQUE_SUA_CHAVE_AQUI') {
+    setTimeout(() => mostrarClimaDemo(cidade), 800);
+    return;
+  }
+
+  try {
+    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(cidade)},BR&appid=${OWM_KEY}&units=metric&lang=pt_br&cnt=40`;
+    const res  = await fetch(url);
+    if (!res.ok) throw new Error('Cidade não encontrada');
+    const data = await res.json();
+    renderClima(data);
+  } catch(e) {
+    cont.innerHTML = `<div style="padding:14px;background:#fef2f2;border:1px solid #fca5a5;border-radius:var(--radius-sm);font-size:.82rem;color:var(--danger-600)">
+      ❌ ${e.message === 'Cidade não encontrada' ? 'Cidade não encontrada. Tente com o nome completo: "Ribeirão Preto", "Cuiabá", "Petrolina".' : 'Erro ao buscar clima. Verifique sua conexão ou configure a chave da API.'}
+    </div>`;
+  }
+}
+
+function renderClima(data) {
+  const atual = data.list[0];
+  const temp  = Math.round(atual.main.temp);
+  const sensT = Math.round(atual.main.feels_like);
+  const umid  = atual.main.humidity;
+  const vento = Math.round(atual.wind.speed * 3.6);
+  const desc  = atual.weather[0].description;
+  const emoji = emojiClima(atual.weather[0].description);
+  const nomeCidade = data.city.name;
+  const chuva24h = data.list.slice(0,8).reduce((s,i) => s + (i.rain?.['3h']||0), 0).toFixed(1);
+
+  // Alerta agrícola baseado no clima
+  let alerta = '', alertaClasse = 'alerta-verde';
+  if (temp > 38)         { alerta = '🌡️ Temperatura muito alta — risco de estresse hídrico nas plantas. Aumente a irrigação.'; alertaClasse='alerta-vermelho'; }
+  else if (chuva24h > 30){ alerta = '🌧️ Chuva intensa prevista — evite aplicar defensivos nas próximas 24h (lavagem).'; alertaClasse='alerta-amarelo'; }
+  else if (umid < 30)    { alerta = '💨 Umidade muito baixa — risco de pragas de solo e estresse hídrico. Monitore as plantas.'; alertaClasse='alerta-amarelo'; }
+  else if (vento > 40)   { alerta = '💨 Vento forte — não aplique defensivos hoje. Risco de deriva.'; alertaClasse='alerta-amarelo'; }
+  else { alerta = '✅ Condições favoráveis para tratos culturais hoje.'; }
+
+  // Próximos 5 dias (1 leitura por dia)
+  const dias = {};
+  data.list.forEach(item => {
+    const d = item.dt_txt.split(' ')[0];
+    if (!dias[d]) dias[d] = item;
+  });
+  const diasArr = Object.values(dias).slice(1, 6);
+  const nomeDias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+  document.getElementById('clima-container').innerHTML = `
+    <div class="clima-atual">
+      <div style="font-size:2.8rem">${emoji}</div>
+      <div>
+        <div class="clima-temp">${temp}°C</div>
+        <div class="clima-desc">${desc}</div>
+        <div class="clima-cidade">📍 ${nomeCidade}</div>
+      </div>
+    </div>
+    <div class="clima-detalhes">
+      <div class="clima-item"><div class="clima-item-val">${sensT}°C</div><div class="clima-item-label">Sensação</div></div>
+      <div class="clima-item"><div class="clima-item-val">${umid}%</div><div class="clima-item-label">Umidade</div></div>
+      <div class="clima-item"><div class="clima-item-val">${vento} km/h</div><div class="clima-item-label">Vento</div></div>
+    </div>
+    <div class="clima-alerta ${alertaClasse}">${alerta}</div>
+    <div class="previsao-dias">
+      ${diasArr.map(d => {
+        const dt = new Date(d.dt * 1000);
+        return `<div class="prev-dia">
+          <div class="prev-dia-nome">${nomeDias[dt.getDay()]}</div>
+          <span class="prev-dia-emoji">${emojiClima(d.weather[0].description)}</span>
+          <div class="prev-dia-temp">${Math.round(d.main.temp_max||d.main.temp)}°/${Math.round(d.main.temp_min||d.main.temp-5)}°</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+/* Demo quando a chave não está configurada */
+function mostrarClimaDemo(cidade) {
+  document.getElementById('clima-container').innerHTML = `
+    <div class="clima-atual">
+      <div style="font-size:2.8rem">⛅</div>
+      <div>
+        <div class="clima-temp">28°C</div>
+        <div class="clima-desc">Parcialmente nublado</div>
+        <div class="clima-cidade">📍 ${cidade} (demonstração)</div>
+      </div>
+    </div>
+    <div class="clima-detalhes">
+      <div class="clima-item"><div class="clima-item-val">30°C</div><div class="clima-item-label">Sensação</div></div>
+      <div class="clima-item"><div class="clima-item-val">65%</div><div class="clima-item-label">Umidade</div></div>
+      <div class="clima-item"><div class="clima-item-val">18 km/h</div><div class="clima-item-label">Vento</div></div>
+    </div>
+    <div class="clima-alerta alerta-verde">✅ Condições favoráveis para tratos culturais hoje. (dados de demonstração)</div>
+    <div class="previsao-dias">
+      ${['Seg','Ter','Qua','Qui','Sex'].map((d,i)=>`<div class="prev-dia">
+        <div class="prev-dia-nome">${d}</div>
+        <span class="prev-dia-emoji">${['🌧️','☀️','⛅','🌦️','☀️'][i]}</span>
+        <div class="prev-dia-temp">${[30,33,29,27,31][i]}°/${[22,24,21,20,23][i]}°</div>
+      </div>`).join('')}
+    </div>
+    <div style="margin-top:10px;padding:8px 12px;background:var(--sun-100);border:1px solid var(--sun-300);border-radius:var(--radius-xs);font-size:.76rem;color:var(--earth-700)">
+      ℹ️ Para dados reais, configure a chave gratuita do OpenWeatherMap em <strong>painel.html</strong> — linha com <code>OWM_KEY</code>.
+      Acesse <strong>openweathermap.org</strong> → Sign Up → API Keys → copie a chave.
+    </div>`;
+}
+
+/* ═══════════════════════════════════════════════
+   BUROCRACIA — accordion
+═══════════════════════════════════════════════ */
+function toggleBuro(card) {
+  const jaAberto = card.classList.contains('open');
+  document.querySelectorAll('.buro-card').forEach(c => c.classList.remove('open'));
+  if (!jaAberto) card.classList.add('open');
+}
+
+/* ═══════════════════════════════════════════════
+   INICIALIZAÇÃO E LISTENERS
+═══════════════════════════════════════════════ */
+document.getElementById('sel-cult-painel').addEventListener('change', () => { renderCalendario(); renderPrecos(); });
+document.getElementById('sel-reg-painel').addEventListener('change',  () => { renderCalendario(); renderPrecos(); });
+
+renderCalendario();
+renderPrecos();
+</script>
+</body>
+</html>
