@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -206,6 +205,114 @@
   .hero-config{width:100%}
   .hero-sel{flex:1}
   .clima-detalhes{grid-template-columns:1fr 1fr 1fr}
+}
+
+/* ════ CHECKLIST DE BENEFÍCIOS ════ */
+.beneficios-section{padding:52px 0 0;margin-top:20px}
+.beneficios-wrap{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-sm);overflow:hidden}
+
+/* ── Stepper de perguntas ── */
+.bq-wrap{padding:28px 28px 24px}
+.bq-progress{display:flex;gap:4px;margin-bottom:24px}
+.bq-prog-dot{flex:1;height:4px;border-radius:99px;background:var(--ink-100);transition:background .3s}
+.bq-prog-dot.done{background:var(--forest-500)}
+.bq-prog-dot.active{background:var(--forest-300)}
+
+.bq-counter{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink-400);margin-bottom:10px}
+.bq-pergunta{font-family:var(--font-display);font-size:1.1rem;font-weight:600;
+  color:var(--forest-950);letter-spacing:-.01em;line-height:1.35;margin-bottom:6px}
+.bq-dica{font-size:.8rem;color:var(--ink-400);line-height:1.55;margin-bottom:20px}
+
+/* Opções de resposta */
+.bq-opcoes{display:grid;gap:8px}
+.bq-opcao{display:flex;align-items:center;gap:12px;padding:12px 16px;
+  border:var(--border-md);border-radius:var(--radius-sm);cursor:pointer;
+  transition:all .18s;background:var(--white);font:inherit;text-align:left;width:100%}
+.bq-opcao:hover{background:var(--forest-50);border-color:var(--forest-300)}
+.bq-opcao.selected{background:var(--forest-900);border-color:var(--forest-900);color:var(--white)}
+.bq-opcao-emoji{font-size:1.2rem;flex-shrink:0}
+.bq-opcao-label{font-size:.88rem;font-weight:600;line-height:1.3}
+.bq-opcao-sub{font-size:.74rem;opacity:.75;margin-top:2px;font-weight:400}
+
+.bq-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px}
+.bq-btn-prev{background:var(--white);color:var(--ink-600);border:var(--border-md);
+  padding:9px 18px;border-radius:var(--radius-xs);font:inherit;font-size:.84rem;
+  font-weight:600;cursor:pointer;transition:all .18s}
+.bq-btn-prev:hover{background:var(--ink-50)}
+.bq-btn-next{background:var(--forest-900);color:var(--white);border:none;
+  padding:9px 22px;border-radius:var(--radius-xs);font:inherit;font-size:.84rem;
+  font-weight:700;cursor:pointer;transition:all .18s}
+.bq-btn-next:hover{background:var(--forest-700)}
+.bq-btn-next:disabled{opacity:.35;cursor:not-allowed}
+
+/* ── Resultado ── */
+.bq-resultado{display:none;padding:28px}
+.bq-resultado.show{display:block}
+
+.bq-res-header{margin-bottom:20px}
+.bq-res-titulo{font-family:var(--font-display);font-size:1.2rem;font-weight:700;
+  color:var(--forest-950);letter-spacing:-.02em;margin-bottom:4px}
+.bq-res-sub{font-size:.84rem;color:var(--ink-500);line-height:1.6}
+
+/* Cards de benefício */
+.bq-beneficios{display:grid;gap:10px;margin-bottom:20px}
+.bq-ben{border-radius:var(--radius-md);overflow:hidden;border:var(--border);transition:all .2s}
+.bq-ben:hover{box-shadow:var(--shadow-sm)}
+.bq-ben-header{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.bq-ben-icon{font-size:1.3rem;flex-shrink:0}
+.bq-ben-info{flex:1;min-width:0}
+.bq-ben-nome{font-size:.9rem;font-weight:700;color:var(--ink-900);margin-bottom:2px}
+.bq-ben-desc{font-size:.76rem;color:var(--ink-500);line-height:1.4}
+.bq-ben-status{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.bq-status-pill{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 9px;border-radius:99px;white-space:nowrap}
+
+/* Status cores */
+.status-elegivel    {background:#d1fae5;color:#065f46}
+.status-pendente    {background:var(--sun-100);color:var(--earth-700)}
+.status-nao-elegivel{background:var(--ink-100);color:var(--ink-600)}
+.status-verificar   {background:var(--sky-100);color:var(--sky-700)}
+
+/* Faixa colorida lateral por status */
+.bq-ben.elegivel    {border-left:4px solid #10b981}
+.bq-ben.pendente    {border-left:4px solid var(--sun-500)}
+.bq-ben.verificar   {border-left:4px solid var(--sky-500)}
+.bq-ben.nao-elegivel{border-left:4px solid var(--ink-300);opacity:.65}
+
+/* Corpo expandido */
+.bq-ben-body{display:none;padding:0 16px 14px;border-top:var(--border)}
+.bq-ben.open .bq-ben-body{display:block}
+.bq-ben-body-texto{font-size:.8rem;color:var(--ink-600);line-height:1.7;margin:10px 0 8px}
+.bq-docs-title{font-size:.72rem;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--ink-400);margin-bottom:6px}
+.bq-doc-item{display:flex;align-items:flex-start;gap:7px;font-size:.78rem;
+  color:var(--ink-600);margin-bottom:4px;line-height:1.4}
+.bq-doc-item::before{content:'📄';font-size:.75rem;flex-shrink:0;margin-top:1px}
+.bq-link-govbr{display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+  padding:8px 16px;background:var(--forest-900);color:var(--white);
+  font-size:.8rem;font-weight:700;border-radius:var(--radius-xs);
+  text-decoration:none;transition:background .18s}
+.bq-link-govbr:hover{background:var(--forest-700)}
+.bq-link-govbr svg{width:13px;height:13px;opacity:.7}
+
+/* Barra de elegibilidade */
+.bq-eligibilidade{display:flex;gap:16px;padding:14px 16px;
+  background:var(--ink-50);border-top:var(--border);flex-wrap:wrap}
+.bq-elig-item{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600}
+.bq-elig-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+.bq-refazer{display:inline-flex;align-items:center;gap:6px;
+  background:transparent;border:var(--border-md);color:var(--ink-600);
+  padding:9px 18px;border-radius:var(--radius-xs);font:inherit;font-size:.84rem;
+  font-weight:600;cursor:pointer;transition:all .18s}
+.bq-refazer:hover{background:var(--ink-50)}
+
+@media(max-width:768px){
+  .bq-wrap,.bq-resultado{padding:20px 16px}
+  .bq-ben-header{gap:8px}
+  .bq-eligibilidade{gap:10px}
 }
   </style>
 </head>
@@ -477,6 +584,59 @@
 
       </div>
 
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════
+         CHECKLIST DE BENEFÍCIOS DO GOVERNO
+    ═══════════════════════════════════════════ -->
+    <div class="beneficios-section">
+      <div style="margin-bottom:16px">
+        <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;
+          color:var(--forest-950);letter-spacing:-.02em;margin-bottom:6px">
+          🏛️ Descubra seus direitos
+        </div>
+        <div style="font-size:.88rem;color:var(--ink-500);line-height:1.7;max-width:64ch">
+          Responda 8 perguntas rápidas sobre sua situação. O sistema mostra quais programas do governo
+          você pode acessar — e o link certo para consultar com seu CPF no gov.br.
+        </div>
+      </div>
+
+      <div class="beneficios-wrap">
+
+        <!-- PERGUNTAS -->
+        <div class="bq-wrap" id="bq-perguntas">
+          <div class="bq-progress" id="bq-progress"></div>
+          <div class="bq-counter" id="bq-counter">Pergunta 1 de 8</div>
+          <div class="bq-pergunta" id="bq-pergunta"></div>
+          <div class="bq-dica"    id="bq-dica"></div>
+          <div class="bq-opcoes"  id="bq-opcoes"></div>
+          <div class="bq-nav">
+            <button class="bq-btn-prev" id="bq-prev" onclick="bqAnterior()" style="visibility:hidden">← Voltar</button>
+            <button class="bq-btn-next" id="bq-next" onclick="bqProximo()" disabled>Próxima →</button>
+          </div>
+        </div>
+
+        <!-- RESULTADO -->
+        <div class="bq-resultado" id="bq-resultado">
+          <div class="bq-res-header">
+            <div class="bq-res-titulo" id="bq-res-titulo">Seu perfil de benefícios</div>
+            <div class="bq-res-sub"    id="bq-res-sub"></div>
+          </div>
+          <div class="bq-beneficios" id="bq-lista"></div>
+          <div class="bq-eligibilidade" id="bq-elig"></div>
+          <div style="margin-top:14px;padding:12px 14px;background:var(--sun-100);
+            border:1px solid var(--sun-300);border-radius:var(--radius-xs);
+            font-size:.78rem;color:var(--earth-700);line-height:1.6">
+            ⚠️ <strong>Atenção:</strong> este checklist é apenas uma orientação educativa baseada nas regras gerais dos programas.
+            Para confirmação oficial, acesse os links do gov.br abaixo ou procure a Emater, Senar ou um banco credenciado.
+          </div>
+          <div style="margin-top:14px">
+            <button class="bq-refazer" onclick="bqReiniciar()">↺ Refazer o checklist</button>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- Link para calculadora -->
@@ -943,6 +1103,254 @@ document.getElementById('sel-reg-painel').addEventListener('change',  () => { re
 
 renderCalendario();
 renderPrecos();
+
+/* ═══════════════════════════════════════════════════════
+   CHECKLIST DE BENEFÍCIOS — lógica completa
+═══════════════════════════════════════════════════════ */
+
+const BQ_PERGUNTAS = [
+  { id:'tipo_produtor', pergunta:'Como você se define como produtor rural?',
+    dica:'Isso define acesso ao Pronaf e programas de agricultura familiar.',
+    opcoes:[
+      {val:'familiar',emoji:'🏡',label:'Agricultor familiar',sub:'Trabalho principalmente com minha família na terra'},
+      {val:'medio',   emoji:'🚜',label:'Produtor médio',     sub:'Tenho funcionários e área entre 4 e 15 módulos fiscais'},
+      {val:'grande',  emoji:'🏭',label:'Grande produtor',    sub:'Acima de 15 módulos fiscais ou empresa rural'},
+      {val:'nao_sei', emoji:'🤷',label:'Não tenho certeza',  sub:'Quero entender melhor minha classificação'},
+    ]},
+  { id:'tem_dap_caf', pergunta:'Você tem DAP ou CAF ativa?',
+    dica:'A DAP/CAF é o documento que comprova que você é agricultor familiar. Sem ela, não dá para acessar o Pronaf e vários outros programas.',
+    opcoes:[
+      {val:'sim',     emoji:'✅',label:'Sim, tenho e está ativa',sub:''},
+      {val:'vencida', emoji:'⏰',label:'Tinha mas está vencida', sub:'Preciso renovar'},
+      {val:'nao',     emoji:'❌',label:'Não tenho',              sub:'Nunca tirei'},
+      {val:'nao_sei', emoji:'🤷',label:'Não sei o que é isso',  sub:'Preciso descobrir'},
+    ]},
+  { id:'tem_car', pergunta:'Sua propriedade está cadastrada no CAR (Cadastro Ambiental Rural)?',
+    dica:'O CAR é obrigatório para toda propriedade rural no Brasil desde 2016. Sem ele, você não consegue crédito rural nem seguro agrícola.',
+    opcoes:[
+      {val:'sim',    emoji:'✅',label:'Sim, está regularizada',      sub:''},
+      {val:'pendente',emoji:'⏳',label:'Cadastrei mas tem pendências',sub:'Análise em andamento'},
+      {val:'nao',    emoji:'❌',label:'Não está cadastrada',          sub:'Ainda não fiz o CAR'},
+      {val:'nao_sei',emoji:'🤷',label:'Não sei dizer',               sub:'Preciso verificar'},
+    ]},
+  { id:'tem_financiamento', pergunta:'Você tem algum financiamento rural ativo?',
+    dica:'O Proagro (seguro contra perda por clima) só pode ser contratado junto com um financiamento ativo, antes do plantio.',
+    opcoes:[
+      {val:'sim_pronaf',emoji:'💳',label:'Sim, tenho Pronaf ativo',  sub:'Financiamento de agricultura familiar'},
+      {val:'sim_outro', emoji:'💰',label:'Sim, outro financiamento', sub:'FCO, Pronamp, crédito rural convencional'},
+      {val:'nao',       emoji:'❌',label:'Não tenho financiamento',   sub:'Pago tudo à vista'},
+      {val:'quero',     emoji:'🙋',label:'Quero mas não sei como',   sub:'Gostaria de acessar crédito rural'},
+    ]},
+  { id:'renda_bruta', pergunta:'Qual é a renda bruta anual da sua propriedade?',
+    dica:'Renda bruta é tudo que você recebeu pelas vendas no ano, antes de descontar os custos.',
+    opcoes:[
+      {val:'ate_20k',   emoji:'🌱',label:'Até R$ 20 mil / ano',            sub:'Pronaf Microcrédito — juros de 0,5% ao ano'},
+      {val:'ate_415k',  emoji:'🌾',label:'Entre R$ 20 mil e R$ 415 mil',  sub:'Pronaf padrão — juros de 3% a 6% ao ano'},
+      {val:'acima_415k',emoji:'🏭',label:'Acima de R$ 415 mil',           sub:'Outros programas disponíveis'},
+      {val:'nao_sei',   emoji:'🤷',label:'Não calculo isso regularmente', sub:'Preciso de ajuda para calcular'},
+    ]},
+  { id:'vende_governo', pergunta:'Você tem interesse em vender para o governo (escolas, hospitais, prefeituras)?',
+    dica:'O PAA e o PNAE compram direto de agricultores familiares, sem intermediário, com preços acima do mercado.',
+    opcoes:[
+      {val:'ja_vendo', emoji:'✅',label:'Sim, já participo do PAA ou PNAE',sub:''},
+      {val:'interesse',emoji:'🙋',label:'Tenho interesse',                 sub:'Quero saber como participar'},
+      {val:'nao',      emoji:'❌',label:'Não tenho interesse agora',        sub:'Prefiro o mercado convencional'},
+      {val:'nao_sabia',emoji:'😮',label:'Não sabia que era possível',      sub:'Quero entender melhor'},
+    ]},
+  { id:'praticas_sustentaveis', pergunta:'Você usa ou quer adotar práticas de agricultura sustentável?',
+    dica:'Plantio direto, integração lavoura-pecuária e agrofloresta abrem acesso ao ABC+ com juros reduzidos.',
+    opcoes:[
+      {val:'ja_usa',   emoji:'🌱',label:'Sim, já uso plantio direto ou práticas similares',sub:''},
+      {val:'interesse',emoji:'🙋',label:'Tenho interesse em adotar',                        sub:'Quero saber os benefícios'},
+      {val:'nao',      emoji:'❌',label:'Não uso e não tenho interesse agora',               sub:''},
+      {val:'nao_sei',  emoji:'🤷',label:'Não sei o que isso envolve',                       sub:'Quero entender'},
+    ]},
+  { id:'perdeu_safra', pergunta:'Você já perdeu uma safra por causa de seca, chuva, geada ou outro evento climático?',
+    dica:'Quem perdeu por clima pode ter direito ao Garantia-Safra ou ao Proagro nas próximas safras.',
+    opcoes:[
+      {val:'sim_recente',emoji:'😢',label:'Sim, perdi safra recentemente (últimos 2 anos)',sub:'Posso ter indenização pendente'},
+      {val:'sim_antes',  emoji:'📅',label:'Sim, já perdi antes',                           sub:'Mas foi há mais de 2 anos'},
+      {val:'nao',        emoji:'✅',label:'Não, nunca perdi safra por clima',               sub:''},
+      {val:'semiarido',  emoji:'🌵',label:'Sou do Semiárido e já sofri com seca',         sub:'PE, CE, RN, PB, AL, SE, PI, BA, MG norte'},
+    ]},
+];
+
+const BENEFICIOS = [
+  { id:'pronaf', icon:'💰', nome:'Pronaf — Crédito rural com juros baixos', desc:'Financiamento de custeio e investimento para agricultores familiares',
+    elegivel:r=>['familiar','nao_sei'].includes(r.tipo_produtor) && r.renda_bruta!=='acima_415k',
+    pendente:r=>r.tem_dap_caf!=='sim',
+    texto:r=>`Você se enquadra no Pronaf com juros de <strong>${r.renda_bruta==='ate_20k'?'0,5% ao ano (Microcrédito Rural)':'3% a 6% ao ano'}</strong>. Use para comprar sementes, adubo, equipamento ou fazer benfeitorias.`,
+    pendencias:r=>{const p=[];if(r.tem_dap_caf==='nao')p.push('Tirar a DAP/CAF na Emater ou sindicato rural — é gratuita');if(r.tem_dap_caf==='vencida')p.push('Renovar a DAP/CAF antes de acessar o crédito');if(r.tem_car==='nao')p.push('Regularizar o CAR da propriedade');return p;},
+    docs:['DAP ou CAF ativa','CAR regularizado','RG, CPF e comprovante de residência','Nota fiscal ou contrato de arrendamento'],
+    link:'https://www.gov.br/mda/pt-br/assuntos/pronaf', linkLabel:'Ver Pronaf',
+    linkConsulta:'https://www.bcb.gov.br/estabilidadefinanceira/proagroconsulta', linkConsultaLabel:'Consultar no Banco Central'},
+
+  { id:'proagro', icon:'🛡️', nome:'Proagro — Seguro agrícola gratuito', desc:'Cobertura de perdas por seca, chuva, geada e adversidades climáticas',
+    elegivel:r=>['sim_pronaf','quero'].includes(r.tem_financiamento)||r.perdeu_safra==='sim_recente',
+    pendente:r=>r.tem_financiamento==='nao'||r.tem_dap_caf!=='sim',
+    texto:()=>'O Proagro cobre perdas de lavoura por clima. Deve ser contratado <strong>antes do plantio</strong>, junto com o financiamento no banco. Se perdeu safra com Proagro ativo, pode ter indenização pendente.',
+    pendencias:r=>{const p=[];if(r.tem_financiamento==='nao')p.push('Contratar financiamento Pronaf — o Proagro é vinculado a ele');if(r.perdeu_safra==='sim_recente')p.push('Verificar se havia Proagro ativo na safra perdida — ligue para o banco');return p;},
+    docs:['Contrato de financiamento ativo','Laudo técnico em caso de sinistro','DAP/CAF ativa (para Proagro Mais)'],
+    link:'https://www.bcb.gov.br/estabilidadefinanceira/proagro', linkLabel:'Ver Proagro',
+    linkConsulta:'https://www.bcb.gov.br/estabilidadefinanceira/proagroconsulta', linkConsultaLabel:'Consultar sinistros pendentes'},
+
+  { id:'garantia_safra', icon:'🌵', nome:'Garantia-Safra — Semiárido', desc:'Pagamento emergencial em caso de perda total de safra por clima',
+    elegivel:r=>r.perdeu_safra==='semiarido'||(r.perdeu_safra==='sim_recente'&&r.tem_dap_caf==='sim'),
+    pendente:r=>r.tem_dap_caf!=='sim',
+    texto:()=>'O Garantia-Safra paga <strong>R$ 1.100 por família</strong> em caso de perda acima de 50% da safra de milho, feijão, arroz, mandioca ou algodão. Específico para municípios do Semiárido.',
+    pendencias:r=>{const p=[];if(r.tem_dap_caf!=='sim')p.push('DAP/CAF ativa é obrigatória');p.push('Verificar se seu município está na lista do Garantia-Safra deste ano');return p;},
+    docs:['DAP/CAF ativa','Comprovante de plantio (nota fiscal de sementes)','Declaração de perda emitida pela prefeitura ou Emater'],
+    link:'https://www.gov.br/mda/pt-br/assuntos/garantia-safra', linkLabel:'Ver Garantia-Safra',
+    linkConsulta:'https://consultapublica.dataprev.gov.br/garantiasafra/', linkConsultaLabel:'Consultar se tenho pagamento pendente'},
+
+  { id:'paa', icon:'📊', nome:'PAA — Venda direta para o governo', desc:'O governo compra sua produção — sem intermediário — e doa para escolas e hospitais',
+    elegivel:r=>['familiar','nao_sei'].includes(r.tipo_produtor)&&['interesse','nao_sabia','ja_vendo'].includes(r.vende_governo),
+    pendente:r=>r.tem_dap_caf!=='sim'||r.vende_governo==='interesse',
+    texto:()=>'O PAA garante venda de até <strong>R$ 15 mil por agricultor por ano</strong>, sem precisar de intermediário. Preços geralmente acima do mercado.',
+    pendencias:r=>{const p=[];if(r.tem_dap_caf!=='sim')p.push('DAP/CAF ativa é obrigatória');if(r.vende_governo!=='ja_vendo')p.push('Procurar a Secretaria Municipal de Agricultura para entrar em uma chamada pública');return p;},
+    docs:['DAP/CAF ativa','CAR regularizado','Nota fiscal do produtor rural','Conta em banco público (BB ou Caixa)'],
+    link:'https://www.gov.br/mds/pt-br/acoes-e-programas/seguranca-alimentar/paa', linkLabel:'Ver o PAA',
+    linkConsulta:'https://www.gov.br/mds/pt-br/acoes-e-programas/seguranca-alimentar/paa', linkConsultaLabel:'Encontrar chamadas abertas'},
+
+  { id:'pnae', icon:'🏫', nome:'PNAE — Merenda Escolar (30% obrigatório da AF)', desc:'Por lei, 30% dos recursos da merenda devem vir de agricultores familiares locais',
+    elegivel:r=>['familiar','nao_sei'].includes(r.tipo_produtor)&&['interesse','nao_sabia','ja_vendo'].includes(r.vende_governo),
+    pendente:r=>r.tem_dap_caf!=='sim',
+    texto:()=>'Por lei, <strong>no mínimo 30% da merenda escolar</strong> deve vir de agricultores familiares locais. As prefeituras fazem chamadas públicas ao longo do ano.',
+    pendencias:r=>{const p=['Contatar a Secretaria Municipal de Educação para ver quando abre a próxima chamada'];if(r.tem_dap_caf!=='sim')p.unshift('DAP/CAF ativa é obrigatória');return p;},
+    docs:['DAP/CAF ativa','Nota fiscal do produtor rural','Certidão negativa de débitos','CAR regularizado'],
+    link:'https://www.fnde.gov.br/index.php/programas/pnae', linkLabel:'Ver o PNAE',
+    linkConsulta:'https://www.fnde.gov.br/index.php/programas/pnae/pnae-sobre-o-programa/pnae-agricultura-familiar', linkConsultaLabel:'Como participar'},
+
+  { id:'abc_mais', icon:'🌱', nome:'ABC+ — Crédito para agricultura sustentável', desc:'Juros reduzidos para quem adota práticas de baixo carbono',
+    elegivel:r=>['interesse','ja_usa'].includes(r.praticas_sustentaveis),
+    pendente:r=>r.tem_car==='nao'||r.tem_dap_caf!=='sim',
+    texto:()=>'O ABC+ financia plantio direto, recuperação de pastagens e sistemas agroflorestais com <strong>juros de 7% a 10,5% ao ano</strong> — abaixo do mercado.',
+    pendencias:r=>{const p=[];if(r.tem_car!=='sim')p.push('CAR regularizado é obrigatório para o ABC+');if(r.tipo_produtor==='familiar'&&r.tem_dap_caf!=='sim')p.push('DAP/CAF ativa para agricultores familiares');return p;},
+    docs:['CAR regularizado','Projeto técnico por engenheiro agrônomo','Documentos pessoais e da propriedade'],
+    link:'https://www.gov.br/agricultura/pt-br/assuntos/sustentabilidade/abc', linkLabel:'Ver o ABC+',
+    linkConsulta:'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/abc-programa-agricultura-baixo-carbono', linkConsultaLabel:'Simular no BNDES'},
+
+  { id:'car_reg', icon:'🗺️', nome:'CAR — Regularização ambiental pendente', desc:'Situação do seu Cadastro Ambiental Rural',
+    elegivel:r=>r.tem_car!=='sim',
+    pendente:()=>true,
+    texto:r=>r.tem_car==='nao'?'Você ainda <strong>não cadastrou no CAR</strong>. Isso é obrigatório por lei e bloqueia crédito rural, seguro e programas. O cadastro é gratuito.':'Seu CAR está com <strong>pendências</strong>. Resolva as inconsistências no SICAR para liberar o crédito rural.',
+    pendencias:r=>r.tem_car==='nao'?['Cadastrar no SICAR gratuitamente (sicar.gov.br)','A Emater faz gratuitamente se precisar de ajuda']:['Acessar o SICAR com CPF e verificar as inconsistências','Contate a Emater do seu município'],
+    docs:['CPF ou CNPJ do proprietário','NIRF ou comprovante de posse','Mapa/polígono da propriedade'],
+    link:'https://www.car.gov.br', linkLabel:'Acessar o SICAR',
+    linkConsulta:'https://consultapublica.car.gov.br/publico/imoveis/index', linkConsultaLabel:'Consultar situação do meu CAR'},
+
+  { id:'dap_caf', icon:'📋', nome:'DAP / CAF — Sua identidade de agricultor familiar', desc:'Documento que abre acesso a todos os programas de agricultura familiar',
+    elegivel:r=>r.tem_dap_caf!=='sim'&&['familiar','nao_sei'].includes(r.tipo_produtor),
+    pendente:()=>true,
+    texto:r=>r.tem_dap_caf==='nao'?'Você ainda <strong>não tem DAP/CAF</strong>. É o documento mais importante para Pronaf, PAA, PNAE e Garantia-Safra. A emissão é gratuita na Emater ou sindicato rural.':'Sua DAP/CAF está <strong>vencida</strong>. Renove antes de tentar acessar qualquer programa.',
+    pendencias:()=>['Procurar a Emater, sindicato rural ou cooperativa mais próxima','A emissão é gratuita e pode ser feita no mesmo dia'],
+    docs:['RG ou CNH','CPF','Comprovante de residência na zona rural','Comprovante de posse ou uso da terra'],
+    link:'https://www.gov.br/agricultura/pt-br/assuntos/mda/caf', linkLabel:'Ver sobre a CAF',
+    linkConsulta:'https://sistemasweb.agricultura.gov.br/cacaf/consultarCaf.seam', linkConsultaLabel:'Consultar minha CAF pelo CPF'},
+];
+
+let bqAtual=0, bqRespostas={}, bqSelecionado=null;
+
+function bqRenderPergunta(){
+  const p=BQ_PERGUNTAS[bqAtual], total=BQ_PERGUNTAS.length;
+  document.getElementById('bq-progress').innerHTML=BQ_PERGUNTAS.map((_,i)=>`<div class="bq-prog-dot ${i<bqAtual?'done':i===bqAtual?'active':''}"></div>`).join('');
+  document.getElementById('bq-counter').textContent=`Pergunta ${bqAtual+1} de ${total}`;
+  document.getElementById('bq-pergunta').textContent=p.pergunta;
+  document.getElementById('bq-dica').textContent=p.dica;
+  bqSelecionado=bqRespostas[p.id]||null;
+  document.getElementById('bq-opcoes').innerHTML=p.opcoes.map(o=>`
+    <button class="bq-opcao ${bqSelecionado===o.val?'selected':''}" onclick="bqSelecionar('${o.val}')">
+      <span class="bq-opcao-emoji">${o.emoji}</span>
+      <div><div class="bq-opcao-label">${o.label}</div>${o.sub?`<div class="bq-opcao-sub">${o.sub}</div>`:''}</div>
+    </button>`).join('');
+  document.getElementById('bq-prev').style.visibility=bqAtual===0?'hidden':'visible';
+  document.getElementById('bq-next').textContent=bqAtual===total-1?'Ver meus benefícios →':'Próxima →';
+  document.getElementById('bq-next').disabled=!bqSelecionado;
+}
+
+function bqSelecionar(val){
+  bqSelecionado=val;
+  bqRespostas[BQ_PERGUNTAS[bqAtual].id]=val;
+  document.getElementById('bq-opcoes').querySelectorAll('.bq-opcao').forEach(b=>
+    b.classList.toggle('selected',b.getAttribute('onclick').includes(`'${val}'`)));
+  document.getElementById('bq-next').disabled=false;
+}
+
+function bqProximo(){
+  if(!bqSelecionado)return;
+  bqRespostas[BQ_PERGUNTAS[bqAtual].id]=bqSelecionado;
+  if(bqAtual<BQ_PERGUNTAS.length-1){bqAtual++;bqSelecionado=bqRespostas[BQ_PERGUNTAS[bqAtual].id]||null;bqRenderPergunta();}
+  else bqMostrarResultado();
+}
+
+function bqAnterior(){if(bqAtual>0){bqAtual--;bqRenderPergunta();}}
+
+function bqMostrarResultado(){
+  const r=bqRespostas;
+  const lista=BENEFICIOS.map(b=>{
+    const elegivel=b.elegivel(r), pendente=elegivel&&b.pendente(r);
+    const status=!elegivel?'nao-elegivel':pendente?'pendente':'elegivel';
+    return{...b,elegivel,pendente,status,textoCal:b.texto(r),pendenciasCal:b.pendencias(r)};
+  }).sort((a,b)=>({'elegivel':0,'pendente':1,'nao-elegivel':2}[a.status]||1)-({'elegivel':0,'pendente':1,'nao-elegivel':2}[b.status]||1));
+
+  const cE=lista.filter(b=>b.status==='elegivel').length;
+  const cP=lista.filter(b=>b.status==='pendente').length;
+  const cN=lista.filter(b=>b.status==='nao-elegivel').length;
+  const nomeP={familiar:'agricultor familiar',medio:'produtor médio',grande:'grande produtor',nao_sei:'produtor rural'}[r.tipo_produtor]||'produtor rural';
+
+  document.getElementById('bq-res-titulo').textContent=`Seu perfil: ${nomeP}`;
+  document.getElementById('bq-res-sub').innerHTML=`Com base nas suas respostas, identificamos <strong>${cE+cP} programas relevantes</strong>: ${cE} com acesso direto e ${cP} com pendências a resolver.`;
+
+  const extIcon=`<svg style="width:12px;height:12px;opacity:.7" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9"/></svg>`;
+  const statusLabels={'elegivel':'Você tem direito','pendente':'Pendências a resolver','nao-elegivel':'Não se enquadra'};
+  const statusClasses={'elegivel':'status-elegivel','pendente':'status-pendente','nao-elegivel':'status-nao-elegivel'};
+
+  document.getElementById('bq-lista').innerHTML=lista.map(b=>{
+    const pHtml=b.pendenciasCal?.length?`<div class="bq-docs-title" style="color:var(--earth-700)">⚠️ O que precisa resolver</div>${b.pendenciasCal.map(p=>`<div class="bq-doc-item" style="color:var(--earth-700)">${p}</div>`).join('')}<div style="margin-top:8px"></div>`:'';
+    const dHtml=b.docs?.length?`<div class="bq-docs-title">📋 Documentos necessários</div>${b.docs.map(d=>`<div class="bq-doc-item">${d}</div>`).join('')}`:'';
+    return `<div class="bq-ben ${b.status}" onclick="bqToggleBen(this)">
+      <div class="bq-ben-header">
+        <span class="bq-ben-icon">${b.icon}</span>
+        <div class="bq-ben-info"><div class="bq-ben-nome">${b.nome}</div><div class="bq-ben-desc">${b.desc}</div></div>
+        <div class="bq-ben-status"><span class="bq-status-pill ${statusClasses[b.status]}">${statusLabels[b.status]}</span><span style="font-size:.72rem;color:var(--ink-400)">▼ ver detalhes</span></div>
+      </div>
+      <div class="bq-ben-body">
+        <div class="bq-ben-body-texto">${b.textoCal}</div>
+        ${pHtml}${dHtml}
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <a href="${b.link}" target="_blank" rel="noopener" class="bq-link-govbr" onclick="event.stopPropagation()">${b.linkLabel} ${extIcon}</a>
+          <a href="${b.linkConsulta}" target="_blank" rel="noopener" onclick="event.stopPropagation()"
+            style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--white);color:var(--forest-700);border:1px solid var(--forest-300);font-size:.78rem;font-weight:700;border-radius:var(--radius-xs);text-decoration:none">
+            ${b.linkConsultaLabel} ${extIcon}</a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('bq-elig').innerHTML=`
+    <div class="bq-elig-item"><div class="bq-elig-dot" style="background:#10b981"></div>${cE} com acesso direto</div>
+    <div class="bq-elig-item"><div class="bq-elig-dot" style="background:var(--sun-500)"></div>${cP} com pendências</div>
+    <div class="bq-elig-item"><div class="bq-elig-dot" style="background:var(--ink-300)"></div>${cN} não se enquadra</div>`;
+
+  document.getElementById('bq-perguntas').style.display='none';
+  document.getElementById('bq-resultado').classList.add('show');
+  document.getElementById('bq-resultado').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function bqToggleBen(el){
+  el.classList.toggle('open');
+  el.querySelector('.bq-ben-status span:last-child').textContent=el.classList.contains('open')?'▲ fechar':'▼ ver detalhes';
+}
+
+function bqReiniciar(){
+  bqAtual=0;bqRespostas={};bqSelecionado=null;
+  document.getElementById('bq-resultado').classList.remove('show');
+  document.getElementById('bq-perguntas').style.display='block';
+  bqRenderPergunta();
+}
+
+bqRenderPergunta();
+
 </script>
 </body>
 </html>
