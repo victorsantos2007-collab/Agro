@@ -506,17 +506,17 @@
     </a>
     <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
       <span></span><span></span><span></span>
-    </button>
+    </button></div>
     <nav class="menu" id="menu-nav">
       <ul>
         <li><a href="index.html#problema"    class="menu-link">O Problema</a></li>
         <li><a href="index.html#indicadores" class="menu-link">Dados</a></li>
         <li><a href="#calculadora"           class="menu-link">Calculadora</a></li>
         <li><a href="#praticas"              class="menu-link">Como fazer</a></li>
+        <li><a href="agropecuaria.html" class="menu-link">Agropecuária</a></li>
         <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
       </ul>
     </nav>
-  </div>
 </header>
 
 <main>
@@ -982,7 +982,7 @@ const CULTURAS = {
     cat:'frutas-tropicais', emoji:'🍊', nome:'Laranja',
     desc:'Fruta cítrica de alta demanda. Ciclos longos mas produção constante por anos.',
     unidade:'cx 40kg', prodMedia:500,
-    precos:{ sul:28, sudeste:22, centroeste:25, nordeste:20, norte:22 },
+    precos:{ sul:34, sudeste:28, centroeste:30, nordeste:25, norte:27 },
     safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
     perdaPC:28,
     insumos:[
@@ -1012,7 +1012,7 @@ const CULTURAS = {
     cat:'frutas-tropicais', emoji:'🍉', nome:'Melancia',
     desc:'Ciclo curto (75–90 dias), alta produtividade e boa rentabilidade no verão.',
     unidade:'kg', prodMedia:40000,
-    precos:{ sul:0.60, sudeste:0.75, centroeste:0.65, nordeste:0.55, norte:0.60 },
+    precos:{ sul:0.62, sudeste:0.78, centroeste:0.68, nordeste:0.58, norte:0.62 },
     safras:{ sul:2, sudeste:3, centroeste:2, nordeste:3, norte:3 },
     perdaPC:25,
     insumos:[
@@ -1027,7 +1027,7 @@ const CULTURAS = {
     cat:'frutas-tropicais', emoji:'🥭', nome:'Manga',
     desc:'Alta valorização no mercado externo. Nordeste brasileiro é referência mundial.',
     unidade:'cx 13kg', prodMedia:600,
-    precos:{ sul:18, sudeste:16, centroeste:14, nordeste:20, norte:15 },
+    precos:{ sul:22, sudeste:18, centroeste:16, nordeste:24, norte:17 },
     safras:{ sul:1, sudeste:1, centroeste:1, nordeste:2, norte:1 },
     perdaPC:30,
     insumos:[
@@ -1042,7 +1042,7 @@ const CULTURAS = {
     cat:'frutas-tropicais', emoji:'🍈', nome:'Mamão',
     desc:'Ciclo produtivo curto — começa a produzir em 8 meses. Alta demanda no mercado.',
     unidade:'cx 13kg', prodMedia:1200,
-    precos:{ sul:18, sudeste:20, centroeste:16, nordeste:14, norte:14 },
+    precos:{ sul:22, sudeste:24, centroeste:20, nordeste:18, norte:18 },
     safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
     perdaPC:35,
     insumos:[
@@ -1057,7 +1057,7 @@ const CULTURAS = {
     cat:'frutas-tropicais', emoji:'🍍', nome:'Abacaxi',
     desc:'Ciclo de 12–18 meses. Brasil é um dos maiores produtores mundiais.',
     unidade:'mil frutos', prodMedia:30,
-    precos:{ sul:1800, sudeste:2000, centroeste:1600, nordeste:1400, norte:1500 },
+    precos:{ sul:2200, sudeste:2500, centroeste:2000, nordeste:1800, norte:1900 },
     safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
     perdaPC:20,
     insumos:[
@@ -1072,7 +1072,7 @@ const CULTURAS = {
     cat:'frutas-tropicais', emoji:'🍏', nome:'Goiaba',
     desc:'Fruta versátil — in natura e indústria. Produção contínua ao longo do ano.',
     unidade:'kg', prodMedia:30000,
-    precos:{ sul:1.2, sudeste:1.8, centroeste:1.4, nordeste:1.2, norte:1.3 },
+    precos:{ sul:1.4, sudeste:2.0, centroeste:1.6, nordeste:1.4, norte:1.5 },
     safras:{ sul:2, sudeste:2, centroeste:2, nordeste:3, norte:2 },
     perdaPC:30,
     insumos:[
@@ -1087,7 +1087,7 @@ const CULTURAS = {
     cat:'frutas-tropicais', emoji:'🌕', nome:'Maracujá',
     desc:'Alta rentabilidade por ha. Ciclo produtivo de 2–3 anos com manejo correto.',
     unidade:'kg', prodMedia:15000,
-    precos:{ sul:2.0, sudeste:2.8, centroeste:2.2, nordeste:2.0, norte:2.1 },
+    precos:{ sul:2.8, sudeste:3.5, centroeste:3.0, nordeste:2.8, norte:2.9 },
     safras:{ sul:1, sudeste:2, centroeste:2, nordeste:2, norte:2 },
     perdaPC:25,
     insumos:[
@@ -1102,7 +1102,7 @@ const CULTURAS = {
     cat:'frutas-tropicais', emoji:'🍌', nome:'Banana',
     desc:'Uma das frutas mais produzidas no Brasil. Alta demanda interna e boa rentabilidade.',
     unidade:'cx 22kg', prodMedia:1000,
-    precos:{ sul:22, sudeste:20, centroeste:18, nordeste:16, norte:18 },
+    precos:{ sul:26, sudeste:24, centroeste:22, nordeste:20, norte:22 },
     safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
     perdaPC:35,
     insumos:[
@@ -1117,7 +1117,7 @@ const CULTURAS = {
     cat:'frutas-tropicais', emoji:'🥥', nome:'Coco',
     desc:'Alta demanda — água de coco, leite, óleo. Produção começa em 3–4 anos.',
     unidade:'mil frutos', prodMedia:15,
-    precos:{ sul:2800, sudeste:3200, centroeste:3000, nordeste:2600, norte:2500 },
+    precos:{ sul:3500, sudeste:4000, centroeste:3800, nordeste:3200, norte:3100 },
     safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
     perdaPC:15,
     insumos:[
@@ -1132,7 +1132,7 @@ const CULTURAS = {
     cat:'frutas-tropicais', emoji:'🍒', nome:'Acerola',
     desc:'A fruta com mais vitamina C do mundo. Alta demanda da indústria farmacêutica e de sucos.',
     unidade:'kg', prodMedia:12000,
-    precos:{ sul:2.5, sudeste:3.0, centroeste:2.5, nordeste:2.2, norte:2.3 },
+    precos:{ sul:3.0, sudeste:3.5, centroeste:3.0, nordeste:2.8, norte:2.8 },
     safras:{ sul:2, sudeste:3, centroeste:2, nordeste:3, norte:3 },
     perdaPC:40,
     insumos:[
@@ -1149,7 +1149,7 @@ const CULTURAS = {
     cat:'frutas-temperadas', emoji:'🍇', nome:'Uva',
     desc:'Para mesa e vinho. Sul do Brasil é referência nacional em qualidade.',
     unidade:'kg', prodMedia:15000,
-    precos:{ sul:4.5, sudeste:5.0, centroeste:5.5, nordeste:6.0, norte:6.5 },
+    precos:{ sul:6.0, sudeste:8.0, centroeste:9.0, nordeste:10.0, norte:11.0 },
     safras:{ sul:1, sudeste:2, centroeste:2, nordeste:2, norte:2 },
     perdaPC:20,
     insumos:[
@@ -1164,7 +1164,7 @@ const CULTURAS = {
     cat:'frutas-temperadas', emoji:'🍎', nome:'Maçã',
     desc:'Produção concentrada no Sul. Exige frio para produzir — regula o ciclo produtivo.',
     unidade:'cx 18kg', prodMedia:1500,
-    precos:{ sul:35, sudeste:40, centroeste:42, nordeste:45, norte:48 },
+    precos:{ sul:38, sudeste:44, centroeste:46, nordeste:50, norte:52 },
     safras:{ sul:1, sudeste:0, centroeste:0, nordeste:0, norte:0 },
     perdaPC:15,
     insumos:[
@@ -1179,7 +1179,7 @@ const CULTURAS = {
     cat:'frutas-temperadas', emoji:'🍑', nome:'Pêssego',
     desc:'Ciclo curto de produção. Alta demanda em compota e consumo in natura no Sul.',
     unidade:'cx 10kg', prodMedia:1800,
-    precos:{ sul:18, sudeste:22, centroeste:24, nordeste:26, norte:28 },
+    precos:{ sul:22, sudeste:26, centroeste:28, nordeste:30, norte:32 },
     safras:{ sul:1, sudeste:1, centroeste:0, nordeste:0, norte:0 },
     perdaPC:30,
     insumos:[
@@ -1194,7 +1194,7 @@ const CULTURAS = {
     cat:'frutas-temperadas', emoji:'🍓', nome:'Morango',
     desc:'Alta rentabilidade por ha. Ciclo curto e valorização constante no mercado.',
     unidade:'kg', prodMedia:40000,
-    precos:{ sul:6.0, sudeste:8.0, centroeste:9.0, nordeste:10.0, norte:11.0 },
+    precos:{ sul:8.0, sudeste:10.0, centroeste:12.0, nordeste:14.0, norte:15.0 },
     safras:{ sul:1, sudeste:2, centroeste:2, nordeste:2, norte:2 },
     perdaPC:40,
     insumos:[
@@ -1209,7 +1209,7 @@ const CULTURAS = {
     cat:'frutas-temperadas', emoji:'🫐', nome:'Ameixa',
     desc:'Fruta de alta valorização. Boa para mesa e indústria. Concentrada no Sul.',
     unidade:'cx 10kg', prodMedia:1200,
-    precos:{ sul:22, sudeste:28, centroeste:30, nordeste:32, norte:35 },
+    precos:{ sul:28, sudeste:32, centroeste:34, nordeste:38, norte:42 },
     safras:{ sul:1, sudeste:1, centroeste:0, nordeste:0, norte:0 },
     perdaPC:22,
     insumos:[
@@ -1225,7 +1225,7 @@ const CULTURAS = {
     cat:'graos', emoji:'🌱', nome:'Soja',
     desc:'Principal commodity do agronegócio brasileiro. Exportação e mercado interno.',
     unidade:'sc 60kg', prodMedia:55,
-    precos:{ sul:142, sudeste:148, centroeste:145, nordeste:155, norte:162 },
+    precos:{ sul:148, sudeste:152, centroeste:145, nordeste:158, norte:165 },
     safras:{ sul:1, sudeste:2, centroeste:2, nordeste:2, norte:2 },
     perdaPC:15,
     insumos:[
@@ -1240,7 +1240,7 @@ const CULTURAS = {
     cat:'graos', emoji:'🌽', nome:'Milho',
     desc:'Cultura versátil: ração, etanol, alimento humano. Alta produtividade no Cerrado.',
     unidade:'sc 60kg', prodMedia:100,
-    precos:{ sul:52, sudeste:58, centroeste:55, nordeste:62, norte:68 },
+    precos:{ sul:62, sudeste:66, centroeste:60, nordeste:70, norte:74 },
     safras:{ sul:2, sudeste:2, centroeste:2, nordeste:2, norte:2 },
     perdaPC:18,
     insumos:[
@@ -1254,7 +1254,7 @@ const CULTURAS = {
     cat:'graos', emoji:'☕', nome:'Café',
     desc:'Bebida mais consumida no Brasil. Alta valorização por qualidade de cup score.',
     unidade:'sc 60kg', prodMedia:28,
-    precos:{ sul:1200, sudeste:1150, centroeste:1100, nordeste:1050, norte:1000 },
+    precos:{ sul:2050, sudeste:1980, centroeste:1920, nordeste:1880, norte:1820 },
     safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
     perdaPC:15,
     insumos:[
@@ -1268,7 +1268,7 @@ const CULTURAS = {
     cat:'graos', emoji:'🍚', nome:'Arroz',
     desc:'Alimento básico do brasileiro. Sul do país é referência em produtividade.',
     unidade:'sc 50kg', prodMedia:100,
-    precos:{ sul:58, sudeste:62, centroeste:60, nordeste:65, norte:63 },
+    precos:{ sul:78, sudeste:82, centroeste:80, nordeste:88, norte:84 },
     safras:{ sul:1, sudeste:2, centroeste:1, nordeste:2, norte:2 },
     perdaPC:15,
     insumos:[
@@ -1282,7 +1282,7 @@ const CULTURAS = {
     cat:'graos', emoji:'🫘', nome:'Feijão',
     desc:'Alimento essencial. Ciclo curto permite até 3 safras/ano em regiões quentes.',
     unidade:'sc 60kg', prodMedia:30,
-    precos:{ sul:320, sudeste:340, centroeste:330, nordeste:350, norte:360 },
+    precos:{ sul:345, sudeste:375, centroeste:360, nordeste:392, norte:408 },
     safras:{ sul:2, sudeste:3, centroeste:2, nordeste:3, norte:3 },
     perdaPC:18,
     insumos:[
@@ -1387,7 +1387,7 @@ const CULTURAS = {
     cat:'outros', emoji:'☁️', nome:'Algodão',
     desc:'Fibra têxtil com alta demanda. Cerrado é referência mundial em produtividade.',
     unidade:'@ 15kg', prodMedia:270,
-    precos:{ sul:680, sudeste:690, centroeste:670, nordeste:660, norte:650 },
+    precos:{ sul:722, sudeste:728, centroeste:714, nordeste:700, norte:690 },
     safras:{ sul:1, sudeste:1, centroeste:1, nordeste:1, norte:1 },
     perdaPC:8,
     insumos:[
@@ -1532,7 +1532,7 @@ function goStep(n) {
   document.getElementById('calculadora').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   if (n === 1) renderInsumos();
-  if (n === 2) renderProducao();
+  if (n === 2) renderProdução();
 }
 
 document.querySelectorAll('.step').forEach(s => {
@@ -1586,7 +1586,7 @@ function recalcTotal() {
    Sempre reseta os sliders com os valores corretos
    para a cultura + região selecionadas.
 ═══════════════════════════════════════════════════ */
-function renderProducao() {
+function renderProdução() {
   if (!cultAtual) return;
 
   const c    = CULTURAS[cultAtual];
