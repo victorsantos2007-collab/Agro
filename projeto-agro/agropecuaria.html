@@ -250,6 +250,147 @@
   .cruz-stats{grid-template-columns:1fr 1fr 1fr}
   .curio-grid{grid-template-columns:1fr}
 }
+
+/* ══ CALCULADORA DE PECUÁRIA ══ */
+.calc-pec{background:var(--forest-900);border-radius:var(--radius-xl);
+  padding:32px 28px;color:var(--white);margin-bottom:18px;position:relative;overflow:hidden}
+.calc-pec::before{content:'';position:absolute;top:-60px;right:-60px;
+  width:220px;height:220px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.05);pointer-events:none}
+.calc-pec-title{font-family:var(--font-display);font-size:1.25rem;font-weight:700;
+  color:var(--white);letter-spacing:-.02em;margin-bottom:6px}
+.calc-pec-sub{font-size:.84rem;color:rgba(255,255,255,.55);margin-bottom:24px;line-height:1.65}
+
+/* Seletor de espécie na calculadora */
+.cp-especies{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.cp-esp{padding:8px 14px;border-radius:var(--radius-xs);
+  border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);
+  color:rgba(255,255,255,.7);font:inherit;font-size:.82rem;font-weight:700;
+  cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:6px}
+.cp-esp.active{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5);color:var(--white)}
+.cp-esp:hover:not(.active){background:rgba(255,255,255,.12)}
+
+/* Grid de entradas */
+.cp-form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.cp-group{display:grid;gap:6px}
+.cp-group.full{grid-column:1/-1}
+.cp-label{font-size:.74rem;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.03em;text-transform:uppercase}
+.cp-input,.cp-sel{
+  border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-sm);
+  padding:10px 12px;font:inherit;font-size:.9rem;
+  color:var(--white);background:rgba(255,255,255,.08);outline:none;width:100%;
+  transition:border-color .18s,background .18s}
+.cp-input:focus,.cp-sel:focus{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.13)}
+.cp-input::placeholder{color:rgba(255,255,255,.3)}
+.cp-sel option{background:#0d2818;color:var(--white)}
+.cp-sel{appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  padding-right:30px;background-color:rgba(255,255,255,.08)}
+
+/* Tabela de itens de custo */
+.cp-itens{display:grid;gap:8px;margin-bottom:20px}
+.cp-item-row{display:grid;grid-template-columns:1fr auto 120px auto;
+  gap:10px;align-items:center;padding:10px 14px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--radius-sm)}
+.cp-item-nome{font-size:.86rem;font-weight:600;color:var(--white)}
+.cp-item-cat{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:99px}
+.cp-item-val{border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-xs);
+  padding:7px 10px;font:inherit;font-size:.86rem;color:var(--white);
+  background:rgba(255,255,255,.08);outline:none;width:100%;text-align:right;
+  transition:border-color .18s}
+.cp-item-val:focus{border-color:rgba(255,255,255,.5)}
+.cp-item-del{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.3);
+  font-size:.9rem;padding:4px 8px;border-radius:var(--radius-xs);
+  transition:all .18s;line-height:1}
+.cp-item-del:hover{background:rgba(249,115,115,.2);color:#fca5a5}
+
+/* Botão adicionar item */
+.cp-add-row{display:grid;grid-template-columns:1.5fr 1fr 120px auto;gap:10px;
+  padding:10px 14px;background:rgba(255,255,255,.04);
+  border:1px dashed rgba(255,255,255,.15);border-radius:var(--radius-sm);
+  align-items:end;margin-bottom:20px}
+.cp-add-input,.cp-add-sel{
+  border:1px solid rgba(255,255,255,.15);border-radius:var(--radius-xs);
+  padding:8px 10px;font:inherit;font-size:.84rem;color:var(--white);
+  background:rgba(255,255,255,.06);outline:none;width:100%;
+  transition:border-color .18s}
+.cp-add-input:focus,.cp-add-sel:focus{border-color:rgba(255,255,255,.45)}
+.cp-add-input::placeholder{color:rgba(255,255,255,.25)}
+.cp-add-sel{appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 8px center;
+  padding-right:26px;background-color:rgba(255,255,255,.06)}
+.cp-add-sel option{background:#0d2818}
+.cp-add-btn{padding:8px 16px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);border-radius:var(--radius-xs);
+  font:inherit;font-size:.82rem;font-weight:700;color:var(--white);
+  cursor:pointer;white-space:nowrap;transition:all .18s}
+.cp-add-btn:hover{background:rgba(255,255,255,.2)}
+
+/* Resultado da calculadora */
+.cp-resultado{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.cp-res-box{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--radius-md);padding:16px 18px}
+.cp-res-box.destaque{background:rgba(108,191,138,.12);border-color:rgba(108,191,138,.3)}
+.cp-res-box.alerta{background:rgba(249,115,115,.1);border-color:rgba(249,115,115,.25)}
+.cp-res-label{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);margin-bottom:6px}
+.cp-res-val{font-family:var(--font-display);font-size:1.5rem;font-weight:700;
+  color:var(--white);letter-spacing:-.04em;line-height:1;margin-bottom:3px}
+.cp-res-val.verde{color:#86efac}
+.cp-res-val.amarelo{color:#fbbf24}
+.cp-res-val.vermelho{color:#fca5a5}
+.cp-res-sub{font-size:.74rem;color:rgba(255,255,255,.4)}
+
+/* Breakdown por categoria */
+.cp-breakdown{margin-bottom:18px}
+.cp-bd-titulo{font-size:.74rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px}
+.cp-bd-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.cp-bd-label{font-size:.8rem;color:rgba(255,255,255,.7);min-width:140px;flex-shrink:0}
+.cp-bd-bar-wrap{flex:1;height:8px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+.cp-bd-bar{height:100%;border-radius:99px;transition:width .5s var(--ease)}
+.cp-bd-val{font-family:var(--font-display);font-size:.82rem;font-weight:700;
+  color:var(--white);white-space:nowrap;min-width:80px;text-align:right}
+
+/* Comparativo mensal×anual */
+.cp-periodos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.cp-periodo{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--radius-sm);padding:12px;text-align:center}
+.cp-periodo-label{font-size:.68rem;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:5px}
+.cp-periodo-val{font-family:var(--font-display);font-size:1.05rem;font-weight:700;
+  color:var(--white);letter-spacing:-.03em}
+
+/* Botão calcular */
+.cp-btn-calc{width:100%;padding:13px;background:var(--forest-400);
+  color:var(--forest-950);border:none;border-radius:var(--radius-sm);
+  font:inherit;font-size:.92rem;font-weight:800;cursor:pointer;
+  transition:all .18s;letter-spacing:.02em;margin-bottom:16px}
+.cp-btn-calc:hover{background:var(--forest-300)}
+
+/* Alerta de margem */
+.cp-alerta-margem{padding:12px 16px;border-radius:var(--radius-sm);
+  font-size:.82rem;line-height:1.65;margin-top:12px}
+
+@media(max-width:768px){
+  .cp-form{grid-template-columns:1fr 1fr}
+  .cp-resultado{grid-template-columns:1fr 1fr}
+  .cp-periodos{grid-template-columns:repeat(2,1fr)}
+  .cp-add-row{grid-template-columns:1fr 1fr;gap:8px}
+  .cp-add-row .cp-add-btn{grid-column:1/-1}
+  .cp-item-row{grid-template-columns:1fr 80px auto}
+  .cp-item-cat{display:none}
+}
+@media(max-width:480px){
+  .calc-pec{padding:22px 16px}
+  .cp-form{grid-template-columns:1fr}
+  .cp-resultado{grid-template-columns:1fr}
+  .cp-periodos{grid-template-columns:1fr 1fr}
+  .cp-bd-label{min-width:100px;font-size:.72rem}
+}
   </style>
 </head>
 <body>
@@ -711,6 +852,141 @@
       border-radius:var(--radius-sm);font-size:.82rem;color:var(--sky-700);line-height:1.6">
       💡 <strong>O que mais pesa:</strong> Alimentação (pastagem + suplementação) representa 55–65% do custo do boi gordo. Gestão de pastagem — adubação, reforma e taxa de lotação — é onde está a maior oportunidade de redução de custo sem perder produtividade.
     </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       CALCULADORA DE CUSTOS PECUÁRIOS
+  ═══════════════════════════════════ -->
+  <div class="calc-pec" id="calc-pec">
+
+    <div class="calc-pec-title">🐄 Calculadora de Custos do Rebanho</div>
+    <div class="calc-pec-sub">
+      Informe o tamanho do seu rebanho, a espécie e os gastos de cada categoria.
+      A calculadora mostra o custo total, o custo por cabeça, por mês e por ano —
+      e avisa se o seu custo está acima da média de mercado.
+    </div>
+
+    <!-- Seletor de espécie -->
+    <div class="cp-especies" id="cp-especies">
+      <button class="cp-esp active" data-esp="bovino_corte" onclick="selecionarEsp(this)">🐄 Boi gordo</button>
+      <button class="cp-esp" data-esp="leite"         onclick="selecionarEsp(this)">🥛 Leite</button>
+      <button class="cp-esp" data-esp="suino"         onclick="selecionarEsp(this)">🐖 Suínos</button>
+      <button class="cp-esp" data-esp="frango"        onclick="selecionarEsp(this)">🐔 Frango</button>
+      <button class="cp-esp" data-esp="ovino"         onclick="selecionarEsp(this)">🐑 Ovinos</button>
+    </div>
+
+    <!-- Dados básicos do rebanho -->
+    <div class="cp-form">
+      <div class="cp-group">
+        <label class="cp-label">Número de cabeças</label>
+        <input type="number" class="cp-input" id="cp-cabecas"
+          placeholder="Ex: 150" min="1" step="1" value="100" oninput="calcularPec()"/>
+      </div>
+      <div class="cp-group">
+        <label class="cp-label">Hectares de pasto / área</label>
+        <input type="number" class="cp-input" id="cp-area"
+          placeholder="Ex: 300" min="1" step="1" value="200" oninput="calcularPec()"/>
+      </div>
+      <div class="cp-group">
+        <label class="cp-label">Período de cálculo</label>
+        <select class="cp-sel" id="cp-periodo" onchange="calcularPec()">
+          <option value="1">1 mês</option>
+          <option value="3">3 meses (trimestre)</option>
+          <option value="6">6 meses (semestre)</option>
+          <option value="12" selected>12 meses (ano)</option>
+        </select>
+      </div>
+      <div class="cp-group">
+        <label class="cp-label">Sistema de produção</label>
+        <select class="cp-sel" id="cp-sistema" onchange="trocarSistema()">
+          <option value="extensivo">Extensivo (pasto)</option>
+          <option value="semintensivo" selected>Semi-intensivo</option>
+          <option value="intensivo">Intensivo (confinamento)</option>
+        </select>
+      </div>
+      <div class="cp-group">
+        <label class="cp-label">Região</label>
+        <select class="cp-sel" id="cp-regiao" onchange="calcularPec()">
+          <option value="centroeste" selected>Centro-Oeste</option>
+          <option value="sul">Sul</option>
+          <option value="sudeste">Sudeste</option>
+          <option value="nordeste">Nordeste</option>
+          <option value="norte">Norte</option>
+        </select>
+      </div>
+      <div class="cp-group">
+        <label class="cp-label">Peso médio ao abate (kg)</label>
+        <input type="number" class="cp-input" id="cp-peso"
+          placeholder="Ex: 480" min="10" step="5" value="480" oninput="calcularPec()"/>
+      </div>
+    </div>
+
+    <!-- Itens de custo editáveis -->
+    <div style="font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+      color:rgba(255,255,255,.5);margin-bottom:10px">
+      Itens de custo — edite os valores para a sua realidade
+    </div>
+    <div class="cp-itens" id="cp-itens"></div>
+
+    <!-- Adicionar item customizado -->
+    <div class="cp-add-row">
+      <input type="text" class="cp-add-input" id="cp-add-nome" placeholder="Nome do gasto extra..."/>
+      <select class="cp-add-sel" id="cp-add-cat">
+        <option value="alimentacao">🌿 Alimentação</option>
+        <option value="sanitario">💊 Sanidade</option>
+        <option value="maodeobra">👷 Mão de obra</option>
+        <option value="infraestrutura">🏗️ Infraestrutura</option>
+        <option value="outros">📦 Outros</option>
+      </select>
+      <input type="number" class="cp-add-input" id="cp-add-val"
+        placeholder="R$ valor" min="0" step="1"/>
+      <button class="cp-add-btn" onclick="adicionarItemPec()">＋ Adicionar</button>
+    </div>
+
+    <!-- Botão calcular -->
+    <button class="cp-btn-calc" onclick="calcularPec()">
+      📊 Calcular custo total do rebanho
+    </button>
+
+    <!-- Resultado -->
+    <div class="cp-resultado" id="cp-resultado">
+      <div class="cp-res-box alerta">
+        <div class="cp-res-label">Custo total no período</div>
+        <div class="cp-res-val vermelho" id="cp-r-total">R$ 0</div>
+        <div class="cp-res-sub" id="cp-r-periodo-label">no período selecionado</div>
+      </div>
+      <div class="cp-res-box">
+        <div class="cp-res-label">Custo por cabeça / mês</div>
+        <div class="cp-res-val" id="cp-r-cabeca">R$ 0</div>
+        <div class="cp-res-sub" id="cp-r-cabeca-ref">referência de mercado: —</div>
+      </div>
+      <div class="cp-res-box">
+        <div class="cp-res-label">Custo por ha / mês</div>
+        <div class="cp-res-val" id="cp-r-ha">R$ 0</div>
+        <div class="cp-res-sub">lotação: <span id="cp-r-lotacao">—</span> UA/ha</div>
+      </div>
+      <div class="cp-res-box destaque">
+        <div class="cp-res-label">Receita estimada (venda)</div>
+        <div class="cp-res-val verde" id="cp-r-receita">R$ 0</div>
+        <div class="cp-res-sub" id="cp-r-margem-label">margem estimada: —</div>
+      </div>
+    </div>
+
+    <!-- Períodos comparativos -->
+    <div class="cp-periodos" id="cp-periodos">
+      <div class="cp-periodo"><div class="cp-periodo-label">Mensal</div><div class="cp-periodo-val" id="cp-p-mes">—</div></div>
+      <div class="cp-periodo"><div class="cp-periodo-label">Trimestral</div><div class="cp-periodo-val" id="cp-p-tri">—</div></div>
+      <div class="cp-periodo"><div class="cp-periodo-label">Semestral</div><div class="cp-periodo-val" id="cp-p-sem">—</div></div>
+      <div class="cp-periodo"><div class="cp-periodo-label">Anual</div><div class="cp-periodo-val" id="cp-p-ano">—</div></div>
+    </div>
+
+    <!-- Breakdown por categoria -->
+    <div class="cp-breakdown" id="cp-breakdown"></div>
+
+    <!-- Alerta de margem -->
+    <div class="cp-alerta-margem" id="cp-alerta" style="display:none"></div>
+
   </div>
 
 </div>
@@ -1266,6 +1542,393 @@ document.getElementById('recordes-grid').innerHTML = RECORDES.map(r => `
 
 /* ══ INICIALIZAÇÃO ══ */
 renderCruzamentos();
+
+/* ══════════════════════════════════════════════════════
+   CALCULADORA DE CUSTOS PECUÁRIOS
+══════════════════════════════════════════════════════ */
+
+/* Banco de dados de custos por espécie/sistema
+   Valores em R$/cabeça/mês, baseados em CEPEA e CNA 2025 */
+const DB_CUSTOS_PEC = {
+  bovino_corte: {
+    nome: 'Boi gordo', emoji: '🐄', unidade: 'cabeças',
+    precoVenda: { kg: 6.24, arroba: 312 }, /* R$/kg vivo */
+    ref: { extensivo: 185, semintensivo: 260, intensivo: 480 },
+    itens: {
+      extensivo: [
+        { id:'past',  nome:'Pastagem (manutenção + adubação)',  cat:'alimentacao',    val_ha: 42,  base:'ha' },
+        { id:'supm',  nome:'Suplementação mineral',             cat:'alimentacao',    val_cab: 18, base:'cab' },
+        { id:'vacu',  nome:'Vacinas e medicamentos',            cat:'sanitario',      val_cab: 12, base:'cab' },
+        { id:'maob',  nome:'Mão de obra (vaqueiro)',            cat:'maodeobra',      val_cab: 22, base:'cab' },
+        { id:'depr',  nome:'Depreciação de pastagem e cercas',  cat:'infraestrutura', val_cab: 15, base:'cab' },
+        { id:'agua',  nome:'Água e energia',                    cat:'infraestrutura', val_cab: 8,  base:'cab' },
+        { id:'outr',  nome:'Outros (SISBOV, ITR, etc.)',        cat:'outros',         val_cab: 10, base:'cab' },
+      ],
+      semintensivo: [
+        { id:'past',  nome:'Pastagem (manutenção + adubação)',  cat:'alimentacao',    val_ha: 58,  base:'ha' },
+        { id:'supm',  nome:'Suplementação mineral + proteica',  cat:'alimentacao',    val_cab: 42, base:'cab' },
+        { id:'sile',  nome:'Silagem / volumoso no seco',        cat:'alimentacao',    val_cab: 38, base:'cab' },
+        { id:'vacu',  nome:'Vacinas e medicamentos',            cat:'sanitario',      val_cab: 15, base:'cab' },
+        { id:'maob',  nome:'Mão de obra',                       cat:'maodeobra',      val_cab: 28, base:'cab' },
+        { id:'depr',  nome:'Depreciação instalações',           cat:'infraestrutura', val_cab: 20, base:'cab' },
+        { id:'agua',  nome:'Água e energia',                    cat:'infraestrutura', val_cab: 12, base:'cab' },
+        { id:'outr',  nome:'Outros custos',                     cat:'outros',         val_cab: 12, base:'cab' },
+      ],
+      intensivo: [
+        { id:'conce', nome:'Ração / concentrado',               cat:'alimentacao',    val_cab: 280, base:'cab' },
+        { id:'volu',  nome:'Volumoso (silagem, cana)',           cat:'alimentacao',    val_cab: 95,  base:'cab' },
+        { id:'vacu',  nome:'Vacinas, medicamentos e vermífugo', cat:'sanitario',      val_cab: 22,  base:'cab' },
+        { id:'maob',  nome:'Mão de obra especializada',         cat:'maodeobra',      val_cab: 38,  base:'cab' },
+        { id:'depr',  nome:'Depreciação confinamento',          cat:'infraestrutura', val_cab: 30,  base:'cab' },
+        { id:'agua',  nome:'Água e energia elétrica',           cat:'infraestrutura', val_cab: 18,  base:'cab' },
+        { id:'outr',  nome:'Outros (frete, impostos)',          cat:'outros',         val_cab: 15,  base:'cab' },
+      ]
+    }
+  },
+  leite: {
+    nome: 'Gado de leite', emoji: '🥛', unidade: 'vacas',
+    precoVenda: { litro: 2.85 },
+    prodLitros: { extensivo: 8, semintensivo: 15, intensivo: 28 },
+    ref: { extensivo: 280, semintensivo: 420, intensivo: 720 },
+    itens: {
+      extensivo: [
+        { id:'past',  nome:'Pastagem e forragem',                cat:'alimentacao',    val_ha: 55,  base:'ha' },
+        { id:'mine',  nome:'Suplementação mineral',              cat:'alimentacao',    val_cab: 28, base:'cab' },
+        { id:'vacu',  nome:'Vacinas e medicamentos',             cat:'sanitario',      val_cab: 18, base:'cab' },
+        { id:'mast',  nome:'Controle de mastite (CMT e tto.)',   cat:'sanitario',      val_cab: 22, base:'cab' },
+        { id:'maob',  nome:'Mão de obra (ordenha + trato)',      cat:'maodeobra',      val_cab: 85, base:'cab' },
+        { id:'ener',  nome:'Energia (ordenhadeira + resfriador)',cat:'infraestrutura', val_cab: 32, base:'cab' },
+        { id:'depr',  nome:'Depreciação de equipamentos',        cat:'infraestrutura', val_cab: 18, base:'cab' },
+      ],
+      semintensivo: [
+        { id:'past',  nome:'Pastagem e forragem',                cat:'alimentacao',    val_ha: 68,  base:'ha' },
+        { id:'conce', nome:'Concentrado proteico/energético',    cat:'alimentacao',    val_cab: 95, base:'cab' },
+        { id:'mine',  nome:'Suplementação mineral',              cat:'alimentacao',    val_cab: 32, base:'cab' },
+        { id:'vacu',  nome:'Vacinas e medicamentos',             cat:'sanitario',      val_cab: 22, base:'cab' },
+        { id:'mast',  nome:'Controle de mastite',                cat:'sanitario',      val_cab: 28, base:'cab' },
+        { id:'maob',  nome:'Mão de obra',                        cat:'maodeobra',      val_cab: 95, base:'cab' },
+        { id:'ener',  nome:'Energia e combustível',              cat:'infraestrutura', val_cab: 42, base:'cab' },
+        { id:'depr',  nome:'Depreciação',                        cat:'infraestrutura', val_cab: 25, base:'cab' },
+      ],
+      intensivo: [
+        { id:'rac',   nome:'Ração total misturada (TMR)',        cat:'alimentacao',    val_cab: 320, base:'cab' },
+        { id:'conce', nome:'Concentrado proteico premium',       cat:'alimentacao',    val_cab: 120, base:'cab' },
+        { id:'sani',  nome:'Sanidade (vacinas + hormônios)',     cat:'sanitario',      val_cab: 45,  base:'cab' },
+        { id:'mast',  nome:'Controle de mastite e CCS',         cat:'sanitario',      val_cab: 38,  base:'cab' },
+        { id:'maob',  nome:'Mão de obra especializada',         cat:'maodeobra',      val_cab: 120, base:'cab' },
+        { id:'ener',  nome:'Energia e refrigeração',            cat:'infraestrutura', val_cab: 62,  base:'cab' },
+        { id:'depr',  nome:'Depreciação freestall',             cat:'infraestrutura', val_cab: 38,  base:'cab' },
+      ]
+    }
+  },
+  suino: {
+    nome: 'Suínos', emoji: '🐖', unidade: 'matrizes',
+    precoVenda: { kg: 7.20 },
+    ref: { extensivo: 180, semintensivo: 280, intensivo: 420 },
+    itens: {
+      extensivo: [
+        { id:'rac',  nome:'Ração (creep, inicial, crescimento)', cat:'alimentacao',    val_cab: 95,  base:'cab' },
+        { id:'vacu', nome:'Vacinas e medicamentos',              cat:'sanitario',      val_cab: 22,  base:'cab' },
+        { id:'maob', nome:'Mão de obra',                         cat:'maodeobra',      val_cab: 38,  base:'cab' },
+        { id:'agua', nome:'Água e energia',                      cat:'infraestrutura', val_cab: 15,  base:'cab' },
+        { id:'outr', nome:'Outros',                              cat:'outros',         val_cab: 10,  base:'cab' },
+      ],
+      semintensivo: [
+        { id:'rac',  nome:'Ração (todas as fases)',              cat:'alimentacao',    val_cab: 145, base:'cab' },
+        { id:'soja', nome:'Farelo de soja + milho avulso',       cat:'alimentacao',    val_cab: 48,  base:'cab' },
+        { id:'vacu', nome:'Vacinas, medicamentos, antipar.',     cat:'sanitario',      val_cab: 32,  base:'cab' },
+        { id:'maob', nome:'Mão de obra',                         cat:'maodeobra',      val_cab: 55,  base:'cab' },
+        { id:'ener', nome:'Energia, aquecimento e ventilação',   cat:'infraestrutura', val_cab: 28,  base:'cab' },
+        { id:'depr', nome:'Depreciação instalações',             cat:'infraestrutura', val_cab: 22,  base:'cab' },
+      ],
+      intensivo: [
+        { id:'rac',  nome:'Ração formulada integrada',           cat:'alimentacao',    val_cab: 210, base:'cab' },
+        { id:'vacu', nome:'Protocolo sanitário completo',        cat:'sanitario',      val_cab: 45,  base:'cab' },
+        { id:'maob', nome:'Mão de obra especializada',           cat:'maodeobra',      val_cab: 72,  base:'cab' },
+        { id:'ener', nome:'Energia, ventilação, automação',      cat:'infraestrutura', val_cab: 48,  base:'cab' },
+        { id:'depr', nome:'Depreciação granja',                  cat:'infraestrutura', val_cab: 35,  base:'cab' },
+        { id:'frete',nome:'Frete e logística',                   cat:'outros',         val_cab: 18,  base:'cab' },
+      ]
+    }
+  },
+  frango: {
+    nome: 'Frango de corte', emoji: '🐔', unidade: 'aves',
+    precoVenda: { kg: 6.40 },
+    ref: { extensivo: 12, semintensivo: 15, intensivo: 22 },
+    itens: {
+      extensivo: [
+        { id:'rac',  nome:'Ração caipira',                       cat:'alimentacao',    val_cab: 6.5,  base:'cab' },
+        { id:'vacu', nome:'Vacinas e medicamentos',              cat:'sanitario',      val_cab: 0.8,  base:'cab' },
+        { id:'maob', nome:'Mão de obra',                         cat:'maodeobra',      val_cab: 1.8,  base:'cab' },
+        { id:'cama', nome:'Cama de aviário e manutenção',        cat:'infraestrutura', val_cab: 0.9,  base:'cab' },
+        { id:'outr', nome:'Outros',                              cat:'outros',         val_cab: 0.8,  base:'cab' },
+      ],
+      semintensivo: [
+        { id:'rac',  nome:'Ração balanceada por fase',           cat:'alimentacao',    val_cab: 9.2,  base:'cab' },
+        { id:'pint', nome:'Pintinhos (1 dia)',                   cat:'alimentacao',    val_cab: 2.8,  base:'cab' },
+        { id:'vacu', nome:'Vacinas e programa sanitário',        cat:'sanitario',      val_cab: 1.1,  base:'cab' },
+        { id:'maob', nome:'Mão de obra',                         cat:'maodeobra',      val_cab: 2.0,  base:'cab' },
+        { id:'ener', nome:'Energia e aquecimento',               cat:'infraestrutura', val_cab: 1.2,  base:'cab' },
+        { id:'depr', nome:'Depreciação aviário',                  cat:'infraestrutura', val_cab: 0.8,  base:'cab' },
+      ],
+      intensivo: [
+        { id:'rac',  nome:'Ração (pré-inicial a abate)',         cat:'alimentacao',    val_cab: 13.5, base:'cab' },
+        { id:'pint', nome:'Pintinhos certificados',              cat:'alimentacao',    val_cab: 3.8,  base:'cab' },
+        { id:'vacu', nome:'Protocolo sanitário integrado',       cat:'sanitario',      val_cab: 1.5,  base:'cab' },
+        { id:'maob', nome:'Mão de obra',                         cat:'maodeobra',      val_cab: 1.8,  base:'cab' },
+        { id:'ener', nome:'Energia (ventilação + aquecimento)',  cat:'infraestrutura', val_cab: 1.8,  base:'cab' },
+        { id:'depr', nome:'Depreciação e manutenção aviário',    cat:'infraestrutura', val_cab: 1.2,  base:'cab' },
+        { id:'frete',nome:'Frete pintinhos e aves vivas',        cat:'outros',         val_cab: 0.5,  base:'cab' },
+      ]
+    }
+  },
+  ovino: {
+    nome: 'Ovinos', emoji: '🐑', unidade: 'matrizes',
+    precoVenda: { kg: 12.50 },
+    ref: { extensivo: 45, semintensivo: 75, intensivo: 130 },
+    itens: {
+      extensivo: [
+        { id:'past',  nome:'Pastagem e capineira',               cat:'alimentacao',    val_ha: 28,  base:'ha' },
+        { id:'mine',  nome:'Suplementação mineral',              cat:'alimentacao',    val_cab: 8,  base:'cab' },
+        { id:'verm',  nome:'Vermífugos (FAMACHA)',               cat:'sanitario',      val_cab: 6,  base:'cab' },
+        { id:'vacu',  nome:'Vacinas e medicamentos',             cat:'sanitario',      val_cab: 5,  base:'cab' },
+        { id:'maob',  nome:'Mão de obra',                        cat:'maodeobra',      val_cab: 12, base:'cab' },
+        { id:'tosa',  nome:'Tosa (raças com lã)',                cat:'maodeobra',      val_cab: 3,  base:'cab' },
+        { id:'depr',  nome:'Cerca e instalações',                cat:'infraestrutura', val_cab: 6,  base:'cab' },
+      ],
+      semintensivo: [
+        { id:'past',  nome:'Pastagem + volumoso',                cat:'alimentacao',    val_ha: 38,  base:'ha' },
+        { id:'conc',  nome:'Concentrado para cordeiros',         cat:'alimentacao',    val_cab: 22, base:'cab' },
+        { id:'mine',  nome:'Suplementação mineral',              cat:'alimentacao',    val_cab: 10, base:'cab' },
+        { id:'verm',  nome:'Vermífugos e antiparasitários',      cat:'sanitario',      val_cab: 9,  base:'cab' },
+        { id:'vacu',  nome:'Vacinas e medicamentos',             cat:'sanitario',      val_cab: 7,  base:'cab' },
+        { id:'maob',  nome:'Mão de obra',                        cat:'maodeobra',      val_cab: 16, base:'cab' },
+        { id:'depr',  nome:'Depreciação instalações',            cat:'infraestrutura', val_cab: 8,  base:'cab' },
+      ],
+      intensivo: [
+        { id:'rac',   nome:'Ração completa (terminação)',        cat:'alimentacao',    val_cab: 65, base:'cab' },
+        { id:'verm',  nome:'Protocolo antiparasitário',          cat:'sanitario',      val_cab: 14, base:'cab' },
+        { id:'vacu',  nome:'Vacinas e medicamentos',             cat:'sanitario',      val_cab: 10, base:'cab' },
+        { id:'maob',  nome:'Mão de obra',                        cat:'maodeobra',      val_cab: 20, base:'cab' },
+        { id:'ener',  nome:'Energia e água',                     cat:'infraestrutura', val_cab: 12, base:'cab' },
+        { id:'depr',  nome:'Depreciação aprisco',                cat:'infraestrutura', val_cab: 10, base:'cab' },
+      ]
+    }
+  }
+};
+
+/* Cores por categoria */
+const CAT_CORES_PEC = {
+  alimentacao:   { cor:'#3e9a5e', label:'Alimentação' },
+  sanitario:     { cor:'#e8b84a', label:'Sanidade' },
+  maodeobra:     { cor:'#2176b5', label:'Mão de obra' },
+  infraestrutura:{ cor:'#718077', label:'Infraestrutura' },
+  outros:        { cor:'#9eb0a7', label:'Outros' },
+};
+
+/* Estado da calculadora */
+let pecEsp     = 'bovino_corte';
+let pecSistema = 'semintensivo';
+let pecItens   = []; /* itens extras adicionados pelo usuário */
+
+const fmtP = v => 'R$ ' + (+v).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
+const fmtPd = v => 'R$ ' + (+v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+function selecionarEsp(btn) {
+  document.querySelectorAll('.cp-esp').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  pecEsp = btn.dataset.esp;
+  pecItens = [];
+  renderItensPec();
+  calcularPec();
+}
+
+function trocarSistema() {
+  pecSistema = document.getElementById('cp-sistema').value;
+  pecItens   = [];
+  renderItensPec();
+  calcularPec();
+}
+
+/* Renderiza a tabela de itens de custo */
+function renderItensPec() {
+  const db    = DB_CUSTOS_PEC[pecEsp];
+  const itens = db.itens[pecSistema] || db.itens['semintensivo'];
+  const nCab  = Math.max(1, +document.getElementById('cp-cabecas').value || 100);
+  const nHa   = Math.max(1, +document.getElementById('cp-area').value    || 200);
+
+  /* Calcula valor base de cada item */
+  const rows = itens.map(it => {
+    const val = it.base === 'ha' ? it.val_ha * nHa : it.val_cab * nCab;
+    return { ...it, valTotal: val, valBase: it.base === 'ha' ? it.val_ha : it.val_cab };
+  });
+
+  /* Adiciona itens extras do usuário */
+  const todos = [...rows, ...pecItens];
+
+  document.getElementById('cp-itens').innerHTML = todos.map((it, i) => {
+    const c = CAT_CORES_PEC[it.cat] || CAT_CORES_PEC.outros;
+    return `
+      <div class="cp-item-row">
+        <span class="cp-item-nome">${it.nome}</span>
+        <span class="cp-item-cat" style="background:${c.cor}22;color:${c.cor};border:1px solid ${c.cor}44">
+          ${c.label}
+        </span>
+        <input type="number" class="cp-item-val" id="cp-v-${i}"
+          value="${Math.round(it.valTotal)}" min="0" step="1"
+          oninput="calcularPec()" title="Valor total no período para ${it.nome}"/>
+        <button class="cp-item-del" onclick="removerItemPec(${i})" title="Remover">✕</button>
+      </div>`;
+  }).join('');
+}
+
+function removerItemPec(idx) {
+  const db    = DB_CUSTOS_PEC[pecEsp];
+  const itens = db.itens[pecSistema] || db.itens['semintensivo'];
+  const nFix  = itens.length;
+  if (idx < nFix) return; /* itens fixos não se removem */
+  pecItens.splice(idx - nFix, 1);
+  renderItensPec();
+  calcularPec();
+}
+
+function adicionarItemPec() {
+  const nome = document.getElementById('cp-add-nome').value.trim();
+  const cat  = document.getElementById('cp-add-cat').value;
+  const val  = parseFloat(document.getElementById('cp-add-val').value);
+  if (!nome || isNaN(val) || val <= 0) {
+    document.getElementById('cp-add-nome').style.borderColor='rgba(255,150,150,.6)';
+    setTimeout(()=>document.getElementById('cp-add-nome').style.borderColor='',2000);
+    return;
+  }
+  pecItens.push({ id:'extra-'+Date.now(), nome, cat, valTotal: val, base:'fixo' });
+  document.getElementById('cp-add-nome').value = '';
+  document.getElementById('cp-add-val').value  = '';
+  renderItensPec();
+  calcularPec();
+}
+
+/* Calcula e exibe os resultados */
+function calcularPec() {
+  const nCab    = Math.max(1, +document.getElementById('cp-cabecas').value || 100);
+  const nHa     = Math.max(1, +document.getElementById('cp-area').value    || 200);
+  const nMeses  = +document.getElementById('cp-periodo').value || 12;
+  const peso    = +document.getElementById('cp-peso').value || 480;
+
+  /* Lê todos os valores editados na tabela */
+  const inputs = document.getElementById('cp-itens').querySelectorAll('input[type=number]');
+  let totalMes = 0;
+  inputs.forEach(inp => totalMes += (+inp.value || 0));
+  /* totalMes já está em R$ por mês (valores preenchidos são mensais) */
+  /* Na verdade, os valores na tabela são o custo total do período */
+  const totalPeriodo = totalMes; /* renomear para clareza */
+  const mesesEfetivos = nMeses;
+  const custoPorMes   = totalPeriodo / mesesEfetivos;
+  const custoCabMes   = custoPorMes / nCab;
+  const custoHaMes    = custoPorMes / nHa;
+  const lotacao       = (nCab / nHa).toFixed(1);
+
+  /* Receita estimada */
+  const db = DB_CUSTOS_PEC[pecEsp];
+  let receita = 0;
+  if (pecEsp === 'bovino_corte') {
+    const arrobas = (peso * 0.52) / 15;
+    receita = nCab * arrobas * 312 * (mesesEfetivos / 18); /* ~18 meses ciclo */
+  } else if (pecEsp === 'leite') {
+    const litrosMes = db.prodLitros[pecSistema] || 15;
+    receita = nCab * litrosMes * 30 * db.precoVenda.litro * mesesEfetivos;
+  } else if (pecEsp === 'suino') {
+    const leitoes = nCab * 2.4; /* parições/ano */
+    receita = leitoes * 110 * db.precoVenda.kg * (mesesEfetivos / 12);
+  } else if (pecEsp === 'frango') {
+    const lotes = mesesEfetivos / 1.5; /* ciclo 45 dias */
+    receita = nCab * lotes * 2.8 * db.precoVenda.kg;
+  } else if (pecEsp === 'ovino') {
+    const cordeiros = nCab * 1.4; /* 1,4 cordeiros/matriz/ano */
+    receita = cordeiros * 28 * db.precoVenda.kg * (mesesEfetivos / 12);
+  }
+
+  const margem = receita - totalPeriodo;
+  const margemPct = receita > 0 ? ((margem / receita) * 100).toFixed(1) : 0;
+
+  /* Preenche os cards de resultado */
+  document.getElementById('cp-r-total').textContent       = fmtP(totalPeriodo);
+  document.getElementById('cp-r-periodo-label').textContent = `em ${mesesEfetivos} mês${mesesEfetivos>1?'es':''}`;
+  document.getElementById('cp-r-cabeca').textContent      = fmtP(custoCabMes);
+  const refMes = (db.ref[pecSistema] || 0);
+  document.getElementById('cp-r-cabeca-ref').textContent  = `referência: ${fmtP(refMes)}/cab/mês`;
+  document.getElementById('cp-r-ha').textContent          = fmtP(custoHaMes);
+  document.getElementById('cp-r-lotacao').textContent     = lotacao;
+  document.getElementById('cp-r-receita').textContent     = fmtP(receita);
+
+  const corMargem = margem > 0 ? 'verde' : margem > -totalPeriodo*0.1 ? 'amarelo' : 'vermelho';
+  const rMargemEl = document.getElementById('cp-r-margem-label');
+  rMargemEl.textContent = `margem: ${margem >= 0 ? '+' : ''}${fmtP(margem)} (${margemPct}%)`;
+  const recEl = document.getElementById('cp-r-receita');
+  recEl.className = 'cp-res-val ' + corMargem;
+
+  /* Períodos comparativos */
+  document.getElementById('cp-p-mes').textContent = fmtP(custoPorMes);
+  document.getElementById('cp-p-tri').textContent = fmtP(custoPorMes * 3);
+  document.getElementById('cp-p-sem').textContent = fmtP(custoPorMes * 6);
+  document.getElementById('cp-p-ano').textContent = fmtP(custoPorMes * 12);
+
+  /* Breakdown por categoria */
+  const porCat = {};
+  inputs.forEach((inp, i) => {
+    const row = document.querySelectorAll('.cp-item-row')[i];
+    if (!row) return;
+    const catEl = row.querySelector('.cp-item-cat');
+    const db2   = DB_CUSTOS_PEC[pecEsp];
+    const itens2 = [...(db2.itens[pecSistema]||db2.itens['semintensivo']), ...pecItens];
+    const cat    = itens2[i]?.cat || 'outros';
+    porCat[cat] = (porCat[cat] || 0) + (+inp.value || 0);
+  });
+
+  const maxCat = Math.max(...Object.values(porCat), 1);
+  const sorted = Object.entries(porCat).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('cp-breakdown').innerHTML = `
+    <div class="cp-bd-titulo">Distribuição por categoria (período total)</div>
+    ${sorted.map(([cat, val]) => {
+      const c = CAT_CORES_PEC[cat] || CAT_CORES_PEC.outros;
+      const pct = ((val / totalPeriodo) * 100).toFixed(0);
+      return `
+        <div class="cp-bd-row">
+          <div class="cp-bd-label">${c.label}</div>
+          <div class="cp-bd-bar-wrap">
+            <div class="cp-bd-bar" style="width:${(val/maxCat*100).toFixed(0)}%;background:${c.cor}"></div>
+          </div>
+          <div class="cp-bd-val">${fmtP(val)} <span style="color:rgba(255,255,255,.35);font-size:.72rem">${pct}%</span></div>
+        </div>`;
+    }).join('')}`;
+
+  /* Alerta de margem */
+  const alertEl = document.getElementById('cp-alerta');
+  if (custoCabMes > refMes * 1.2) {
+    alertEl.style.display = 'block';
+    alertEl.style.cssText += ';background:rgba(249,115,115,.12);border:1px solid rgba(249,115,115,.3);color:#fca5a5';
+    const topCatLabel = sorted[0] ? (CAT_CORES_PEC[sorted[0][0]] ? CAT_CORES_PEC[sorted[0][0]].label : 'alimentação') : 'alimentação';
+    const topCatPct   = sorted[0] ? ((sorted[0][1] / totalPeriodo) * 100).toFixed(0) : 0;
+    const acimaPct    = ((custoCabMes / refMes - 1) * 100).toFixed(0);
+    const nomeEsp     = pecEsp === 'bovino_corte' ? 'boi gordo' : pecEsp;
+    alertEl.innerHTML = '⚠️ <strong>Atenção:</strong> seu custo por cabeça/mês (' + fmtPd(custoCabMes) + ') está <strong>' + acimaPct + '% acima</strong> da referência de mercado para ' + nomeEsp + ' no sistema ' + pecSistema + ' (' + fmtPd(refMes) + '). Verifique os maiores gastos na categoria <strong>' + topCatLabel + '</strong> — ela representa ' + topCatPct + '% do seu custo total.';
+  } else if (margem < 0) {
+    alertEl.style.display = 'block';
+    alertEl.style.cssText += ';background:rgba(249,115,115,.12);border:1px solid rgba(249,115,115,.3);color:#fca5a5';
+    alertEl.innerHTML = `🚨 <strong>Resultado negativo:</strong> seus custos (${fmtP(totalPeriodo)}) superam a receita estimada (${fmtP(receita)}) em ${fmtP(Math.abs(margem))}. Revise os valores de venda, reduza os custos variáveis ou reavalie a escala da produção.`;
+  } else if (margemPct > 25) {
+    alertEl.style.display = 'block';
+    alertEl.style.cssText += ';background:rgba(108,191,138,.1);border:1px solid rgba(108,191,138,.25);color:#86efac';
+    alertEl.innerHTML = `✅ <strong>Excelente margem!</strong> Margem de ${margemPct}% está acima da média do setor (15–20%). Continue monitorando os custos para manter essa eficiência.`;
+  } else {
+    alertEl.style.display = 'none';
+  }
+}
+
+/* Inicialização da calculadora */
+renderItensPec();
+calcularPec();
+
 </script>
 </body>
 </html>
