@@ -1708,3 +1708,67 @@ ul   { list-style:none; }
   .prop-cta-btns { flex-direction: column; align-items: center; }
   .btn-white, .btn-outline-white { width: 100%; justify-content: center; }
 }
+
+/* ══════════════════════════════════════════
+   MELHORIAS MOBILE — complementares
+══════════════════════════════════════════ */
+
+/* Hero principal — empilha no mobile */
+@media (max-width: 768px) {
+  .hero { padding: 48px 0 40px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .hero-text h2 { font-size: clamp(1.7rem, 5vw, 2.4rem); }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+  /* Cards de destino na index */
+  .dest-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Section headers */
+  .section-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+
+  /* Page cards */
+  .page-cards { grid-template-columns: 1fr; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .rodape { padding: 40px 0 24px; }
+
+  /* Dados charts */
+  .charts-grid { grid-template-columns: 1fr; }
+  .metric-cards { grid-template-columns: repeat(2, 1fr); }
+
+  /* Tabelas — scroll horizontal */
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Textos longos */
+  .page-tag { font-size: .64rem; padding: 3px 8px; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 36px 0 32px; }
+  .hero-text h2 { font-size: 1.65rem; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .hero-stat strong { font-size: 1.6rem; }
+
+  .dest-grid { grid-template-columns: 1fr; gap: 10px; }
+
+  .metric-cards { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .metric-card { padding: 14px 12px; }
+  .metric-card .val { font-size: 1.4rem; }
+
+  .section-title { font-size: 1.4rem; }
+
+  /* Container menor */
+  .container { width: min(100% - 28px, var(--max-w)); }
+
+  /* Botões full width */
+  .btn-group { flex-direction: column; width: 100%; }
+  .btn-group a, .btn-group button { width: 100%; text-align: center; justify-content: center; }
+}
+
+@media (max-width: 360px) {
+  html { font-size: 15px; }
+  .ap-tab { font-size: .62rem; padding: 9px 7px; }
+  .hero-text h2 { font-size: 1.45rem; }
+  .container { width: min(100% - 22px, var(--max-w)); }
+}
