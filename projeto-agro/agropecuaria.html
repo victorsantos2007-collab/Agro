@@ -1,0 +1,1271 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agropecuária | Safra Justa</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <style>
+/* ══════════════════════════════════════════
+   AGROPECUÁRIA — estilos exclusivos
+══════════════════════════════════════════ */
+.ap-hero{background:var(--forest-900);color:var(--white);padding:56px 0 48px;position:relative;overflow:hidden}
+.ap-hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 80% 30%,rgba(176,120,64,.2) 0%,transparent 55%),
+             radial-gradient(ellipse 40% 50% at 10% 70%,rgba(46,122,72,.18) 0%,transparent 50%);
+  pointer-events:none}
+.ap-hero-inner{position:relative;z-index:1}
+.ap-crumb{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:14px}
+.ap-crumb a{color:rgba(255,255,255,.45);text-decoration:none}
+.ap-hero h1{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:700;color:var(--white);letter-spacing:-.03em;line-height:1.1;margin-bottom:12px}
+.ap-hero h1 em{color:var(--forest-300);font-style:italic}
+.ap-hero-lead{font-size:.95rem;color:rgba(255,255,255,.58);max-width:58ch;line-height:1.8;margin-bottom:28px}
+.ap-hero-tags{display:flex;gap:8px;flex-wrap:wrap}
+.ap-tag{padding:5px 13px;border-radius:99px;border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.07);font-size:.76rem;font-weight:600;
+  color:rgba(255,255,255,.65)}
+
+/* ── Wrapper geral ── */
+.ap-wrap{background:var(--ink-50);padding:0 0 88px}
+
+/* ── Abas ── */
+.ap-tabs{display:flex;background:var(--white);border-bottom:var(--border);
+  position:sticky;top:68px;z-index:100;overflow-x:auto;gap:0}
+.ap-tab{padding:16px 20px;font-size:.82rem;font-weight:700;letter-spacing:.03em;
+  text-transform:uppercase;color:var(--ink-400);cursor:pointer;white-space:nowrap;
+  border-bottom:3px solid transparent;transition:all .18s;display:flex;align-items:center;gap:7px}
+.ap-tab:hover{color:var(--forest-600)}
+.ap-tab.active{color:var(--forest-900);border-bottom-color:var(--forest-600)}
+.ap-panel{display:none;padding:36px 0}
+.ap-panel.active{display:block}
+
+/* ── Card padrão ── */
+.apc{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
+  padding:26px 24px;box-shadow:var(--shadow-sm);margin-bottom:20px}
+.apc-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;
+  color:var(--forest-950);letter-spacing:-.01em;margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;line-height:1.3}
+.apc-icon{font-size:1.3rem;flex-shrink:0}
+
+/* ══ CRUZAMENTOS ══ */
+.especie-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.esp-tab{padding:7px 16px;border-radius:var(--radius-xs);border:var(--border-md);
+  background:var(--white);color:var(--ink-600);font:inherit;font-size:.82rem;
+  font-weight:700;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:6px}
+.esp-tab.active{background:var(--forest-900);border-color:var(--forest-900);color:var(--white)}
+.esp-tab:hover:not(.active){background:var(--forest-50);border-color:var(--forest-300);color:var(--forest-700)}
+
+.cruz-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.cruz-card{border:var(--border);border-radius:var(--radius-lg);overflow:hidden;
+  transition:all .22s var(--ease);box-shadow:var(--shadow-xs)}
+.cruz-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.cruz-header{padding:18px 18px 14px;background:var(--forest-900);color:var(--white);
+  display:flex;align-items:flex-start;gap:12px}
+.cruz-emoji{font-size:2rem;line-height:1;flex-shrink:0}
+.cruz-nome{font-family:var(--font-display);font-size:1rem;font-weight:700;
+  color:var(--white);letter-spacing:-.01em;margin-bottom:4px}
+.cruz-origem{font-size:.75rem;color:rgba(255,255,255,.55)}
+.cruz-badge{margin-left:auto;flex-shrink:0;font-size:.66rem;font-weight:800;
+  letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;
+  border-radius:99px;white-space:nowrap;align-self:flex-start;margin-top:2px}
+.badge-dest{background:#d1fae5;color:#065f46}
+.badge-corte{background:#fee2e2;color:#991b1b}
+.badge-dual{background:#fef3c7;color:#92400e}
+.badge-trac{background:#e0e7ff;color:#3730a3}
+.cruz-body{padding:16px 18px;background:var(--white)}
+.cruz-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.cs-item{background:var(--ink-50);border:var(--border);border-radius:var(--radius-sm);
+  padding:8px 10px;text-align:center}
+.cs-val{font-family:var(--font-display);font-size:1rem;font-weight:700;
+  color:var(--forest-800);letter-spacing:-.02em;margin-bottom:2px}
+.cs-label{font-size:.64rem;color:var(--ink-400);font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase}
+.cruz-desc{font-size:.83rem;color:var(--ink-500);line-height:1.72;margin-bottom:10px}
+.cruz-pros{display:flex;flex-direction:column;gap:3px}
+.cruz-pro{font-size:.78rem;color:var(--forest-700);display:flex;align-items:flex-start;gap:6px;line-height:1.45}
+.cruz-pro::before{content:'✓';font-weight:900;color:var(--forest-500);flex-shrink:0;margin-top:1px}
+
+.comparativo-chart{height:280px;position:relative;margin-top:8px}
+
+/* ══ BEM-ESTAR ANIMAL ══ */
+.bem-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:20px}
+.bem-card{border:var(--border);border-radius:var(--radius-lg);overflow:hidden;
+  box-shadow:var(--shadow-xs);transition:all .2s}
+.bem-card:hover{box-shadow:var(--shadow-sm)}
+.bem-topo{padding:18px 18px 14px;display:flex;align-items:flex-start;gap:12px}
+.bem-icon-wrap{width:48px;height:48px;border-radius:var(--radius-md);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.bem-titulo{font-family:var(--font-display);font-size:.95rem;font-weight:700;
+  color:var(--forest-950);letter-spacing:-.01em;margin-bottom:4px}
+.bem-subtit{font-size:.74rem;color:var(--ink-400)}
+.bem-corpo{padding:0 18px 18px}
+.bem-topico{display:flex;gap:10px;padding:10px 0;border-bottom:var(--border)}
+.bem-topico:last-child{border-bottom:none}
+.bem-topico-icon{font-size:1rem;flex-shrink:0;margin-top:1px;width:22px;text-align:center}
+.bem-topico-texto strong{display:block;font-size:.82rem;font-weight:700;color:var(--ink-800);margin-bottom:2px}
+.bem-topico-texto span{font-size:.78rem;color:var(--ink-500);line-height:1.55}
+
+/* Indicadores de bem-estar */
+.indicadores-bem{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+.ind-bem{background:var(--white);border:var(--border);border-radius:var(--radius-md);
+  padding:16px 12px;text-align:center;box-shadow:var(--shadow-xs);cursor:pointer;
+  transition:all .2s}
+.ind-bem:hover{box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.ind-bem-emoji{font-size:1.5rem;margin-bottom:8px}
+.ind-bem-nome{font-size:.72rem;font-weight:700;color:var(--ink-600);
+  letter-spacing:.03em;text-transform:uppercase;margin-bottom:6px}
+.ind-bem-bar{height:6px;background:var(--ink-100);border-radius:99px;overflow:hidden}
+.ind-bem-fill{height:100%;border-radius:99px;transition:width .6s var(--ease)}
+
+/* Tabela de temperaturas e sinais */
+.sinais-table{width:100%;border-collapse:collapse;font-size:.84rem}
+.sinais-table thead tr{background:var(--forest-900);color:var(--white)}
+.sinais-table thead th{padding:10px 14px;text-align:left;font-size:.72rem;
+  font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.sinais-table tbody tr{border-bottom:var(--border);transition:background .15s}
+.sinais-table tbody tr:hover{background:var(--forest-50)}
+.sinais-table tbody td{padding:10px 14px;color:var(--ink-700);vertical-align:middle}
+.sinal-ok{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;
+  border-radius:99px;font-size:.72rem;font-weight:700}
+.sinal-normal{background:#d1fae5;color:#065f46}
+.sinal-atencao{background:#fef3c7;color:#92400e}
+.sinal-critico{background:#fee2e2;color:#991b1b}
+
+/* ══ CUSTOS E MERCADO ══ */
+.mercado-header{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.mh-card{background:var(--white);border:var(--border);border-radius:var(--radius-md);
+  padding:18px 16px;box-shadow:var(--shadow-xs);position:relative;overflow:hidden}
+.mh-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
+.mh-card.alta::after{background:var(--danger-600)}
+.mh-card.media::after{background:var(--sun-500)}
+.mh-card.baixa::after{background:var(--forest-500)}
+.mh-label{font-size:.7rem;font-weight:700;color:var(--ink-400);
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.mh-val{font-family:var(--font-display);font-size:1.6rem;font-weight:700;
+  color:var(--ink-950);letter-spacing:-.04em;margin-bottom:4px}
+.mh-sub{font-size:.74rem;color:var(--ink-400)}
+.mh-var{font-size:.72rem;font-weight:700;padding:1px 7px;border-radius:99px}
+.var-up{background:#d1fae5;color:#065f46}
+.var-dn{background:#fee2e2;color:#991b1b}
+
+.custos-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px}
+.custo-chart-wrap{height:260px;position:relative}
+
+/* Tabela de custos de produção */
+.custo-table{width:100%;border-collapse:collapse;font-size:.84rem}
+.custo-table thead tr{background:var(--ink-50);border-bottom:var(--border-md)}
+.custo-table thead th{padding:9px 14px;text-align:left;font-size:.72rem;
+  font-weight:700;color:var(--ink-400);letter-spacing:.05em;text-transform:uppercase}
+.custo-table tbody tr{border-bottom:var(--border);transition:background .15s}
+.custo-table tbody tr:hover{background:var(--forest-50)}
+.custo-table tbody td{padding:9px 14px;color:var(--ink-700)}
+.td-custo-bar{display:flex;align-items:center;gap:8px}
+.custo-mini-bar{flex:1;height:6px;background:var(--ink-100);border-radius:99px;overflow:hidden}
+.custo-mini-fill{height:100%;border-radius:99px}
+
+/* ══ NOTÍCIAS ══ */
+.noticias-grid{display:grid;grid-template-columns:1fr;gap:14px}
+.noticia-card{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
+  padding:20px 20px;box-shadow:var(--shadow-xs);transition:all .2s;
+  display:flex;gap:16px;align-items:flex-start}
+.noticia-card:hover{box-shadow:var(--shadow-sm);border-color:var(--ink-200)}
+.noticia-cat{font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  padding:2px 8px;border-radius:99px;flex-shrink:0;white-space:nowrap;align-self:flex-start}
+.cat-genetica{background:#ede9fe;color:#6d28d9}
+.cat-mercado{background:#fef3c7;color:#92400e}
+.cat-saude{background:#fee2e2;color:#991b1b}
+.cat-sustent{background:#d1fae5;color:#065f46}
+.cat-tecnol{background:#e0e7ff;color:#3730a3}
+.cat-politica{background:#fce7f3;color:#9d174d}
+.noticia-body{flex:1;min-width:0}
+.noticia-titulo{font-family:var(--font-display);font-size:.95rem;font-weight:700;
+  color:var(--forest-950);letter-spacing:-.01em;margin-bottom:6px;line-height:1.35}
+.noticia-resumo{font-size:.82rem;color:var(--ink-500);line-height:1.7;margin-bottom:8px}
+.noticia-meta{font-size:.72rem;color:var(--ink-300);display:flex;gap:12px;flex-wrap:wrap}
+.noticia-impacto{margin-top:8px;padding:8px 12px;border-radius:var(--radius-xs);
+  font-size:.78rem;line-height:1.55}
+
+/* ══ CURIOSIDADES ══ */
+.curio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+.curio-card{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
+  padding:22px 18px;box-shadow:var(--shadow-xs);position:relative;overflow:hidden;
+  transition:all .2s;cursor:default}
+.curio-card:hover{box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.curio-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:var(--curio-cor,var(--forest-400))}
+.curio-num{font-family:var(--font-display);font-size:3rem;font-weight:700;
+  color:var(--ink-100);letter-spacing:-.08em;line-height:1;margin-bottom:10px}
+.curio-card h3{font-family:var(--font-display);font-size:.95rem;font-weight:700;
+  color:var(--forest-950);margin-bottom:8px;letter-spacing:-.01em;line-height:1.3}
+.curio-card p{font-size:.82rem;color:var(--ink-500);line-height:1.72}
+.curio-stat{display:inline-flex;align-items:center;gap:5px;margin-top:10px;
+  background:var(--forest-50);border:1px solid var(--forest-200);
+  border-radius:var(--radius-xs);padding:4px 10px;font-size:.76rem;
+  font-weight:700;color:var(--forest-700)}
+
+/* Linha do tempo evolutiva */
+.timeline-evol{display:flex;flex-direction:column;gap:0;position:relative;margin-top:16px}
+.timeline-evol::before{content:'';position:absolute;left:26px;top:10px;bottom:10px;
+  width:2px;background:linear-gradient(180deg,var(--forest-200),var(--forest-500))}
+.evol-item{display:flex;gap:18px;padding:0 0 24px;position:relative;z-index:1}
+.evol-item:last-child{padding-bottom:0}
+.evol-dot{width:54px;height:54px;border-radius:50%;background:var(--white);
+  border:2px solid var(--forest-300);display:flex;align-items:center;
+  justify-content:center;font-size:1.3rem;flex-shrink:0;box-shadow:var(--shadow-sm)}
+.evol-dot.destaque{background:var(--forest-900);border-color:var(--forest-900)}
+.evol-body{flex:1;padding-top:12px}
+.evol-ano{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-400);margin-bottom:4px}
+.evol-body h3{font-family:var(--font-display);font-size:.95rem;font-weight:700;
+  color:var(--forest-950);margin-bottom:6px;letter-spacing:-.01em}
+.evol-body p{font-size:.83rem;color:var(--ink-500);line-height:1.7}
+
+/* ── Responsivo ── */
+@media(max-width:1024px){
+  .cruz-grid{grid-template-columns:1fr}
+  .bem-grid{grid-template-columns:1fr}
+  .custos-grid{grid-template-columns:1fr}
+  .mercado-header{grid-template-columns:repeat(2,1fr)}
+  .curio-grid{grid-template-columns:repeat(2,1fr)}
+  .indicadores-bem{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:768px){
+  .ap-panel{padding:24px 0}
+  .curio-grid{grid-template-columns:1fr}
+  .mercado-header{grid-template-columns:1fr 1fr}
+  .indicadores-bem{grid-template-columns:repeat(3,1fr)}
+  .apc{padding:18px 16px}
+  .ap-tabs{top:56px}
+}
+@media(max-width:480px){
+  .mercado-header{grid-template-columns:1fr 1fr}
+  .indicadores-bem{grid-template-columns:repeat(2,1fr)}
+  .cruz-stats{grid-template-columns:1fr 1fr 1fr}
+  .curio-grid{grid-template-columns:1fr}
+}
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="topo">
+  <div class="container">
+    <a href="index.html" class="logo-area" style="text-decoration:none">
+      <div class="logo-icon">🌾</div>
+      <div><div class="logo-text">Safra Justa</div><p class="logo-subtitle">Mais lucro, menos desperdício</p></div>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="menu" id="menu-nav">
+    <ul>
+      <li><a href="index.html"    class="menu-link">Início</a></li>
+      <li><a href="painel.html"   class="menu-link">Painel</a></li>
+      <li><a href="proposta.html" class="menu-link">Calculadora</a></li>
+      <li><a href="gastos.html"   class="menu-link">Gastos</a></li>
+      <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="ap-hero">
+  <div class="container">
+    <div class="ap-hero-inner">
+      <div class="ap-crumb"><a href="index.html">Início</a> / Agropecuária</div>
+      <h1>Agropecuária brasileira — <em>do animal ao produto</em></h1>
+      <p class="ap-hero-lead">Cruzamentos, bem-estar animal, custos de produção, notícias do setor e curiosidades que todo pecuarista deveria conhecer. Informação técnica em linguagem simples.</p>
+      <div class="ap-hero-tags">
+        <span class="ap-tag">🐄 Bovinos</span>
+        <span class="ap-tag">🐖 Suínos</span>
+        <span class="ap-tag">🐔 Aves</span>
+        <span class="ap-tag">🐑 Ovinos</span>
+        <span class="ap-tag">🥛 Leite</span>
+        <span class="ap-tag">🥩 Corte</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABAS -->
+<div class="ap-tabs" id="ap-tabs">
+  <div class="ap-tab active"  onclick="irAba('cruzamentos')">🧬 Cruzamentos</div>
+  <div class="ap-tab"         onclick="irAba('bemestar')">❤️ Bem-estar Animal</div>
+  <div class="ap-tab"         onclick="irAba('custos')">💰 Custos & Mercado</div>
+  <div class="ap-tab"         onclick="irAba('noticias')">📰 Notícias</div>
+  <div class="ap-tab"         onclick="irAba('curiosidades')">🔬 Curiosidades</div>
+</div>
+
+<div class="ap-wrap">
+<div class="container">
+
+<!-- ══════════════════════════════════════
+     ABA 1 — CRUZAMENTOS
+══════════════════════════════════════ -->
+<div class="ap-panel active" id="panel-cruzamentos">
+
+  <div class="apc">
+    <div class="apc-title"><span class="apc-icon">🧬</span> Melhores cruzamentos — escolha por espécie</div>
+    <div class="especie-tabs">
+      <button class="esp-tab active" onclick="mudarEspecie('bovinos',this)">🐄 Bovinos de Corte</button>
+      <button class="esp-tab" onclick="mudarEspecie('leite',this)">🥛 Bovinos de Leite</button>
+      <button class="esp-tab" onclick="mudarEspecie('suinos',this)">🐖 Suínos</button>
+      <button class="esp-tab" onclick="mudarEspecie('aves',this)">🐔 Aves</button>
+      <button class="esp-tab" onclick="mudarEspecie('ovinos',this)">🐑 Ovinos</button>
+    </div>
+    <div class="cruz-grid" id="cruz-grid"></div>
+  </div>
+
+  <!-- Gráfico comparativo -->
+  <div class="apc">
+    <div class="apc-title"><span class="apc-icon">📊</span> Comparativo de desempenho <span id="chart-especie-label" style="font-family:var(--font-body);font-size:.78rem;font-weight:600;color:var(--ink-400);margin-left:auto">Bovinos de Corte</span></div>
+    <div class="comparativo-chart">
+      <canvas id="comparativo-chart"></canvas>
+    </div>
+  </div>
+
+  <!-- Dica de cruzamento -->
+  <div style="padding:18px 20px;background:var(--sun-100);border:1px solid var(--sun-300);
+    border-radius:var(--radius-lg);font-size:.85rem;color:var(--earth-700);line-height:1.7">
+    <strong>💡 Como escolher o cruzamento certo?</strong> O cruzamento ideal depende de três fatores:
+    <strong>(1) objetivo de produção</strong> (corte, leite ou dupla aptidão),
+    <strong>(2) clima e região</strong> (raças zebuínas toleram melhor o Cerrado e Norte, taurinas se saem melhor no Sul),
+    <strong>(3) mercado de destino</strong> (exportação exige carcaças mais uniformes, mercado interno aceita mais variação).
+    A EMBRAPA recomenda o cruzamento rotativo entre 2 ou 3 raças como o sistema mais equilibrado para o Brasil.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ABA 2 — BEM-ESTAR ANIMAL
+══════════════════════════════════════ -->
+<div class="ap-panel" id="panel-bemestar">
+
+  <!-- 5 domínios de bem-estar -->
+  <div class="apc">
+    <div class="apc-title"><span class="apc-icon">❤️</span> As 5 liberdades do bem-estar animal</div>
+    <p style="font-size:.86rem;color:var(--ink-500);line-height:1.7;margin-bottom:20px">
+      Criado pelo Farm Animal Welfare Council (UK) e adotado pelo Brasil como referência técnica, o protocolo das 5 Liberdades é o padrão internacional mínimo para qualquer criação. Rastreabilidade, certificações de exportação e muitos frigoríficos já exigem comprovação dessas condições.
+    </p>
+    <div class="indicadores-bem" id="indicadores-bem"></div>
+  </div>
+
+  <!-- Cards por espécie / tema -->
+  <div class="bem-grid">
+
+    <div class="bem-card">
+      <div class="bem-topo">
+        <div class="bem-icon-wrap" style="background:var(--earth-100)">🐄</div>
+        <div>
+          <div class="bem-titulo">Bovinos — cuidados essenciais</div>
+          <div class="bem-subtit">Corte e leite · Todas as regiões</div>
+        </div>
+      </div>
+      <div class="bem-corpo">
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🌊</span>
+          <div class="bem-topico-texto">
+            <strong>Água limpa e acessível</strong>
+            <span>Bovinos adultos precisam de 40–80 litros/dia dependendo do clima. No verão do Cerrado, isso pode chegar a 100 L. Cochos sujos reduzem o consumo e causam perda de peso.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🌿</span>
+          <div class="bem-topico-texto">
+            <strong>Pastagem em bom estado</strong>
+            <span>Taxa de lotação acima da capacidade = degradação da pastagem + estresse nos animais. O ideal é 1–3 UA/ha dependendo da forrageira e da época do ano.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🌳</span>
+          <div class="bem-topico-texto">
+            <strong>Sombra e abrigo</strong>
+            <span>Bovinos sem sombra no verão entram em estresse calórico: queda de 30% na produção de leite, redução da fertilidade e perda de 200–300 g/dia no ganho de peso.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">💉</span>
+          <div class="bem-topico-texto">
+            <strong>Vacinações obrigatórias</strong>
+            <span>Febre aftosa (obrigatória em todo o Brasil), brucelose (fêmeas 3–8 meses), raiva (região endêmica). Calendário sanitário é obrigação legal do produtor.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🔍</span>
+          <div class="bem-topico-texto">
+            <strong>Manejo cuidadoso</strong>
+            <span>Gritos, chutes e bastões elétricos elevam o cortisol, prejudicam a qualidade da carne (DFD — dark, firm, dry) e reduzem a produção leiteira. Manejo low-stress de Temple Grandin é comprovado.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bem-card">
+      <div class="bem-topo">
+        <div class="bem-icon-wrap" style="background:#fce7f3">🐖</div>
+        <div>
+          <div class="bem-titulo">Suínos — confinamento saudável</div>
+          <div class="bem-subtit">Granjas e terminação · Sistema intensivo</div>
+        </div>
+      </div>
+      <div class="bem-corpo">
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🌡️</span>
+          <div class="bem-topico-texto">
+            <strong>Temperatura crítica por fase</strong>
+            <span>Leitões até 7 dias: 32–34°C. Creche: 26–30°C. Crescimento: 20–24°C. Terminação: 16–20°C. Fora da faixa ideal = conversão alimentar pior e maior mortalidade.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">📐</span>
+          <div class="bem-topico-texto">
+            <strong>Espaço mínimo por animal</strong>
+            <span>Resolução do MAPA: 0,65 m²/suíno em crescimento, 1 m²/suíno em terminação. Superlotação causa canibalismo, doenças respiratórias e queda de 15% no ganho de peso.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🎮</span>
+          <div class="bem-topico-texto">
+            <strong>Enriquecimento ambiental</strong>
+            <span>Suínos são animais altamente inteligentes — 3º lugar entre mamíferos. Correntes, bolas e objetos para explorar reduzem em 80% o estereótipo de morder cauda.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">💨</span>
+          <div class="bem-topico-texto">
+            <strong>Ventilação e amônia</strong>
+            <span>Amônia acima de 25 ppm causa lesões nas vias respiratórias e conjuntivite. Ventilação mínima de 0,3 m³/min por animal em fase de terminação é obrigatória.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bem-card">
+      <div class="bem-topo">
+        <div class="bem-icon-wrap" style="background:#fef3c7">🐔</div>
+        <div>
+          <div class="bem-titulo">Aves — frango e postura</div>
+          <div class="bem-subtit">Aviários · Densidade e iluminação</div>
+        </div>
+      </div>
+      <div class="bem-corpo">
+        <div class="bem-topico">
+          <span class="bem-topico-icon">💡</span>
+          <div class="bem-topico-texto">
+            <strong>Programa de luz</strong>
+            <span>Frango de corte: 23h de luz nas primeiras semanas, redução gradual. Postura: 16h de luz por dia mantém produção máxima. Luz vermelha reduz canibalismo.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">📦</span>
+          <div class="bem-topico-texto">
+            <strong>Densidade de alojamento</strong>
+            <span>Máximo 33 kg/m² de peso vivo para frango de corte (padrão Brasil). Sistemas de bem-estar melhorado permitem até 38 kg/m² com manejo específico.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🪹</span>
+          <div class="bem-topico-texto">
+            <strong>Cama de aviário</strong>
+            <span>Qualidade da cama afeta diretamente a saúde das patas (pododermatite), que é o principal indicador de bem-estar cobrado por redes europeias de supermercado.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🌀</span>
+          <div class="bem-topico-texto">
+            <strong>Ventilação e gases</strong>
+            <span>CO₂ acima de 3.000 ppm prejudica conversão alimentar. Sistema tunnel ventilation em períodos quentes é o padrão em granjas integradas ao Sul do Brasil.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bem-card">
+      <div class="bem-topo">
+        <div class="bem-icon-wrap" style="background:var(--sky-100)">🥛</div>
+        <div>
+          <div class="bem-titulo">Vacas leiteiras — produção e conforto</div>
+          <div class="bem-subtit">Freestall, semiconfinamento e pasto</div>
+        </div>
+      </div>
+      <div class="bem-corpo">
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🛏️</span>
+          <div class="bem-topico-texto">
+            <strong>Conforto de descanso</strong>
+            <span>Vacas leiteiras devem deitar 12–14h por dia. Cada hora a mais deitada = 1,7 kg a mais de leite. Freestalls mal dimensionados causam lesões de joelho e jogar bruços.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🌡️</span>
+          <div class="bem-topico-texto">
+            <strong>Estresse térmico</strong>
+            <span>Acima de 24°C + umidade alta (ITU > 68), a produção cai 10–35%. Ventiladores + aspersores no corredor de alimentação são o padrão para climas tropicais.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">🦶</span>
+          <div class="bem-topico-texto">
+            <strong>Saúde dos cascos</strong>
+            <span>Laminite, podridão de casco e dermatite são as principais causas de descarte de vacas. Pedilúvio 2–3x por semana e piso antiderrapante reduzem 60% das ocorrências.</span>
+          </div>
+        </div>
+        <div class="bem-topico">
+          <span class="bem-topico-icon">⏱️</span>
+          <div class="bem-topico-texto">
+            <strong>Tempo na fila de ordenha</strong>
+            <span>Vacas em fila por mais de 2,5h/dia têm queda de produção, aumento de cortisol e maior incidência de mastite. Planeje a capacidade da sala de ordenha.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tabela de sinais vitais e temperatura normal -->
+  <div class="apc">
+    <div class="apc-title"><span class="apc-icon">🌡️</span> Parâmetros vitais normais — referência rápida</div>
+    <div style="overflow-x:auto">
+      <table class="sinais-table">
+        <thead>
+          <tr>
+            <th>Espécie</th>
+            <th>Temperatura retal (°C)</th>
+            <th>Frequência cardíaca (bpm)</th>
+            <th>Frequência resp. (mov/min)</th>
+            <th>Gestação (dias)</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🐄 Bovino adulto</td>
+            <td>38,0 – 39,0</td>
+            <td>60 – 80</td>
+            <td>12 – 20</td>
+            <td>280 – 285</td>
+            <td><span class="sinal-ok sinal-normal">Normal</span></td>
+          </tr>
+          <tr>
+            <td>🐄 Bezerro (até 3 meses)</td>
+            <td>38,5 – 39,5</td>
+            <td>70 – 100</td>
+            <td>20 – 40</td>
+            <td>—</td>
+            <td><span class="sinal-ok sinal-normal">Normal</span></td>
+          </tr>
+          <tr>
+            <td>🐖 Suíno adulto</td>
+            <td>38,0 – 39,5</td>
+            <td>60 – 80</td>
+            <td>10 – 20</td>
+            <td>114 – 116</td>
+            <td><span class="sinal-ok sinal-normal">Normal</span></td>
+          </tr>
+          <tr>
+            <td>🐖 Leitão (1ª semana)</td>
+            <td>38,5 – 40,0</td>
+            <td>100 – 180</td>
+            <td>30 – 50</td>
+            <td>—</td>
+            <td><span class="sinal-ok sinal-atencao">⚠ Monitorar</span></td>
+          </tr>
+          <tr>
+            <td>🐔 Frango de corte</td>
+            <td>40,5 – 42,0</td>
+            <td>250 – 350</td>
+            <td>15 – 30</td>
+            <td>21 dias (ovo)</td>
+            <td><span class="sinal-ok sinal-normal">Normal</span></td>
+          </tr>
+          <tr>
+            <td>🐑 Ovino adulto</td>
+            <td>38,5 – 40,0</td>
+            <td>70 – 90</td>
+            <td>16 – 30</td>
+            <td>145 – 151</td>
+            <td><span class="sinal-ok sinal-normal">Normal</span></td>
+          </tr>
+          <tr>
+            <td>🌡️ Acima do normal em bovino</td>
+            <td>&gt; 39,5</td>
+            <td>&gt; 100</td>
+            <td>&gt; 30</td>
+            <td>—</td>
+            <td><span class="sinal-ok sinal-critico">🚨 Chamar veterinário</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     ABA 3 — CUSTOS & MERCADO
+══════════════════════════════════════ -->
+<div class="ap-panel" id="panel-custos">
+
+  <!-- Cotações de referência -->
+  <div class="mercado-header">
+    <div class="mh-card alta">
+      <div class="mh-label">Boi gordo (@ 15kg)</div>
+      <div class="mh-val">R$ 312</div>
+      <div class="mh-sub">São Paulo · Referência CEPEA</div>
+      <span class="mh-var var-up">▲ +2,8%</span>
+    </div>
+    <div class="mh-card media">
+      <div class="mh-label">Frango vivo (kg)</div>
+      <div class="mh-val">R$ 6,40</div>
+      <div class="mh-sub">Sul do Brasil · CEPEA</div>
+      <span class="mh-var var-dn">▼ -1,2%</span>
+    </div>
+    <div class="mh-card alta">
+      <div class="mh-label">Leite (L — produtor)</div>
+      <div class="mh-val">R$ 2,85</div>
+      <div class="mh-sub">Média nacional · CEPEA</div>
+      <span class="mh-var var-up">▲ +0,9%</span>
+    </div>
+    <div class="mh-card baixa">
+      <div class="mh-label">Suíno vivo (kg)</div>
+      <div class="mh-val">R$ 7,20</div>
+      <div class="mh-sub">Sul do Brasil · CEPEA</div>
+      <span class="mh-var var-up">▲ +1,5%</span>
+    </div>
+  </div>
+
+  <!-- Gráfico e tabela de custos -->
+  <div class="custos-grid">
+    <div class="apc" style="margin-bottom:0">
+      <div class="apc-title"><span class="apc-icon">📊</span> Estrutura de custos — boi gordo (por @)</div>
+      <div class="custo-chart-wrap">
+        <canvas id="custo-chart"></canvas>
+      </div>
+    </div>
+    <div class="apc" style="margin-bottom:0">
+      <div class="apc-title"><span class="apc-icon">📋</span> Custo de produção — comparativo</div>
+      <div style="overflow-x:auto">
+        <table class="custo-table">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Custo médio</th>
+              <th>Preço de mercado</th>
+              <th>Margem</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🐄 Boi gordo (por @)</td>
+              <td style="font-weight:700;color:var(--danger-600)">R$ 248</td>
+              <td style="font-weight:700;color:var(--forest-700)">R$ 312</td>
+              <td><div class="td-custo-bar"><span style="font-weight:700;color:var(--forest-700);min-width:36px">+20%</span><div class="custo-mini-bar"><div class="custo-mini-fill" style="width:70%;background:var(--forest-400)"></div></div></div></td>
+            </tr>
+            <tr>
+              <td>🥛 Leite (por litro)</td>
+              <td style="font-weight:700;color:var(--danger-600)">R$ 2,45</td>
+              <td style="font-weight:700;color:var(--forest-700)">R$ 2,85</td>
+              <td><div class="td-custo-bar"><span style="font-weight:700;color:var(--forest-700);min-width:36px">+16%</span><div class="custo-mini-bar"><div class="custo-mini-fill" style="width:55%;background:var(--forest-400)"></div></div></div></td>
+            </tr>
+            <tr>
+              <td>🐔 Frango (por kg vivo)</td>
+              <td style="font-weight:700;color:var(--danger-600)">R$ 5,80</td>
+              <td style="font-weight:700;color:var(--forest-700)">R$ 6,40</td>
+              <td><div class="td-custo-bar"><span style="font-weight:700;color:var(--forest-700);min-width:36px">+10%</span><div class="custo-mini-bar"><div class="custo-mini-fill" style="width:35%;background:var(--sun-500)"></div></div></div></td>
+            </tr>
+            <tr>
+              <td>🐖 Suíno (por kg vivo)</td>
+              <td style="font-weight:700;color:var(--danger-600)">R$ 6,10</td>
+              <td style="font-weight:700;color:var(--forest-700)">R$ 7,20</td>
+              <td><div class="td-custo-bar"><span style="font-weight:700;color:var(--forest-700);min-width:36px">+18%</span><div class="custo-mini-bar"><div class="custo-mini-fill" style="width:62%;background:var(--forest-400)"></div></div></div></td>
+            </tr>
+            <tr>
+              <td>🐑 Cordeiro (por kg vivo)</td>
+              <td style="font-weight:700;color:var(--danger-600)">R$ 14,50</td>
+              <td style="font-weight:700;color:var(--forest-700)">R$ 19,00</td>
+              <td><div class="td-custo-bar"><span style="font-weight:700;color:var(--forest-700);min-width:36px">+31%</span><div class="custo-mini-bar"><div class="custo-mini-fill" style="width:90%;background:var(--forest-500)"></div></div></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:.72rem;color:var(--ink-300);margin-top:10px;line-height:1.5">
+        Custos médios nacionais de acordo com CEPEA/ESALQ e CNA (2025). Variam conforme região, sistema de produção e escala.
+      </p>
+    </div>
+  </div>
+
+  <!-- Custos detalhados por categoria -->
+  <div class="apc" style="margin-top:18px">
+    <div class="apc-title"><span class="apc-icon">🔍</span> Onde vai o dinheiro — boi gordo em pastagem (por @)</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px" id="custos-detail"></div>
+    <div style="padding:12px 16px;background:var(--sky-100);border:1px solid var(--sky-300);
+      border-radius:var(--radius-sm);font-size:.82rem;color:var(--sky-700);line-height:1.6">
+      💡 <strong>O que mais pesa:</strong> Alimentação (pastagem + suplementação) representa 55–65% do custo do boi gordo. Gestão de pastagem — adubação, reforma e taxa de lotação — é onde está a maior oportunidade de redução de custo sem perder produtividade.
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     ABA 4 — NOTÍCIAS
+══════════════════════════════════════ -->
+<div class="ap-panel" id="panel-noticias">
+
+  <div class="apc" style="margin-bottom:6px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div class="apc-title" style="margin-bottom:0"><span class="apc-icon">📰</span> Notícias e tendências do setor</div>
+      <div style="font-size:.74rem;color:var(--ink-400)">Atualizado: março 2026 · Fontes: ABIEC, CNA, USDA, Embrapa</div>
+    </div>
+  </div>
+
+  <div class="noticias-grid" id="noticias-grid"></div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     ABA 5 — CURIOSIDADES
+══════════════════════════════════════ -->
+<div class="ap-panel" id="panel-curiosidades">
+
+  <div class="curio-grid" id="curio-grid"></div>
+
+  <!-- Linha do tempo da pecuária brasileira -->
+  <div class="apc">
+    <div class="apc-title"><span class="apc-icon">🕰️</span> Evolução da pecuária bovina no Brasil</div>
+    <div class="timeline-evol" id="timeline-evol"></div>
+  </div>
+
+  <!-- Recordes mundiais -->
+  <div class="apc" style="margin-top:0">
+    <div class="apc-title"><span class="apc-icon">🏆</span> Brasil no ranking mundial da pecuária</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px" id="recordes-grid"></div>
+  </div>
+
+</div>
+
+</div><!-- /container -->
+</div><!-- /ap-wrap -->
+
+</main>
+
+<footer class="rodape">
+  <div class="container footer-grid">
+    <div><h3>Safra Justa</h3><p>Plataforma educativa para o produtor rural brasileiro.</p></div>
+    <div><h4>Páginas</h4><ul class="footer-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="painel.html">Painel do Produtor</a></li>
+      <li><a href="proposta.html">Calculadora</a></li>
+      <li><a href="gastos.html">Controle de Gastos</a></li>
+    </ul></div>
+    <div><h4>Fontes</h4><ul class="footer-links">
+      <li><a href="https://www.embrapa.br" target="_blank" rel="noopener">EMBRAPA</a></li>
+      <li><a href="https://www.cepea.esalq.usp.br" target="_blank" rel="noopener">CEPEA/ESALQ</a></li>
+      <li><a href="https://www.abiec.com.br" target="_blank" rel="noopener">ABIEC</a></li>
+      <li><a href="https://www.cna.org.br" target="_blank" rel="noopener">CNA</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Safra Justa — safrajusta.com.br</p></div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════
+   HAMBÚRGUER
+══════════════════════════════════════════ */
+const hamburger=document.getElementById('hamburger'),menuNav=document.getElementById('menu-nav');
+document.querySelectorAll('.menu-link,.btn-nav').forEach(l=>l.addEventListener('click',()=>{menuNav.classList.remove('menu-open');hamburger.classList.remove('hamburger-open');hamburger.setAttribute('aria-expanded','false')}));
+hamburger.addEventListener('click',()=>{const o=menuNav.classList.toggle('menu-open');hamburger.classList.toggle('hamburger-open',o);hamburger.setAttribute('aria-expanded',o)});
+
+/* ══════════════════════════════════════════
+   ABAS
+══════════════════════════════════════════ */
+const ABAS = ['cruzamentos','bemestar','custos','noticias','curiosidades'];
+function irAba(nome) {
+  document.querySelectorAll('.ap-tab').forEach((t,i) => t.classList.toggle('active', ABAS[i]===nome));
+  document.querySelectorAll('.ap-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-'+nome).classList.add('active');
+  if (nome==='custos'&&!custoChartRendered) renderCustoChart();
+}
+
+/* ══════════════════════════════════════════
+   DADOS — CRUZAMENTOS
+══════════════════════════════════════════ */
+const DB_CRUZ = {
+  bovinos: [
+    {
+      emoji:'🐄', nome:'Nelore × Angus (Nelangus)', aptidao:'corte', badge:'dest',
+      origem:'Zebuíno × Britânico', precocidade:'18–24 meses',
+      gmd:'1,1 kg/dia', carcaca:'52–56%', arroba:'18–22 @',
+      desc:'O cruzamento mais popular do Brasil. O Nelore traz rusticidade, tolerância ao calor e resistência a carrapatos; o Angus contribui com marmoreio, precocidade e qualidade de carcaça. Resultado: carne de alta qualidade com adaptação tropical.',
+      pros:['Alta qualidade da carne — marmoreio superior','Resistência a ectoparasitas (herança do Nelore)','Precocidade de acabamento — abate mais cedo','Aceito pelo mercado premium e exportação']
+    },
+    {
+      emoji:'🐄', nome:'Nelore × Simmental (SimNelore)', aptidao:'dual', badge:'dual',
+      origem:'Zebuíno × Europeu continental', precocidade:'22–28 meses',
+      gmd:'1,2 kg/dia', carcaca:'50–54%', arroba:'20–26 @',
+      desc:'Cruzamento de dupla aptidão com alta produção de leite no F1, permitindo boas taxas de desmame, e carcaças pesadas para corte. Muito usado em sistemas de cria-recria-engorda integrado.',
+      pros:['Vacas F1 produzem 8–12 kg leite/dia','Filhotes com alto potencial de crescimento','Adaptação ao Cerrado e Mata Atlântica','Excelente para sistema cria + engorda na mesma propriedade']
+    },
+    {
+      emoji:'🐄', nome:'Brahman × Hereford (Braford)', aptidao:'corte', badge:'dest',
+      origem:'Zebuíno × Britânico', precocidade:'20–26 meses',
+      gmd:'0,9 kg/dia', carcaca:'51–55%', arroba:'17–21 @',
+      desc:'Desenvolvido nos EUA e muito usado no Sul do Brasil e no Pantanal. Combina a docilidade do Hereford com a rusticidade do Brahman. Ótimo para regiões com verão quente e inverno frio.',
+      pros:['Temperamento dócil — facilita o manejo','Alta fertilidade das fêmeas','Adaptação a climas variáveis','Carne macia com boa cobertura de gordura']
+    },
+    {
+      emoji:'🐄', nome:'Girolando (Gir × Holandês)', aptidao:'leite', badge:'dest',
+      origem:'Zebuíno × Europeu leiteiro', precocidade:'—',
+      gmd:'—', carcaca:'—', arroba:'8.000–12.000 L/lactação',
+      desc:'A raça leiteira tropical mais importante do mundo — desenvolvida no Brasil. Reúne a produção leiteira do Holandês com a rusticidade, tolerância ao calor e resistência a doenças do Gir.',
+      pros:['Produção de 8.000–12.000 L/lactação (padrão)','Alta resistência ao calor tropical','Não necessita de instalações refrigeradas','Base do leite brasileiro — 80% do rebanho nacional']
+    }
+  ],
+  leite: [
+    {
+      emoji:'🥛', nome:'Girolando 5/8', aptidao:'leite', badge:'dest',
+      origem:'5/8 Holandês + 3/8 Gir', precocidade:'26–30 meses',
+      gmd:'—', carcaca:'—', arroba:'9.000–13.000 L/lactação',
+      desc:'A composição racial mais usada no Brasil para leite tropical. O 5/8 Holandês eleva a produção mantendo adaptação ao clima. Predomina nas principais bacias leiteiras do país.',
+      pros:['Melhor relação produção × adaptação','Maturidade sexual precoce para fêmeas','Alta persistência de lactação','Aceita bem a ordenha 2×/dia sem freestall']
+    },
+    {
+      emoji:'🥛', nome:'Holandês puro (PO)', aptidao:'leite', badge:'dest',
+      origem:'Europeu continental', precocidade:'22–24 meses',
+      gmd:'—', carcaca:'—', arroba:'15.000–20.000 L/lactação',
+      desc:'A raça mais produtiva do mundo. No Brasil funciona bem apenas em regiões com altitude acima de 700m, clima ameno e instalações com controle térmico. Alta exigência de manejo.',
+      pros:['Maior potencial produtivo do mundo','Facilidade de seleção genética — amplo banco de sêmen','Alta resposta ao manejo e alimentação qualificada','Indicado para produtores que investem em tecnologia']
+    },
+    {
+      emoji:'🥛', nome:'Jersey', aptidao:'leite', badge:'dual',
+      origem:'Ilha de Jersey (Reino Unido)', precocidade:'22–24 meses',
+      gmd:'—', carcaca:'—', arroba:'7.000–9.000 L/lactação',
+      desc:'Menor que o Holandês, o Jersey é mais eficiente por kg de peso corporal e produz leite com alto teor de gordura (4,5–5,5%) e proteína, ideal para queijo e derivados.',
+      pros:['Leite com maior teor de sólidos (+25% gordura vs Holandês)','Menor custo de alimentação por kg de leite','Excelente para produção de queijo artesanal','Boa adaptação a regiões serranas']
+    },
+    {
+      emoji:'🥛', nome:'Brown Swiss (Pardo Suíço)', aptidao:'dual', badge:'dual',
+      origem:'Suíça central', precocidade:'24–28 meses',
+      gmd:'0,7 kg/dia', carcaca:'—', arroba:'8.000–11.000 L/lactação',
+      desc:'Raça de dupla aptidão com alta produção de leite rico em proteína e boa conformação de carcaça. Muito resistente — se adapta do clima frio ao tropical de altitude.',
+      pros:['Alta proteína no leite — ideal para derivados','Longevidade excepcional — vacas produtivas por 7–9 anos','Patas e cascos muito resistentes','Dupla aptidão real — descarte com boa valorização']
+    }
+  ],
+  suinos: [
+    {
+      emoji:'🐖', nome:'Landrace × Large White', aptidao:'corte', badge:'dest',
+      origem:'Dinamarquês × Britânico', precocidade:'150–170 dias',
+      gmd:'900–1.100 g/dia', carcaca:'80–85%', arroba:'95–115 kg ao abate',
+      desc:'A base da suinocultura industrial brasileira. O cruzamento produz animais com alto rendimento de carcaça, excelente conversão alimentar e baixíssimo teor de gordura — padrão exigido pelo mercado externo.',
+      pros:['Maior rendimento de carcaça da suinocultura','Conversão alimentar de 2,1–2,4 kg ração/kg ganho','Prolificidade alta (12–14 leitões/leitegada)','Velocidade de crescimento superior']
+    },
+    {
+      emoji:'🐖', nome:'Duroc × (Landrace × LW)', aptidao:'corte', badge:'dest',
+      origem:'Tricruzamento industrial', precocidade:'155–175 dias',
+      gmd:'950–1.050 g/dia', carcaca:'78–83%', arroba:'100–120 kg ao abate',
+      desc:'O sistema de tricruzamento mais usado em granjas integradas no Brasil. O Duroc (raça paterna) confere marmoreio, temperamento calmo e excelente ganho de peso; as fêmeas híbridas Landrace × LW são as mães.',
+      pros:['Marmoreio superior — mais saboroso','Menor incidência de PSE (carne pálida)','Resistência a estresse de manejo','Fêmeas F1 com ótima habilidade materna']
+    },
+    {
+      emoji:'🐖', nome:'Piau (raça nativa)', aptidao:'dual', badge:'dual',
+      origem:'Brasil — porco caipira', precocidade:'240–300 dias',
+      gmd:'400–600 g/dia', carcaca:'70–75%', arroba:'75–90 kg ao abate',
+      desc:'Raça nativa brasileira, resistente e rústica. Cresce mais devagar mas acumula gordura de sabor superior — perfeito para embutidos artesanais, banha e mercado de produtos diferenciados.',
+      pros:['Resistência a doenças e clima adverso','Gordura de sabor superior — embutidos artesanais','Menor custo de instalação e manejo','Mercado de nicho com preço 2–3× maior']
+    },
+    {
+      emoji:'🐖', nome:'Pietrain × (LR × LW)', aptidao:'corte', badge:'dest',
+      origem:'Belga × Híbrido industrial', precocidade:'150–165 dias',
+      gmd:'850–1.000 g/dia', carcaca:'82–88%', arroba:'90–110 kg ao abate',
+      desc:'O Pietrain tem o maior percentual de carne magra de todas as raças suínas. Cruzado com fêmeas do sistema industrial, produz carcaças excepcionais para cortes nobres — filé, lombo e copa.',
+      pros:['Maior porcentagem de carne magra (66–70%)','Excelente para cortes de alto valor','Amplamente usado em genética industrial europeia','Alta demanda para exportação de cortes nobres']
+    }
+  ],
+  aves: [
+    {
+      emoji:'🐔', nome:'Cobb 500 — frango de corte', aptidao:'corte', badge:'dest',
+      origem:'Linhagem americana', precocidade:'42–47 dias',
+      gmd:'65–75 g/dia', carcaca:'74–76%', arroba:'2,8–3,2 kg ao abate',
+      desc:'A linhagem de frango de corte mais usada no Brasil — presente em 60% das granjas integradas. Crescimento explosivo com excelente conversão alimentar. Alta homogeneidade de lote.',
+      pros:['Conversão alimentar de 1,85–1,95 kg ração/kg','Rendimento de peito superior (23–25%)','Alta uniformidade — fundamental para linha de abate','Adaptação a sistemas intensivos tropicais']
+    },
+    {
+      emoji:'🐔', nome:'Ross 308 — frango de corte', aptidao:'corte', badge:'dest',
+      origem:'Linhagem escocesa', precocidade:'40–45 dias',
+      gmd:'68–78 g/dia', carcaca:'75–77%', arroba:'2,9–3,3 kg ao abate',
+      desc:'Concorrente direto do Cobb 500, com ligeira vantagem em rendimento de peito. Muito usado por integradoras que atendem mercado de cortes nobres e exportação.',
+      pros:['Maior rendimento de peito (24–26%)','Excelente viabilidade (mortalidade < 3%)','Boa rusticidade em climas mais quentes','Preferido por integradoras exportadoras']
+    },
+    {
+      emoji:'🐔', nome:'Hubbard — frango caipira', aptidao:'dual', badge:'dual',
+      origem:'Linhagem francesa', precocidade:'85–90 dias',
+      gmd:'28–35 g/dia', carcaca:'68–72%', arroba:'3,0–3,8 kg ao abate',
+      desc:'Linhagem de crescimento mais lento para o mercado de aves caipiras e orgânicas. Penas coloridas, sistema semi-intensivo ao ar livre. Preço de venda 3–4× maior que frango convencional.',
+      pros:['Preço de mercado 3–4× superior','Sistema ao ar livre = menor custo de instalação','Alta preferência do consumidor consciente','Mercado em expansão — 15% ao ano no Brasil']
+    },
+    {
+      emoji:'🥚', nome:'Lohmann Brown — postura', aptidao:'dest', badge:'dest',
+      origem:'Linhagem alemã', precocidade:'18–20 semanas',
+      gmd:'—', carcaca:'—', arroba:'310–320 ovos/ave/ano',
+      desc:'A linhagem de postura mais popular do Brasil. Ovos de casca marrom-escura com excelente relação tamanho/peso. Pico de postura acima de 95% e boa persistência até a 90ª semana.',
+      pros:['310–320 ovos/ano por ave','Pico de postura > 95% de produção','Boa resistência a doenças respiratórias','Aceitação total pelo mercado varejista brasileiro']
+    }
+  ],
+  ovinos: [
+    {
+      emoji:'🐑', nome:'Dorper × Santa Inês', aptidao:'corte', badge:'dest',
+      origem:'Sul-africano × Brasileiro', precocidade:'4–6 meses',
+      gmd:'250–320 g/dia', carcaca:'48–52%', arroba:'32–40 kg ao abate',
+      desc:'O melhor cruzamento para cordeiro de corte no semiárido e Cerrado brasileiro. O Dorper traz crescimento rápido e carcaça excelente; o Santa Inês confere rusticidade, resistência a parasitas e prolificidade.',
+      pros:['Alta resistência a parasitas gastrointestinais','Crescimento rápido — abate aos 4–6 meses','Cordeiro com carcaça macia e pouca gordura','Perfeito para o clima semiárido nordestino']
+    },
+    {
+      emoji:'🐑', nome:'Ile de France × Corriedale', aptidao:'corte', badge:'dest',
+      origem:'Francês × Neozelandês', precocidade:'5–7 meses',
+      gmd:'220–280 g/dia', carcaca:'46–50%', arroba:'35–45 kg ao abate',
+      desc:'Cruzamento de corte para regiões com inverno definido (Sul e Sudeste de altitude). O Corriedale como base materna traz prolificidade e boa lã; o Ile de France como terminal entrega a conformação de carcaça.',
+      pros:['Excelente conformação de carcaça — perna e paleta','Prolificidade materna superior','Lã de qualidade como renda adicional','Alta rusticidade para o sul do Brasil']
+    },
+    {
+      emoji:'🐑', nome:'Morada Nova — raça nativa', aptidao:'corte', badge:'dual',
+      origem:'Nordeste brasileiro', precocidade:'5–8 meses',
+      gmd:'180–240 g/dia', carcaca:'44–48%', arroba:'28–35 kg ao abate',
+      desc:'Raça nativa do Nordeste, extremamente adaptada ao semiárido. Prolífica (parições gêmeas frequentes), sem lã (sem custo de tosa) e resistente à verminose. Base ideal para cruzamento com Dorper.',
+      pros:['Extrema resistência ao clima semiárido','Sem lã — economia de mão de obra','Alta prolificidade — parições gêmeas comuns','Resistência natural à verminose (principal doença ovina']
+    },
+    {
+      emoji:'🐑', nome:'Texel × Santa Inês', aptidao:'corte', badge:'dest',
+      origem:'Holandês × Brasileiro', precocidade:'5–6 meses',
+      gmd:'230–300 g/dia', carcaca:'47–51%', arroba:'33–42 kg ao abate',
+      desc:'O Texel é o mais musculoso entre as raças ovinas — carcaças com altíssima relação músculo/gordura e conformação nota 10 para o mercado premium e churrascaria.',
+      pros:['Melhor conformação muscular da ovinocultura','Carcaça classificada como "Extra" no SISBOV','Aceito por restaurantes e mercado premium','Alta demanda pelo cordeiro texel no Sudeste']
+    }
+  ]
+};
+
+let espAtual = 'bovinos', comparChart = null;
+
+function mudarEspecie(esp, btn) {
+  espAtual = esp;
+  document.querySelectorAll('.esp-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCruzamentos();
+}
+
+const BADGES = {dest:'🌟 Destaque',corte:'🥩 Corte',dual:'🔄 Dupla aptidão',leite:'🥛 Leite',trac:'⚙️ Tração'};
+const BADGE_CSS = {dest:'badge-dest',corte:'badge-corte',dual:'badge-dual',leite:'badge-dest',trac:'badge-trac'};
+
+function renderCruzamentos() {
+  const dados = DB_CRUZ[espAtual] || [];
+  const fmt = v => isNaN(+v) ? v : (+v).toLocaleString('pt-BR');
+  const labelsTerceiro = {bovinos:'Arroba / cab.',leite:'Produção/lactação',suinos:'Peso ao abate',aves:'Prod./ave/ano',ovinos:'Peso ao abate'};
+  const terceiroLabel = labelsTerceiro[espAtual]||'Aroba/cab.';
+
+  document.getElementById('cruz-grid').innerHTML = dados.map(d => `
+    <div class="cruz-card">
+      <div class="cruz-header">
+        <span class="cruz-emoji">${d.emoji}</span>
+        <div>
+          <div class="cruz-nome">${d.nome}</div>
+          <div class="cruz-origem">${d.origem}</div>
+        </div>
+        <span class="cruz-badge ${BADGE_CSS[d.aptidao]||'badge-dest'}">${BADGES[d.aptidao]||d.aptidao}</span>
+      </div>
+      <div class="cruz-body">
+        <div class="cruz-stats">
+          <div class="cs-item"><div class="cs-val">${d.precocidade}</div><div class="cs-label">Precocidade</div></div>
+          <div class="cs-item"><div class="cs-val">${d.gmd}</div><div class="cs-label">GMD/prod.</div></div>
+          <div class="cs-item"><div class="cs-val">${d.arroba}</div><div class="cs-label">${terceiroLabel}</div></div>
+        </div>
+        <p class="cruz-desc">${d.desc}</p>
+        <div class="cruz-pros">${d.pros.map(p=>`<div class="cruz-pro">${p}</div>`).join('')}</div>
+      </div>
+    </div>`).join('');
+
+  // Label do gráfico
+  const nomesEsp = {bovinos:'Bovinos de Corte',leite:'Bovinos de Leite',suinos:'Suínos',aves:'Aves',ovinos:'Ovinos'};
+  document.getElementById('chart-especie-label').textContent = nomesEsp[espAtual]||espAtual;
+
+  renderComparativoChart();
+}
+
+function renderComparativoChart() {
+  const dados = DB_CRUZ[espAtual] || [];
+  const labels = dados.map(d => d.nome.length > 18 ? d.nome.slice(0,18)+'…' : d.nome);
+
+  // Métricas por espécie — extrai GMD ou usa proxy
+  const gmd = dados.map(d => {
+    const v = parseFloat(d.gmd?.replace(',','.').replace(/[^0-9.]/g,''));
+    return isNaN(v) ? 0 : v;
+  });
+  const carcaca = dados.map(d => {
+    const v = parseFloat(d.carcaca?.replace(',','.').replace(/[^0-9.]/g,''));
+    return isNaN(v) ? 0 : v;
+  });
+
+  if (comparChart) comparChart.destroy();
+  comparChart = new Chart(document.getElementById('comparativo-chart'), {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        { label:'GMD (kg/dia ou equiv.)', data:gmd, backgroundColor:'rgba(46,122,72,.8)', borderRadius:5, borderSkipped:false },
+        { label:'Rendimento carcaça (%)', data:carcaca, backgroundColor:'rgba(33,118,181,.7)', borderRadius:5, borderSkipped:false },
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'top',labels:{font:{size:11}}},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}`}}
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:11},maxRotation:25}},
+        y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:11}}}
+      }
+    }
+  });
+}
+
+/* ══════════════════════════════════════════
+   BEM-ESTAR — 5 liberdades
+══════════════════════════════════════════ */
+const CINCO_LIBERDADES = [
+  { emoji:'🍽️', nome:'Livre de fome e sede', pct:72, cor:'#059669',
+    desc:'Acesso a água limpa e alimento adequado em quantidade e qualidade para manter plena saúde.' },
+  { emoji:'🌬️', nome:'Livre de desconforto', pct:58, cor:'#d97706',
+    desc:'Ambiente com temperatura, umidade e espaço adequados. Sombra, abrigo e cama seca.' },
+  { emoji:'💊', nome:'Livre de dor e doença', pct:65, cor:'#dc2626',
+    desc:'Prevenção de doenças e tratamento rápido. Veterinário e protocolo sanitário ativo.' },
+  { emoji:'🎮', nome:'Livre de comportamento normal', pct:45, cor:'#7c3aed',
+    desc:'Espaço e estímulos para que o animal possa expressar comportamentos naturais da espécie.' },
+  { emoji:'😌', nome:'Livre de medo e angústia', pct:52, cor:'#0369a1',
+    desc:'Manejo gentil, sem gritos, pancadas ou situações que causem estresse crônico ou agudo.' },
+];
+
+document.getElementById('indicadores-bem').innerHTML = CINCO_LIBERDADES.map(l => `
+  <div class="ind-bem" title="${l.desc}">
+    <div class="ind-bem-emoji">${l.emoji}</div>
+    <div class="ind-bem-nome">${l.nome}</div>
+    <div class="ind-bem-bar">
+      <div class="ind-bem-fill" style="width:${l.pct}%;background:${l.cor}"></div>
+    </div>
+    <div style="font-size:.7rem;color:var(--ink-400);margin-top:4px;font-weight:600">${l.pct}% das granjas atendem</div>
+  </div>`).join('');
+
+/* ══════════════════════════════════════════
+   CUSTOS — gráfico e detalhamento
+══════════════════════════════════════════ */
+let custoChartRendered = false;
+const CUSTOS_BOI = [
+  { cat:'Pastagem e forragem', val:92, cor:'#3e9a5e' },
+  { cat:'Suplementação mineral', val:38, cor:'#2176b5' },
+  { cat:'Suplementação proteica', val:28, cor:'#6cb2e0' },
+  { cat:'Medicamentos / vacinas', val:18, cor:'#e8b84a' },
+  { cat:'Mão de obra', val:35, cor:'#c98a1a' },
+  { cat:'Depreciação de pastagem', val:22, cor:'#718077' },
+  { cat:'Outros custos fixos', val:15, cor:'#9eb0a7' },
+];
+
+function renderCustoChart() {
+  custoChartRendered = true;
+  const total = CUSTOS_BOI.reduce((s,c)=>s+c.val,0);
+
+  new Chart(document.getElementById('custo-chart'), {
+    type:'doughnut',
+    data:{
+      labels:CUSTOS_BOI.map(c=>c.cat),
+      datasets:[{data:CUSTOS_BOI.map(c=>c.val),backgroundColor:CUSTOS_BOI.map(c=>c.cor),borderWidth:0,hoverOffset:8}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:'60%',
+      plugins:{
+        legend:{position:'right',labels:{font:{size:11},boxWidth:12}},
+        tooltip:{callbacks:{
+          label:c=>` ${c.label}: R$ ${c.parsed} (${((c.parsed/total)*100).toFixed(0)}%)`
+        }}
+      }
+    }
+  });
+
+  document.getElementById('custos-detail').innerHTML = CUSTOS_BOI.map(c => `
+    <div style="background:var(--ink-50);border:var(--border);border-radius:var(--radius-sm);padding:14px 14px">
+      <div style="font-size:.7rem;font-weight:700;color:var(--ink-400);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px">${c.cat}</div>
+      <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--forest-900);letter-spacing:-.03em">R$ ${c.val}<span style="font-size:.7rem;font-weight:600;color:var(--ink-400)">/@ </span></div>
+      <div style="font-size:.72rem;color:var(--ink-400);margin-top:2px">${((c.val/total)*100).toFixed(0)}% do custo total</div>
+    </div>`).join('');
+}
+
+/* ══════════════════════════════════════════
+   NOTÍCIAS
+══════════════════════════════════════════ */
+const NOTICIAS = [
+  {
+    cat:'genetica', catLabel:'Genética', titulo:'Brasil lança programa nacional de genomia bovina para raças zebuínas',
+    resumo:'O programa prevê genotipagem de 500 mil animais até 2027, criando o maior banco de dados genômico tropical do mundo. Estimativa de ganho genético 40% superior à seleção convencional para raças como Nelore e Gir.',
+    fonte:'Embrapa Gado de Corte', data:'Março 2026',
+    impacto:'Para o produtor: valores de touros provados devem cair com maior oferta de sêmen de animais superiores identificados mais cedo.',
+    impactoClasse:'background:var(--forest-50);border:1px solid var(--forest-200);color:var(--forest-700)'
+  },
+  {
+    cat:'mercado', catLabel:'Mercado', titulo:'Brasil bate recorde histórico: exportações de carne bovina ultrapassam US$ 12 bilhões em 2025',
+    resumo:'China seguiu como principal destino (45% do volume), mas a diversificação para EUA, Japão e Europa cresceu. Corte traseiro valorizado — alcatra, picanha e contrafilé lideram. Câmbio favorável mantém competitividade.',
+    fonte:'ABIEC / Ministério da Agricultura', data:'Fevereiro 2026',
+    impacto:'Para o produtor: preço da @ tende a se manter elevado no primeiro semestre de 2026 com demanda externa aquecida.',
+    impactoClasse:'background:var(--sky-100);border:1px solid var(--sky-300);color:var(--sky-700)'
+  },
+  {
+    cat:'saude', catLabel:'Saúde Animal', titulo:'Febre aftosa: Brasil mantém status de zona livre sem vacinação em novas zonas',
+    resumo:'O OIE confirmou a ampliação das zonas livres de febre aftosa sem vacinação no Sul do Brasil. Isso abre mercados premium como Japão e Coreia do Sul para carnes do Paraná e Santa Catarina.',
+    fonte:'MAPA / OIE', data:'Janeiro 2026',
+    impacto:'Para o produtor do Sul: pode acessar mercados que pagam 15–25% acima da média internacional.',
+    impactoClasse:'background:var(--forest-50);border:1px solid var(--forest-200);color:var(--forest-700)'
+  },
+  {
+    cat:'sustent', catLabel:'Sustentabilidade', titulo:'Programa Carne Carbono Neutro atinge 2.000 propriedades certificadas no Brasil',
+    resumo:'A certificação Carbon Zero Beef premia produtores que comprovam sequestro de carbono superior à emissão do rebanho via integração lavoura-pecuária-floresta (iLPF). Comprador paga prêmio de 8–15% sobre o preço da @.',
+    fonte:'Embrapa / Conexão Agro', data:'Março 2026',
+    impacto:'Para o produtor: o prêmio de sustentabilidade pode representar R$ 25–45 a mais por @ para quem adota iLPF.',
+    impactoClasse:'background:var(--forest-50);border:1px solid var(--forest-200);color:var(--forest-700)'
+  },
+  {
+    cat:'tecnol', catLabel:'Tecnologia', titulo:'Monitoramento por IoT e IA reduz mortalidade de bezerros em 30% em teste da Embrapa',
+    resumo:'Coleiras inteligentes com sensores de temperatura, movimento e ruminação identificaram sinais de doença 18–36h antes dos sintomas clínicos aparecerem. Projeto piloto em MS com 480 animais mostrou redução de 32% na mortalidade neonatal.',
+    fonte:'Embrapa Gado de Corte', data:'Fevereiro 2026',
+    impacto:'Para o produtor: tecnologia deve chegar ao mercado em 2027 a custo estimado de R$ 180–250 por coleira.',
+    impactoClasse:'background:var(--sky-100);border:1px solid var(--sky-300);color:var(--sky-700)'
+  },
+  {
+    cat:'politica', catLabel:'Política', titulo:'Novo Marco Regulatório da Rastreabilidade Animal entra em vigor em 2026',
+    resumo:'A Instrução Normativa 58/2025 torna obrigatória a rastreabilidade individual de 100% dos bovinos até 2027. SISBOV passa a ser pré-requisito para acesso ao Pronaf e ao seguro rural Proagro.',
+    fonte:'MAPA', data:'Janeiro 2026',
+    impacto:'Para o produtor: quem ainda não está no SISBOV deve se cadastrar o quanto antes para não perder acesso ao crédito rural.',
+    impactoClasse:'background:var(--sun-100);border:1px solid var(--sun-300);color:var(--earth-700)'
+  },
+];
+
+const CAT_CLASSES = {genetica:'cat-genetica',mercado:'cat-mercado',saude:'cat-saude',
+  sustent:'cat-sustent',tecnol:'cat-tecnol',politica:'cat-politica'};
+
+document.getElementById('noticias-grid').innerHTML = NOTICIAS.map(n => `
+  <div class="noticia-card">
+    <span class="noticia-cat ${CAT_CLASSES[n.cat]||''}">${n.catLabel}</span>
+    <div class="noticia-body">
+      <div class="noticia-titulo">${n.titulo}</div>
+      <div class="noticia-resumo">${n.resumo}</div>
+      <div class="noticia-meta">
+        <span>📰 ${n.fonte}</span>
+        <span>📅 ${n.data}</span>
+      </div>
+      <div class="noticia-impacto" style="${n.impactoClasse}">
+        <strong>Impacto para você:</strong> ${n.impacto}
+      </div>
+    </div>
+  </div>`).join('');
+
+/* ══════════════════════════════════════════
+   CURIOSIDADES
+══════════════════════════════════════════ */
+const CURIOSIDADES = [
+  {
+    num:'01', cor:'#3e9a5e',
+    titulo:'O Brasil tem mais bois do que gente',
+    texto:'Com 234 milhões de cabeças de bovinos para 215 milhões de habitantes, o Brasil tem o maior rebanho comercial do mundo — superando a Índia, que não abate gado por questões religiosas.',
+    stat:'234 milhões de cabeças'
+  },
+  {
+    num:'02', cor:'#2176b5',
+    titulo:'Uma vaca produz cerca de 200 litros de metano por dia',
+    texto:'O metano (CH₄) é emitido pela fermentação entérica no rúmen. A pecuária responde por 14,5% das emissões globais de gases do efeito estufa — por isso sistemas de integração lavoura-pecuária-floresta viram política de estado.',
+    stat:'14,5% das emissões globais'
+  },
+  {
+    num:'03', cor:'#c98a1a',
+    titulo:'Frango é o animal mais criado no mundo — e o Brasil domina',
+    texto:'O planeta abate cerca de 70 bilhões de frangos por ano. O Brasil é o maior exportador mundial, com 35% do mercado internacional. O estado do Paraná sozinho exporta mais frango do que a Tailândia inteira.',
+    stat:'35% do mercado de exportação'
+  },
+  {
+    num:'04', cor:'#7c3aed',
+    titulo:'A vaca tem um estômago com 4 câmaras — cada uma com função diferente',
+    texto:'Rúmen (fermentação), retículo (filtragem e ruminação), omaso (absorção de água) e abomaso (digestão enzimática, o "estômago de verdade"). O rúmen sozinho comporta 150–200 litros em bovinos adultos.',
+    stat:'4 câmaras digestivas'
+  },
+  {
+    num:'05', cor:'#dc2626',
+    titulo:'O Nelore brasileiro tem genes únicos que não existem mais na Índia',
+    texto:'Após séculos de seleção no Cerrado, o Nelore brasileiro divergiu geneticamente dos Ongoles indianos originais. Pesquisas da Embrapa mostram que o Nelore brasileiro tem alelos para resistência ao calor e a carrapatos que não existem na população indiana.',
+    stat:'500+ anos de seleção adaptativa'
+  },
+  {
+    num:'06', cor:'#0369a1',
+    titulo:'Uma galinha pode produzir um ovo sem ser fecundada',
+    texto:'A postura ocorre independente de fertilização — a fêmea ovula naturalmente a cada 24–27 horas. O galo é necessário apenas para fertilizar o ovo e gerar um pintinho. A indústria de postura cria só fêmeas, descartando os machos no nascimento.',
+    stat:'~300 ovos/ano por galinha'
+  },
+];
+
+document.getElementById('curio-grid').innerHTML = CURIOSIDADES.map(c => `
+  <div class="curio-card" style="--curio-cor:${c.cor}">
+    <div class="curio-num">${c.num}</div>
+    <h3>${c.titulo}</h3>
+    <p>${c.texto}</p>
+    <div class="curio-stat">📊 ${c.stat}</div>
+  </div>`).join('');
+
+/* Timeline evolutiva */
+const TIMELINE = [
+  { ano:'1530', emoji:'⛵', dest:false, titulo:'Chegada do gado ao Brasil', texto:'D. João III envia o primeiro carregamento de bovinos de raça Ibérica (Minhota) para o Brasil. As primeiras fazendas se formam no litoral da Bahia e de São Paulo.' },
+  { ano:'1750', emoji:'🌵', dest:false, titulo:'Expansão para o sertão', texto:'A pecuária avança para o interior como atividade econômica independente. O sertão nordestino e a Amazônia são colonizados majoritariamente pela pata do boi.' },
+  { ano:'1870', emoji:'🔬', dest:false, titulo:'Introdução do Zebu indiano', texto:'Primeiros zebuínos (Gir e Guzerá) chegam da Índia via Portugal. A adaptação ao calor e a resistência a doenças revolucionam a pecuária tropical.' },
+  { ano:'1938', emoji:'🏛️', dest:false, titulo:'Criação do MAPA e ordenamento', texto:'Estrutura regulatória da pecuária brasileira é criada. Surge o primeiro serviço de inspeção de abate, base da exportação de carnes.' },
+  { ano:'1975', emoji:'🧪', dest:true,  titulo:'EMBRAPA e a revolução genética', texto:'Fundação da Embrapa Gado de Corte em Campo Grande. Início dos programas de melhoramento genético que criaram o Nelore elite e o Girolando — raças praticamente inventadas no Brasil.' },
+  { ano:'1994', emoji:'📡', dest:false, titulo:'SISBOV e rastreabilidade', texto:'Brasil cria o sistema de rastreabilidade bovina, pavimentando o caminho para a retomada das exportações de carne após crises sanitárias na Europa.' },
+  { ano:'2005', emoji:'🌍', dest:true,  titulo:'Brasil vira maior exportador mundial', texto:'O Brasil ultrapassa a Austrália e se torna o maior exportador de carne bovina do mundo, posto que mantém até hoje com 35% do mercado global.' },
+  { ano:'2026', emoji:'🤖', dest:true,  titulo:'Genomia e Agricultura 4.0', texto:'Genotipagem em larga escala, coleiras inteligentes com IoT, drones para manejo de pastagem e IA para diagnóstico de doenças: a agropecuária entra na era digital.' },
+];
+
+document.getElementById('timeline-evol').innerHTML = TIMELINE.map(t => `
+  <div class="evol-item">
+    <div class="evol-dot ${t.dest?'destaque':''}">${t.emoji}</div>
+    <div class="evol-body">
+      <div class="evol-ano">${t.ano}</div>
+      <h3>${t.titulo}</h3>
+      <p>${t.texto}</p>
+    </div>
+  </div>`).join('');
+
+/* Recordes mundiais */
+const RECORDES = [
+  { emoji:'🥇', posicao:'1º lugar', titulo:'Maior exportador de carne bovina', sub:'35% do mercado mundial · US$ 12 bi/ano', cor:'#c98a1a' },
+  { emoji:'🥇', posicao:'1º lugar', titulo:'Maior rebanho comercial bovino', sub:'234 milhões de cabeças · supera Índia', cor:'#3e9a5e' },
+  { emoji:'🥇', posicao:'1º lugar', titulo:'Maior exportador de frango', sub:'35% do mercado mundial · 4,5 mi t/ano', cor:'#e8b84a' },
+  { emoji:'🥈', posicao:'2º lugar', titulo:'Maior produtor de soja (insumo pecuário)', sub:'Soja é a base do farelo proteico mundial', cor:'#2176b5' },
+  { emoji:'🥉', posicao:'3º lugar', titulo:'Maior exportador de carne suína', sub:'Atrás de UE e EUA · crescendo 8%/ano', cor:'#718077' },
+  { emoji:'⭐', posicao:'Referência', titulo:'Genética tropical zebuína', sub:'Nelore brasileiro referência mundial para climas quentes', cor:'#7c3aed' },
+];
+
+document.getElementById('recordes-grid').innerHTML = RECORDES.map(r => `
+  <div style="background:var(--white);border:var(--border);border-radius:var(--radius-md);
+    padding:18px 16px;box-shadow:var(--shadow-xs);border-top:4px solid ${r.cor}">
+    <div style="font-size:1.4rem;margin-bottom:8px">${r.emoji}</div>
+    <div style="font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+      color:${r.cor};margin-bottom:4px">${r.posicao}</div>
+    <div style="font-family:var(--font-display);font-size:.95rem;font-weight:700;
+      color:var(--forest-950);letter-spacing:-.01em;margin-bottom:6px;line-height:1.3">${r.titulo}</div>
+    <div style="font-size:.78rem;color:var(--ink-400);line-height:1.5">${r.sub}</div>
+  </div>`).join('');
+
+/* ══ INICIALIZAÇÃO ══ */
+renderCruzamentos();
+</script>
+</body>
+</html>
