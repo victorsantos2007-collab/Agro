@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Controle de Gastos | Safra Justa</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <style>
+/* ════════════════════════════════════════════
+   CONTROLE DE GASTOS — estilos exclusivos
+════════════════════════════════════════════ */
+
+/* ── Hero ── */
+.gh{background:var(--forest-900);color:var(--white);padding:52px 0 44px;position:relative;overflow:hidden}
+.gh::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 70% at 80% 30%,rgba(46,122,72,.2) 0%,transparent 55%);pointer-events:none}
+.gh-inner{position:relative;z-index:1;display:flex;align-items:flex-end;
+  justify-content:space-between;gap:24px;flex-wrap:wrap}
+.gh h1{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);
+  font-weight:700;color:var(--white);letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
+.gh h1 em{font-style:italic;color:var(--forest-300)}
+.gh p{font-size:.92rem;color:rgba(255,255,255,.58);line-height:1.7;max-width:54ch}
+.gh-stats{display:flex;gap:28px;flex-wrap:wrap;flex-shrink:0}
+.gh-stat strong{display:block;font-family:var(--font-display);font-size:1.8rem;
+  font-weight:700;color:var(--white);letter-spacing:-.04em;line-height:1;margin-bottom:3px}
+.gh-stat span{font-size:.72rem;color:rgba(255,255,255,.4);font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase}
+
+/* ── Abas principais ── */
+.page-wrap{background:var(--ink-50);padding:32px 0 88px;min-height:calc(100vh - 68px)}
+.main-tabs{display:flex;gap:0;background:var(--white);border:var(--border);
+  border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);
+  margin-bottom:24px}
+.main-tab{flex:1;padding:14px 10px;text-align:center;cursor:pointer;
+  font-weight:700;font-size:.82rem;letter-spacing:.03em;text-transform:uppercase;
+  color:var(--ink-400);border-right:var(--border);transition:all .18s;
+  display:flex;align-items:center;justify-content:center;gap:7px}
+.main-tab:last-child{border-right:none}
+.main-tab.active{background:var(--forest-900);color:var(--white)}
+.main-tab:hover:not(.active){background:var(--forest-50);color:var(--forest-700)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ── Card base ── */
+.gc{background:var(--white);border:var(--border);border-radius:var(--radius-lg);
+  padding:24px 22px;box-shadow:var(--shadow-sm);margin-bottom:18px}
+.gc-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;
+  color:var(--forest-950);letter-spacing:-.01em;margin-bottom:16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px}
+.gc-title span{font-family:var(--font-body);font-size:.74rem;font-weight:600;
+  color:var(--ink-400);letter-spacing:.04em;text-transform:uppercase}
+
+/* ════ ABA 1 — ADICIONAR PRODUTO ════ */
+.form-add{display:grid;grid-template-columns:2fr 1.2fr 1fr 1fr auto;gap:10px;align-items:end}
+.fa-group{display:grid;gap:6px}
+.fa-label{font-size:.76rem;font-weight:700;color:var(--ink-600);letter-spacing:.02em}
+.fa-input,.fa-sel{
+  border:var(--border-md);border-radius:var(--radius-sm);
+  padding:10px 12px;font:inherit;font-size:.9rem;
+  color:var(--ink-800);background:var(--white);outline:none;
+  transition:border-color .2s,box-shadow .2s;width:100%}
+.fa-input:focus,.fa-sel:focus{
+  border-color:var(--forest-500);box-shadow:0 0 0 3px rgba(62,154,94,.1)}
+.fa-sel{appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23718077' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
+
+/* Cor por categoria */
+.cat-pill{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;
+  font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap;letter-spacing:.03em}
+.cat-defensivo {background:#fee2e2;color:#991b1b}
+.cat-fertilizante{background:#fef3c7;color:#92400e}
+.cat-semente   {background:#d1fae5;color:#065f46}
+.cat-combustivel{background:#e0e7ff;color:#3730a3}
+.cat-maodeobra {background:#fce7f3;color:#9d174d}
+.cat-irrigacao {background:#e0f2fe;color:#075985}
+.cat-maquinario{background:#f1f5f9;color:#334155}
+.cat-outro     {background:var(--ink-100);color:var(--ink-700)}
+
+.btn-add{background:var(--forest-900);color:var(--white);border:none;
+  padding:10px 20px;border-radius:var(--radius-sm);font:inherit;font-size:.88rem;
+  font-weight:700;cursor:pointer;transition:background .18s;white-space:nowrap;
+  display:flex;align-items:center;gap:7px}
+.btn-add:hover{background:var(--forest-700)}
+
+/* ── Tabela de lançamentos ── */
+.lancamentos-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.lancamentos-table thead tr{background:var(--ink-50);border-bottom:var(--border-md)}
+.lancamentos-table thead th{padding:10px 14px;text-align:left;font-size:.72rem;
+  font-weight:700;color:var(--ink-400);letter-spacing:.05em;text-transform:uppercase}
+.lancamentos-table tbody tr{border-bottom:var(--border);transition:background .15s}
+.lancamentos-table tbody tr:hover{background:var(--forest-50)}
+.lancamentos-table tbody td{padding:11px 14px;color:var(--ink-700);vertical-align:middle}
+.td-nome{font-weight:600;color:var(--ink-900)}
+.td-val{font-family:var(--font-display);font-weight:700;color:var(--ink-900);white-space:nowrap}
+.td-val.red{color:var(--danger-600)}
+.btn-del{background:none;border:none;cursor:pointer;color:var(--ink-300);
+  font-size:.9rem;padding:4px 8px;border-radius:var(--radius-xs);
+  transition:all .18s;line-height:1}
+.btn-del:hover{background:#fee2e2;color:#991b1b}
+.empty-state{text-align:center;padding:48px 24px;color:var(--ink-400)}
+.empty-icon{font-size:2.5rem;margin-bottom:12px}
+
+/* ── Filtro de período/cultura ── */
+.filtros{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.filtro-sel{border:var(--border-md);border-radius:var(--radius-xs);
+  padding:7px 28px 7px 10px;font:inherit;font-size:.82rem;color:var(--ink-700);
+  background:var(--white);outline:none;cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%23718077' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 8px center;
+  transition:border-color .18s}
+.filtro-sel:focus{border-color:var(--forest-500)}
+.total-badge{margin-left:auto;font-family:var(--font-display);font-size:1.1rem;
+  font-weight:700;color:var(--danger-600);letter-spacing:-.02em}
+.total-badge span{font-family:var(--font-body);font-size:.74rem;
+  color:var(--ink-400);font-weight:600;margin-right:4px}
+
+/* ════ ABA 2 — ANÁLISE DE GASTOS ════ */
+.analise-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.analise-chart-wrap{position:relative;height:240px}
+.cat-breakdown{display:grid;gap:8px}
+.cat-row{display:flex;align-items:center;gap:10px;padding:10px 12px;
+  border-radius:var(--radius-sm);background:var(--ink-50);border:var(--border)}
+.cat-row-emoji{font-size:1.1rem;flex-shrink:0}
+.cat-row-info{flex:1;min-width:0}
+.cat-row-nome{font-size:.84rem;font-weight:700;color:var(--ink-800);margin-bottom:3px}
+.cat-row-bar-wrap{height:6px;background:var(--ink-200);border-radius:99px;overflow:hidden}
+.cat-row-bar{height:100%;border-radius:99px;transition:width .6s var(--ease)}
+.cat-row-val{font-family:var(--font-display);font-size:.95rem;font-weight:700;
+  color:var(--ink-900);white-space:nowrap;flex-shrink:0}
+.cat-row-pct{font-size:.72rem;color:var(--ink-400);white-space:nowrap;flex-shrink:0;min-width:36px;text-align:right}
+
+/* Cartões de resumo */
+.resumo-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.resumo-card{background:var(--white);border:var(--border);border-radius:var(--radius-md);
+  padding:18px 16px;box-shadow:var(--shadow-xs)}
+.resumo-label{font-size:.7rem;font-weight:700;color:var(--ink-400);
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.resumo-val{font-family:var(--font-display);font-size:1.5rem;font-weight:700;
+  color:var(--ink-950);letter-spacing:-.04em;line-height:1;margin-bottom:3px}
+.resumo-val.red{color:var(--danger-600)}
+.resumo-val.green{color:var(--forest-600)}
+.resumo-sub{font-size:.74rem;color:var(--ink-400);line-height:1.4}
+
+/* Dica de custo ── */
+.dica-custo{padding:14px 16px;border-radius:var(--radius-sm);
+  background:var(--sun-100);border:1px solid var(--sun-300);
+  font-size:.82rem;color:var(--earth-700);line-height:1.65}
+.dica-custo strong{color:var(--earth-600)}
+
+/* ════ ABA 3 — ASSISTENTE IA ════ */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 320px);min-height:480px;max-height:720px}
+.chat-msgs{flex:1;overflow-y:auto;padding:18px;display:flex;
+  flex-direction:column;gap:14px;scroll-behavior:smooth}
+.chat-msgs::-webkit-scrollbar{width:4px}
+.chat-msgs::-webkit-scrollbar-track{background:transparent}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--ink-200);border-radius:99px}
+
+.msg{display:flex;gap:10px;align-items:flex-start;max-width:88%}
+.msg.user{flex-direction:row-reverse;align-self:flex-end}
+.msg-avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;
+  border:var(--border);background:var(--white)}
+.msg.ia .msg-avatar{background:var(--forest-900);border-color:var(--forest-900);color:var(--white)}
+.msg.user .msg-avatar{background:var(--sky-100);border-color:var(--sky-300)}
+.msg-bubble{padding:11px 14px;border-radius:var(--radius-md);font-size:.87rem;
+  line-height:1.65;max-width:100%;word-break:break-word}
+.msg.ia   .msg-bubble{background:var(--white);border:var(--border);
+  color:var(--ink-700);border-bottom-left-radius:4px}
+.msg.user .msg-bubble{background:var(--forest-900);color:var(--white);
+  border-bottom-right-radius:4px}
+.msg-bubble strong{font-weight:700}
+.msg-bubble ul{margin:8px 0 4px 16px;display:grid;gap:3px}
+.msg-bubble li{list-style:disc}
+.msg-time{font-size:.68rem;color:var(--ink-300);margin-top:4px;text-align:right}
+.msg.ia .msg-time{text-align:left}
+
+/* Sugestões rápidas */
+.chat-sugestoes{display:flex;gap:7px;flex-wrap:wrap;padding:10px 18px;
+  border-top:var(--border);background:var(--ink-50)}
+.sug-btn{padding:6px 13px;border-radius:99px;border:var(--border-md);
+  background:var(--white);font:inherit;font-size:.78rem;font-weight:600;
+  color:var(--ink-600);cursor:pointer;transition:all .18s;white-space:nowrap}
+.sug-btn:hover{background:var(--forest-50);border-color:var(--forest-300);color:var(--forest-700)}
+
+/* Input do chat */
+.chat-input-row{display:flex;gap:10px;padding:14px 18px;border-top:var(--border);background:var(--white)}
+.chat-input{flex:1;border:var(--border-md);border-radius:var(--radius-md);
+  padding:11px 14px;font:inherit;font-size:.9rem;color:var(--ink-800);
+  outline:none;resize:none;transition:border-color .2s,box-shadow .2s;
+  max-height:120px;overflow-y:auto;line-height:1.55}
+.chat-input:focus{border-color:var(--forest-500);box-shadow:0 0 0 3px rgba(62,154,94,.1)}
+.chat-input::placeholder{color:var(--ink-300)}
+.chat-send{background:var(--forest-900);color:var(--white);border:none;
+  width:44px;height:44px;border-radius:var(--radius-sm);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;transition:background .18s;flex-shrink:0;align-self:flex-end}
+.chat-send:hover{background:var(--forest-700)}
+.chat-send:disabled{opacity:.4;cursor:not-allowed}
+
+/* Digitando... */
+.typing-dots{display:flex;gap:4px;align-items:center;padding:8px 4px}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:var(--ink-300);
+  animation:typingBounce 1.2s ease-in-out infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}
+.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typingBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+
+/* ── Responsivo ── */
+@media(max-width:1024px){
+  .resumo-cards{grid-template-columns:repeat(2,1fr)}
+  .analise-grid{grid-template-columns:1fr}
+  .form-add{grid-template-columns:1fr 1fr;gap:10px}
+  .form-add .btn-add{grid-column:1/-1}
+}
+@media(max-width:768px){
+  .main-tabs{border-radius:var(--radius-sm)}
+  .main-tab{font-size:.7rem;padding:12px 6px;gap:5px}
+  .resumo-cards{grid-template-columns:1fr 1fr}
+  .form-add{grid-template-columns:1fr}
+  .gh-inner{flex-direction:column;gap:20px}
+  .chat-wrap{height:calc(100vh - 280px);min-height:400px}
+  .lancamentos-table thead th:nth-child(4),
+  .lancamentos-table tbody td:nth-child(4){display:none}
+}
+@media(max-width:480px){
+  .resumo-cards{grid-template-columns:1fr 1fr}
+  .gc{padding:18px 14px}
+  .main-tab span.tab-label{display:none}
+  .filtros{gap:8px}
+  .chat-sugestoes{padding:8px 12px;gap:6px}
+  .chat-input-row{padding:10px 12px}
+}
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="topo">
+  <div class="container">
+    <a href="index.html" class="logo-area" style="text-decoration:none">
+      <div class="logo-icon">🌾</div>
+      <div><div class="logo-text">Safra Justa</div><p class="logo-subtitle">Mais lucro, menos desperdício</p></div>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="menu" id="menu-nav">
+    <ul>
+      <li><a href="index.html"    class="menu-link">Início</a></li>
+      <li><a href="painel.html"   class="menu-link">Painel</a></li>
+      <li><a href="proposta.html" class="menu-link">Calculadora</a></li>
+      <li><a href="dados.html"    class="menu-link">Dados</a></li>
+      <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="gh">
+  <div class="container">
+    <div class="gh-inner">
+      <div>
+        <div style="font-size:.74rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px">
+          <a href="index.html" style="color:rgba(255,255,255,.45);text-decoration:none">Início</a> / Controle de Gastos
+        </div>
+        <h1>Saiba onde vai cada <em>real da lavoura</em></h1>
+        <p>Adicione os produtos que você usou na safra, veja em qual categoria está o maior gasto e tire dúvidas com a IA sobre como reduzir cada um deles.</p>
+      </div>
+      <div class="gh-stats">
+        <div class="gh-stat"><strong id="stat-total">R$ 0</strong><span>Total registrado</span></div>
+        <div class="gh-stat"><strong id="stat-itens">0</strong><span>Lançamentos</span></div>
+        <div class="gh-stat"><strong id="stat-maior-cat">—</strong><span>Maior categoria</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div class="page-wrap">
+  <div class="container">
+
+    <!-- Abas -->
+    <div class="main-tabs">
+      <div class="main-tab active" onclick="trocarAba('registros')">
+        📝 <span class="tab-label">Registrar produtos</span>
+      </div>
+      <div class="main-tab" onclick="trocarAba('analise')">
+        📊 <span class="tab-label">Análise de gastos</span>
+      </div>
+      <div class="main-tab" onclick="trocarAba('assistente')">
+        🤖 <span class="tab-label">Assistente IA</span>
+      </div>
+    </div>
+
+    <!-- ════ ABA 1: REGISTRAR ════ -->
+    <div class="tab-panel active" id="panel-registros">
+
+      <!-- Formulário de adição -->
+      <div class="gc">
+        <div class="gc-title">Adicionar produto / gasto <span>safra atual</span></div>
+        <div class="form-add" id="form-add">
+          <div class="fa-group">
+            <label class="fa-label">Nome do produto</label>
+            <input type="text" id="fa-nome" class="fa-input"
+              placeholder="Ex: Roundup 480, Ureia 45%, Sementes de soja..."/>
+          </div>
+          <div class="fa-group">
+            <label class="fa-label">Categoria</label>
+            <select id="fa-cat" class="fa-sel">
+              <option value="">Selecione...</option>
+              <option value="semente">🌱 Semente</option>
+              <option value="fertilizante">🧪 Fertilizante / Adubo</option>
+              <option value="defensivo">🛡️ Defensivo (herbicida, fungicida, inseticida)</option>
+              <option value="combustivel">⛽ Combustível</option>
+              <option value="maodeobra">👷 Mão de obra</option>
+              <option value="irrigacao">💧 Irrigação</option>
+              <option value="maquinario">🚜 Maquinário / Aluguel</option>
+              <option value="outro">📦 Outro</option>
+            </select>
+          </div>
+          <div class="fa-group">
+            <label class="fa-label">Quantidade</label>
+            <input type="number" id="fa-qtd" class="fa-input"
+              placeholder="Ex: 50" min="0.01" step="any"/>
+          </div>
+          <div class="fa-group">
+            <label class="fa-label">Valor total (R$)</label>
+            <input type="number" id="fa-val" class="fa-input"
+              placeholder="Ex: 1200" min="0.01" step="any"/>
+          </div>
+          <button class="btn-add" onclick="adicionarItem()">
+            <span style="font-size:1.1rem">＋</span> Adicionar
+          </button>
+        </div>
+        <div id="form-erro" style="display:none;margin-top:10px;padding:8px 12px;
+          background:#fef2f2;border:1px solid #fca5a5;border-radius:var(--radius-xs);
+          font-size:.8rem;color:#991b1b"></div>
+      </div>
+
+      <!-- Filtros e tabela -->
+      <div class="gc">
+        <div class="filtros">
+          <select class="filtro-sel" id="filtro-cat" onchange="renderTabela()">
+            <option value="">Todas as categorias</option>
+            <option value="semente">🌱 Semente</option>
+            <option value="fertilizante">🧪 Fertilizante</option>
+            <option value="defensivo">🛡️ Defensivo</option>
+            <option value="combustivel">⛽ Combustível</option>
+            <option value="maodeobra">👷 Mão de obra</option>
+            <option value="irrigacao">💧 Irrigação</option>
+            <option value="maquinario">🚜 Maquinário</option>
+            <option value="outro">📦 Outro</option>
+          </select>
+          <select class="filtro-sel" id="filtro-ord" onchange="renderTabela()">
+            <option value="data-desc">Mais recente</option>
+            <option value="data-asc">Mais antigo</option>
+            <option value="val-desc">Maior valor</option>
+            <option value="val-asc">Menor valor</option>
+          </select>
+          <div class="total-badge">
+            <span>Total filtrado:</span>
+            <span id="total-filtrado">R$ 0</span>
+          </div>
+        </div>
+
+        <div id="tabela-container">
+          <table class="lancamentos-table" id="lancamentos-table">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Categoria</th>
+                <th>Qtd</th>
+                <th>Data</th>
+                <th style="text-align:right">Valor</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="lancamentos-body"></tbody>
+          </table>
+          <div class="empty-state" id="empty-state">
+            <div class="empty-icon">📋</div>
+            <p style="font-size:.92rem;line-height:1.7">
+              Nenhum produto registrado ainda.<br>
+              Use o formulário acima para adicionar seus gastos.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;justify-content:flex-end;gap:10px">
+          <button onclick="exportarCSV()"
+            style="background:var(--white);border:var(--border-md);color:var(--ink-600);
+              padding:7px 16px;border-radius:var(--radius-xs);font:inherit;font-size:.8rem;
+              font-weight:600;cursor:pointer;transition:all .18s"
+            onmouseover="this.style.background='var(--ink-50)'"
+            onmouseout="this.style.background='var(--white)'">
+            ⬇ Exportar CSV
+          </button>
+          <button onclick="limparTudo()"
+            style="background:var(--white);border:1px solid #fca5a5;color:#991b1b;
+              padding:7px 16px;border-radius:var(--radius-xs);font:inherit;font-size:.8rem;
+              font-weight:600;cursor:pointer;transition:all .18s"
+            onmouseover="this.style.background='#fef2f2'"
+            onmouseout="this.style.background='var(--white)'">
+            🗑 Limpar tudo
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ════ ABA 2: ANÁLISE ════ -->
+    <div class="tab-panel" id="panel-analise">
+
+      <!-- Cards de resumo -->
+      <div class="resumo-cards">
+        <div class="resumo-card">
+          <div class="resumo-label">Total gasto</div>
+          <div class="resumo-val red" id="r-total">R$ 0</div>
+          <div class="resumo-sub" id="r-total-sub">nenhum lançamento</div>
+        </div>
+        <div class="resumo-card">
+          <div class="resumo-label">Maior gasto único</div>
+          <div class="resumo-val" id="r-maior">—</div>
+          <div class="resumo-sub" id="r-maior-sub">—</div>
+        </div>
+        <div class="resumo-card">
+          <div class="resumo-label">Categoria dominante</div>
+          <div class="resumo-val" id="r-cat-dom" style="font-size:1.1rem">—</div>
+          <div class="resumo-sub" id="r-cat-dom-pct">—</div>
+        </div>
+        <div class="resumo-card">
+          <div class="resumo-label">Média por lançamento</div>
+          <div class="resumo-val" id="r-media">—</div>
+          <div class="resumo-sub" id="r-media-sub">—</div>
+        </div>
+      </div>
+
+      <!-- Gráficos + breakdown -->
+      <div class="analise-grid">
+        <div class="gc" style="margin-bottom:0">
+          <div class="gc-title">Distribuição por categoria</div>
+          <div class="analise-chart-wrap">
+            <canvas id="donut-chart"></canvas>
+          </div>
+          <div id="analise-vazio" style="display:none;text-align:center;
+            padding:32px;color:var(--ink-300);font-size:.88rem">
+            Adicione gastos na aba Registros para ver o gráfico.
+          </div>
+        </div>
+        <div class="gc" style="margin-bottom:0">
+          <div class="gc-title">Ranking de categorias</div>
+          <div class="cat-breakdown" id="cat-breakdown">
+            <div style="text-align:center;padding:32px;color:var(--ink-300);font-size:.88rem">
+              Nenhum dado registrado ainda.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráfico de barras -->
+      <div class="gc" style="margin-top:18px">
+        <div class="gc-title">Valor por produto <span>top 10</span></div>
+        <div style="height:260px;position:relative">
+          <canvas id="bar-chart"></canvas>
+        </div>
+        <div id="bar-vazio" style="display:none;text-align:center;
+          padding:32px;color:var(--ink-300);font-size:.88rem">
+          Adicione produtos para ver o ranking.
+        </div>
+      </div>
+
+      <!-- Dica de redução -->
+      <div class="dica-custo" id="dica-custo" style="display:none">
+        <strong>💡 Onde focar primeiro:</strong> <span id="dica-texto"></span>
+        <span style="margin-left:8px;color:var(--sky-700);cursor:pointer;font-weight:700;font-size:.78rem"
+          onclick="irParaAssistente()">Perguntar ao assistente →</span>
+      </div>
+
+    </div>
+
+    <!-- ════ ABA 3: ASSISTENTE IA ════ -->
+    <div class="tab-panel" id="panel-assistente">
+      <div class="gc" style="padding:0;overflow:hidden">
+        <div style="padding:20px 22px;border-bottom:var(--border);
+          display:flex;align-items:center;gap:12px">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--forest-900);
+            display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">🤖</div>
+          <div>
+            <div style="font-family:var(--font-display);font-size:.95rem;font-weight:700;
+              color:var(--forest-950);letter-spacing:-.01em">Assistente Agrícola</div>
+            <div style="font-size:.75rem;color:var(--ink-400)">
+              Tire dúvidas sobre como reduzir cada categoria de gasto na sua lavoura
+            </div>
+          </div>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:5px;
+            font-size:.72rem;font-weight:700;color:var(--forest-600)">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--forest-500)"></div>
+            online
+          </div>
+        </div>
+
+        <div class="chat-wrap">
+          <div class="chat-msgs" id="chat-msgs">
+            <!-- Mensagem inicial do bot -->
+            <div class="msg ia">
+              <div class="msg-avatar">🤖</div>
+              <div>
+                <div class="msg-bubble">
+                  Olá! Sou o assistente agrícola da <strong>Safra Justa</strong>. 👋<br><br>
+                  Estou aqui para te ajudar a <strong>reduzir os custos da sua lavoura</strong> com dicas práticas, explicações simples e sugestões baseadas no que você já registrou.<br><br>
+                  Pode me perguntar sobre qualquer categoria — defensivos, fertilizantes, sementes, combustível, mão de obra ou irrigação. O que você quer saber?
+                </div>
+                <div class="msg-time" id="hora-inicial"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sugestões rápidas -->
+          <div class="chat-sugestoes">
+            <button class="sug-btn" onclick="enviarSugestao(this)">Como reduzir gasto com defensivo?</button>
+            <button class="sug-btn" onclick="enviarSugestao(this)">Vale a pena analisar o solo antes de adubar?</button>
+            <button class="sug-btn" onclick="enviarSugestao(this)">Qual semente é mais econômica?</button>
+            <button class="sug-btn" onclick="enviarSugestao(this)">Como gastar menos com irrigação?</button>
+            <button class="sug-btn" onclick="enviarSugestao(this)">Como reduzir custo com mão de obra?</button>
+          </div>
+
+          <!-- Input -->
+          <div class="chat-input-row">
+            <textarea class="chat-input" id="chat-input" rows="1"
+              placeholder="Digite sua dúvida sobre custos agrícolas..."
+              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();enviarMsg()}"
+              oninput="autoResize(this)"></textarea>
+            <button class="chat-send" id="chat-send" onclick="enviarMsg()" title="Enviar">
+              ➤
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</main>
+
+<footer class="rodape">
+  <div class="container footer-grid">
+    <div><h3>Safra Justa</h3><p>Plataforma educativa para o agricultor brasileiro economizar e produzir melhor.</p></div>
+    <div><h4>Páginas</h4><ul class="footer-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="painel.html">Painel do Produtor</a></li>
+      <li><a href="proposta.html">Calculadora</a></li>
+      <li><a href="dados.html">Dados</a></li>
+    </ul></div>
+    <div><h4>Fontes</h4><ul class="footer-links">
+      <li><a href="https://www.embrapa.br" target="_blank" rel="noopener">EMBRAPA</a></li>
+      <li><a href="https://www.conab.gov.br" target="_blank" rel="noopener">CONAB</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Safra Justa — safrajusta.com.br</p></div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════
+   HAMBÚRGUER
+════════════════════════════════════════════════ */
+const hamburger=document.getElementById('hamburger'),menuNav=document.getElementById('menu-nav');
+document.querySelectorAll('.menu-link,.btn-nav').forEach(l=>l.addEventListener('click',()=>{menuNav.classList.remove('menu-open');hamburger.classList.remove('hamburger-open');hamburger.setAttribute('aria-expanded','false')}));
+hamburger.addEventListener('click',()=>{const o=menuNav.classList.toggle('menu-open');hamburger.classList.toggle('hamburger-open',o);hamburger.setAttribute('aria-expanded',o)});
+
+/* ════════════════════════════════════════════════
+   DADOS — persistência em localStorage
+════════════════════════════════════════════════ */
+const STORAGE_KEY = 'safrajusta_gastos_v1';
+
+function carregarDados() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch { return []; }
+}
+
+function salvarDados(dados) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(dados)); } catch(e) {}
+}
+
+let DADOS = carregarDados();
+
+/* ════════════════════════════════════════════════
+   CONFIG DE CATEGORIAS
+════════════════════════════════════════════════ */
+const CATS = {
+  semente:     { label:'Semente',           emoji:'🌱', cor:'#059669', corBg:'#d1fae5' },
+  fertilizante:{ label:'Fertilizante/Adubo',emoji:'🧪', cor:'#d97706', corBg:'#fef3c7' },
+  defensivo:   { label:'Defensivo',          emoji:'🛡️', cor:'#dc2626', corBg:'#fee2e2' },
+  combustivel: { label:'Combustível',        emoji:'⛽', cor:'#4f46e5', corBg:'#e0e7ff' },
+  maodeobra:   { label:'Mão de obra',        emoji:'👷', cor:'#be185d', corBg:'#fce7f3' },
+  irrigacao:   { label:'Irrigação',          emoji:'💧', cor:'#0369a1', corBg:'#e0f2fe' },
+  maquinario:  { label:'Maquinário/Aluguel', emoji:'🚜', cor:'#475569', corBg:'#f1f5f9' },
+  outro:       { label:'Outro',              emoji:'📦', cor:'#718077', corBg:'#f4f8f6' },
+};
+
+/* ════════════════════════════════════════════════
+   ABAS
+════════════════════════════════════════════════ */
+function trocarAba(nome) {
+  document.querySelectorAll('.main-tab').forEach((t,i) => {
+    const abas = ['registros','analise','assistente'];
+    t.classList.toggle('active', abas[i] === nome);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + nome).classList.add('active');
+  if (nome === 'analise') renderAnalise();
+}
+
+/* ════════════════════════════════════════════════
+   ADICIONAR ITEM
+════════════════════════════════════════════════ */
+function adicionarItem() {
+  const nome = document.getElementById('fa-nome').value.trim();
+  const cat  = document.getElementById('fa-cat').value;
+  const qtd  = parseFloat(document.getElementById('fa-qtd').value);
+  const val  = parseFloat(document.getElementById('fa-val').value);
+  const erro = document.getElementById('form-erro');
+
+  if (!nome) { mostrarErro('Informe o nome do produto.'); return; }
+  if (!cat)  { mostrarErro('Selecione a categoria.'); return; }
+  if (!val || val <= 0) { mostrarErro('Informe um valor válido maior que zero.'); return; }
+
+  erro.style.display = 'none';
+
+  const item = {
+    id:   Date.now(),
+    nome,
+    cat,
+    qtd:  isNaN(qtd) ? null : qtd,
+    val,
+    data: new Date().toLocaleDateString('pt-BR'),
+    ts:   Date.now(),
+  };
+
+  DADOS.push(item);
+  salvarDados(DADOS);
+
+  // Limpa formulário
+  document.getElementById('fa-nome').value = '';
+  document.getElementById('fa-cat').value  = '';
+  document.getElementById('fa-qtd').value  = '';
+  document.getElementById('fa-val').value  = '';
+  document.getElementById('fa-nome').focus();
+
+  renderTabela();
+  atualizarHero();
+}
+
+function mostrarErro(msg) {
+  const el = document.getElementById('form-erro');
+  el.textContent = '⚠ ' + msg;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+}
+
+/* ════════════════════════════════════════════════
+   TABELA DE LANÇAMENTOS
+════════════════════════════════════════════════ */
+const fmt = v => 'R$ ' + (+v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+function renderTabela() {
+  const filtCat = document.getElementById('filtro-cat').value;
+  const filtOrd = document.getElementById('filtro-ord').value;
+
+  let dados = filtCat ? DADOS.filter(d => d.cat === filtCat) : [...DADOS];
+
+  dados.sort((a, b) => {
+    if (filtOrd === 'val-desc') return b.val - a.val;
+    if (filtOrd === 'val-asc')  return a.val - b.val;
+    if (filtOrd === 'data-asc') return a.ts - b.ts;
+    return b.ts - a.ts; // data-desc
+  });
+
+  const total = dados.reduce((s, d) => s + d.val, 0);
+  document.getElementById('total-filtrado').textContent = fmt(total);
+
+  const tbody  = document.getElementById('lancamentos-body');
+  const empty  = document.getElementById('empty-state');
+  const tabela = document.getElementById('lancamentos-table');
+
+  if (!dados.length) {
+    tabela.style.display = 'none';
+    empty.style.display  = 'block';
+    return;
+  }
+  tabela.style.display = 'table';
+  empty.style.display  = 'none';
+
+  tbody.innerHTML = dados.map(d => {
+    const c = CATS[d.cat] || CATS.outro;
+    return `
+      <tr>
+        <td class="td-nome">${d.nome}</td>
+        <td>
+          <span class="cat-pill cat-${d.cat}" style="background:${c.corBg};color:${c.cor}">
+            ${c.emoji} ${c.label}
+          </span>
+        </td>
+        <td style="color:var(--ink-500)">${d.qtd != null ? d.qtd : '—'}</td>
+        <td style="color:var(--ink-400);font-size:.8rem">${d.data}</td>
+        <td class="td-val" style="text-align:right">${fmt(d.val)}</td>
+        <td>
+          <button class="btn-del" onclick="deletarItem(${d.id})" title="Remover">✕</button>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+function deletarItem(id) {
+  DADOS = DADOS.filter(d => d.id !== id);
+  salvarDados(DADOS);
+  renderTabela();
+  atualizarHero();
+}
+
+function limparTudo() {
+  if (!DADOS.length) return;
+  if (confirm('Tem certeza que quer apagar todos os lançamentos? Essa ação não pode ser desfeita.')) {
+    DADOS = [];
+    salvarDados(DADOS);
+    renderTabela();
+    atualizarHero();
+  }
+}
+
+/* ════════════════════════════════════════════════
+   HERO — atualização dinâmica
+════════════════════════════════════════════════ */
+function atualizarHero() {
+  const total = DADOS.reduce((s, d) => s + d.val, 0);
+  document.getElementById('stat-total').textContent = fmt(total);
+  document.getElementById('stat-itens').textContent = DADOS.length;
+
+  if (DADOS.length) {
+    const por = totaisPorCat();
+    const top = Object.entries(por).sort((a,b)=>b[1]-a[1])[0];
+    const c = CATS[top[0]] || CATS.outro;
+    document.getElementById('stat-maior-cat').textContent = c.emoji + ' ' + c.label;
+  } else {
+    document.getElementById('stat-maior-cat').textContent = '—';
+  }
+}
+
+function totaisPorCat() {
+  const t = {};
+  DADOS.forEach(d => { t[d.cat] = (t[d.cat] || 0) + d.val; });
+  return t;
+}
+
+/* ════════════════════════════════════════════════
+   ANÁLISE — gráficos e breakdown
+════════════════════════════════════════════════ */
+let donutChart = null, barChart = null;
+
+function renderAnalise() {
+  const total = DADOS.reduce((s, d) => s + d.val, 0);
+  const n     = DADOS.length;
+  const maior = DADOS.reduce((m, d) => d.val > (m?.val || 0) ? d : m, null);
+  const por   = totaisPorCat();
+  const sorted = Object.entries(por).sort((a,b) => b[1]-a[1]);
+  const topCat = sorted[0];
+
+  // Cards de resumo
+  document.getElementById('r-total').textContent    = total ? fmt(total) : 'R$ 0,00';
+  document.getElementById('r-total-sub').textContent = n + ' lançamento' + (n!==1?'s':'') + ' registrado' + (n!==1?'s':'');
+  document.getElementById('r-maior').textContent     = maior ? fmt(maior.val) : '—';
+  document.getElementById('r-maior-sub').textContent = maior ? maior.nome : '—';
+  document.getElementById('r-media').textContent     = n ? fmt(total/n) : '—';
+  document.getElementById('r-media-sub').textContent = n ? 'média por lançamento' : '—';
+
+  if (topCat) {
+    const c = CATS[topCat[0]] || CATS.outro;
+    document.getElementById('r-cat-dom').textContent    = c.emoji + ' ' + c.label;
+    document.getElementById('r-cat-dom-pct').textContent = ((topCat[1]/total)*100).toFixed(1) + '% do total';
+  } else {
+    document.getElementById('r-cat-dom').textContent     = '—';
+    document.getElementById('r-cat-dom-pct').textContent = '—';
+  }
+
+  // Donut
+  if (sorted.length) {
+    document.getElementById('analise-vazio').style.display = 'none';
+    const labels = sorted.map(([k]) => (CATS[k]||CATS.outro).emoji + ' ' + (CATS[k]||CATS.outro).label);
+    const vals   = sorted.map(([,v]) => v);
+    const cores  = sorted.map(([k]) => (CATS[k]||CATS.outro).cor);
+
+    if (donutChart) donutChart.destroy();
+    donutChart = new Chart(document.getElementById('donut-chart'), {
+      type: 'doughnut',
+      data: { labels, datasets: [{ data: vals, backgroundColor: cores, borderWidth: 0, hoverOffset: 8 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '65%',
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: {
+            label: c => ` ${c.label}: ${fmt(c.parsed)} (${((c.parsed/total)*100).toFixed(1)}%)`
+          }}
+        }
+      }
+    });
+  } else {
+    document.getElementById('analise-vazio').style.display = 'block';
+  }
+
+  // Breakdown lateral
+  document.getElementById('cat-breakdown').innerHTML = sorted.length
+    ? sorted.map(([k, v]) => {
+        const c = CATS[k] || CATS.outro;
+        const pct = ((v/total)*100).toFixed(1);
+        return `
+          <div class="cat-row">
+            <span class="cat-row-emoji">${c.emoji}</span>
+            <div class="cat-row-info">
+              <div class="cat-row-nome">${c.label}</div>
+              <div class="cat-row-bar-wrap">
+                <div class="cat-row-bar" style="width:${pct}%;background:${c.cor}"></div>
+              </div>
+            </div>
+            <div class="cat-row-val">${fmt(v)}</div>
+            <div class="cat-row-pct">${pct}%</div>
+          </div>`;
+      }).join('')
+    : '<div style="text-align:center;padding:32px;color:var(--ink-300);font-size:.88rem">Nenhum dado registrado ainda.</div>';
+
+  // Bar chart top 10
+  const top10 = [...DADOS].sort((a,b)=>b.val-a.val).slice(0,10);
+  if (top10.length) {
+    document.getElementById('bar-vazio').style.display = 'none';
+    if (barChart) barChart.destroy();
+    barChart = new Chart(document.getElementById('bar-chart'), {
+      type: 'bar',
+      data: {
+        labels: top10.map(d => d.nome.length > 18 ? d.nome.slice(0,18)+'…' : d.nome),
+        datasets: [{ label: 'Valor (R$)',
+          data: top10.map(d => d.val),
+          backgroundColor: top10.map(d => (CATS[d.cat]||CATS.outro).cor),
+          borderRadius: 5, borderSkipped: false }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${fmt(c.parsed)}` }} },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 11 }, maxRotation: 35 } },
+          y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => 'R$'+v.toLocaleString('pt-BR') } }
+        }
+      }
+    });
+  } else {
+    document.getElementById('bar-vazio').style.display = 'block';
+  }
+
+  // Dica automática baseada no maior gasto
+  if (topCat) {
+    const c = CATS[topCat[0]] || CATS.outro;
+    const pct = ((topCat[1]/total)*100).toFixed(0);
+    const dicas = {
+      defensivo:   `${c.emoji} Defensivos representam ${pct}% dos seus gastos. Monitoramento preventivo de pragas e aplicação no momento certo podem reduzir até 35% esse custo.`,
+      fertilizante:`${c.emoji} Fertilizantes/Adubos são ${pct}% dos seus gastos. Uma análise de solo custa R$ 50–150 e pode revelar que você está comprando o dobro do necessário.`,
+      semente:     `${c.emoji} Sementes representam ${pct}% dos seus gastos. Compare cultivares e verifique se a densidade de plantio está correta para evitar desperdício.`,
+      combustivel: `${c.emoji} Combustível é ${pct}% dos seus gastos. Manutenção preventiva do motor, calibragem de pneus e rotas otimizadas podem reduzir até 20%.`,
+      maodeobra:   `${c.emoji} Mão de obra representa ${pct}% dos seus gastos. Mecanização de operações repetitivas e planejamento da safra reduzem horas ociosas.`,
+      irrigacao:   `${c.emoji} Irrigação é ${pct}% dos seus gastos. Gotejamento consome até 50% menos água que aspersão convencional — o retorno vem em 1–2 safras.`,
+      maquinario:  `${c.emoji} Maquinário/Aluguel é ${pct}% dos seus gastos. Consórcio com outros produtores para compra conjunta ou contrato de uso compartilhado pode reduzir muito.`,
+      outro:       `${c.emoji} A categoria "Outro" representa ${pct}% dos seus gastos. Detalhe melhor esses lançamentos para identificar oportunidades de redução.`,
+    };
+    document.getElementById('dica-custo').style.display = 'block';
+    document.getElementById('dica-texto').textContent   = dicas[topCat[0]] || '';
+  } else {
+    document.getElementById('dica-custo').style.display = 'none';
+  }
+}
+
+function irParaAssistente() {
+  trocarAba('assistente');
+  const por    = totaisPorCat();
+  const sorted = Object.entries(por).sort((a,b)=>b[1]-a[1]);
+  if (sorted.length) {
+    const [k, v] = sorted[0];
+    const c = CATS[k] || CATS.outro;
+    setTimeout(() => {
+      document.getElementById('chat-input').value =
+        `Meu maior gasto é com ${c.label.toLowerCase()} (${fmt(v)} no total). Como posso reduzir esse custo?`;
+      document.getElementById('chat-input').focus();
+    }, 200);
+  }
+}
+
+/* ════════════════════════════════════════════════
+   EXPORTAR CSV
+════════════════════════════════════════════════ */
+function exportarCSV() {
+  if (!DADOS.length) { alert('Nenhum dado para exportar.'); return; }
+  const header = ['Nome do Produto','Categoria','Quantidade','Valor (R$)','Data'];
+  const rows   = DADOS.map(d => [
+    `"${d.nome}"`,
+    `"${(CATS[d.cat]||CATS.outro).label}"`,
+    d.qtd != null ? d.qtd : '',
+    d.val.toFixed(2).replace('.',','),
+    d.data
+  ]);
+  const csv = [header, ...rows].map(r => r.join(';')).join('\n');
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'gastos-safra-justa.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+/* ════════════════════════════════════════════════
+   ASSISTENTE IA — integrado com Claude API
+════════════════════════════════════════════════ */
+const historico = [];
+
+function horaAtual() {
+  return new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+}
+
+document.getElementById('hora-inicial').textContent = horaAtual();
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function enviarSugestao(btn) {
+  document.getElementById('chat-input').value = btn.textContent;
+  enviarMsg();
+}
+
+function adicionarMsg(role, texto, id) {
+  const msgs  = document.getElementById('chat-msgs');
+  const isIA  = role === 'ia';
+  const div   = document.createElement('div');
+  div.className = 'msg ' + role;
+  div.innerHTML = `
+    <div class="msg-avatar">${isIA ? '🤖' : '👨‍🌾'}</div>
+    <div>
+      <div class="msg-bubble" ${id ? `id="${id}"` : ''}>${texto}</div>
+      <div class="msg-time">${horaAtual()}</div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function contextoGastos() {
+  if (!DADOS.length) return '';
+  const total = DADOS.reduce((s, d) => s + d.val, 0);
+  const por   = totaisPorCat();
+  const sorted = Object.entries(por).sort((a,b)=>b[1]-a[1]);
+  const resumo = sorted.map(([k,v]) =>
+    `${(CATS[k]||CATS.outro).label}: R$ ${v.toFixed(2)} (${((v/total)*100).toFixed(1)}%)`
+  ).join(', ');
+  return `\n\n[Contexto dos gastos registrados pelo agricultor - total: R$ ${total.toFixed(2)} - distribuição: ${resumo}]`;
+}
+
+async function enviarMsg() {
+  const input = document.getElementById('chat-input');
+  const texto = input.value.trim();
+  if (!texto) return;
+
+  const sendBtn = document.getElementById('chat-send');
+  input.value = '';
+  input.style.height = 'auto';
+  sendBtn.disabled = true;
+
+  // Mensagem do usuário
+  adicionarMsg('user', escapeHTML(texto));
+  historico.push({ role: 'user', content: texto });
+
+  // Indicador de digitação
+  const msgs = document.getElementById('chat-msgs');
+  const typingDiv = document.createElement('div');
+  typingDiv.className = 'msg ia';
+  typingDiv.innerHTML = `
+    <div class="msg-avatar">🤖</div>
+    <div><div class="msg-bubble">
+      <div class="typing-dots">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    </div></div>`;
+  msgs.appendChild(typingDiv);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  try {
+    const systemPrompt = `Você é o Assistente Agrícola da Safra Justa, uma plataforma educativa para agricultores brasileiros.
+
+Sua função é ajudar agricultores a REDUZIR CUSTOS de produção respondendo perguntas sobre:
+- Defensivos (herbicidas, fungicidas, inseticidas)
+- Fertilizantes e adubos
+- Sementes e cultivares
+- Combustível e maquinário
+- Mão de obra e organização
+- Irrigação e uso de água
+
+REGRAS DE COMPORTAMENTO:
+1. Responda SEMPRE em português brasileiro simples e direto — como se estivesse conversando com um agricultor, não um técnico
+2. Dê dicas PRÁTICAS e CONCRETAS, com valores aproximados quando possível
+3. Mencione fontes confiáveis (EMBRAPA, CONAB, Emater) quando relevante
+4. Quando o agricultor tiver dados de gastos registrados no sistema, use esses dados para personalizar a resposta
+5. Seja direto: bullet points quando houver múltiplas dicas, parágrafos curtos
+6. NÃO fale sobre temas fora da agricultura e custos de produção
+7. Se não souber algo específico, indique procurar a Emater local
+8. Máximo de 300 palavras por resposta${contextoGastos()}`;
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: historico
+      })
+    });
+
+    const data = await response.json();
+    typingDiv.remove();
+
+    if (data.content?.[0]?.text) {
+      const resposta = data.content[0].text;
+      historico.push({ role: 'assistant', content: resposta });
+      adicionarMsg('ia', formatarResposta(resposta));
+    } else {
+      throw new Error('Resposta inesperada da API');
+    }
+
+  } catch(e) {
+    typingDiv.remove();
+    // Fallback com respostas locais se a API não estiver configurada
+    const respFallback = gerarRespostaLocal(texto);
+    historico.push({ role: 'assistant', content: respFallback });
+    adicionarMsg('ia', formatarResposta(respFallback));
+  } finally {
+    sendBtn.disabled = false;
+    input.focus();
+  }
+}
+
+function formatarResposta(texto) {
+  return texto
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,   '<em>$1</em>')
+    .replace(/^- (.+)$/gm,   '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g,   '<br>');
+}
+
+function escapeHTML(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ── Respostas locais (fallback sem API) ── */
+function gerarRespostaLocal(pergunta) {
+  const p = pergunta.toLowerCase();
+  const por = totaisPorCat();
+  const total = DADOS.reduce((s,d)=>s+d.val,0);
+
+  if (p.includes('defensiv') || p.includes('herbicid') || p.includes('fungicid') || p.includes('inseticid')) {
+    return `**Como reduzir gastos com defensivos:**
+
+- **Monitoramento preventivo:** vistorie a lavoura 2x por semana. Aplicação só quando a praga atingir o nível de dano econômico reduz em até 40% o número de aplicações
+- **Horário correto:** aplique de madrugada ou início da manhã, quando o vento é menor — evita deriva e aumenta a eficiência do produto
+- **Mistura de tanque:** consulte a Emater ou agrônomo sobre quais produtos são compatíveis para misturar em uma só aplicação (economiza diesel e mão de obra)
+- **Bico certo:** bico de leque para herbicida, cônico para fungicida. Bico errado pode desperdiçar até 30% do produto
+- **Receituário agronômico:** produtos com receituário têm qualidade controlada. Genéricos bons existem — compare ingrediente ativo, não marca
+
+💡 **Dica rápida:** manejo integrado de pragas (MIP) pode reduzir o custo com defensivos em 25–35% sem perda de produtividade. Consulte a Emater do seu município.`;
+  }
+
+  if (p.includes('fertili') || p.includes('adubo') || p.includes('ureia') || p.includes('npk')) {
+    return `**Como reduzir gastos com fertilizantes:**
+
+- **Análise de solo:** custa R$ 50–150 e dura 2–3 anos. Muitos produtores gastam 30% a mais em adubo do que o solo precisa — a análise elimina esse desperdício
+- **Inoculação biológica:** soja, feijão e algumas forrageiras fixam nitrogênio do ar com bactérias específicas. Uma dose de inoculante (R$ 15–30) pode substituir 30–40 kg/ha de ureia
+- **Calcário antes:** se o pH estiver baixo, a planta não absorve o fertilizante — você gasta e não aproveita. Calcário é barato; calcule quanto precisa com a análise de solo
+- **Parcelamento:** ureia de uma vez só perde nitrogênio por volatilização. Aplique em 2–3 vezes para aproveitar melhor
+- **Compra antecipada:** preço do fertilizante sobe perto do plantio. Comprar 3–4 meses antes pode economizar 15–25%
+
+💡 Fale com a Emater — muitas oferecem análise de solo gratuita ou subsidiada.`;
+  }
+
+  if (p.includes('irrig') || p.includes('água') || p.includes('agua')) {
+    return `**Como reduzir gastos com irrigação:**
+
+- **Gotejamento vs. aspersão:** gotejamento usa até 50% menos água e energia. Para hortaliças e frutas, o retorno do investimento vem em 1–2 safras
+- **Irrigação noturna:** à noite, a evaporação é muito menor. O mesmo volume de água vai mais longe
+- **Tensiômetro:** aparelho simples (R$ 80–150) que mede a umidade do solo e avisa quando irrigar — evita regar mais do que precisa
+- **Manutenção de bomba:** filtros sujos e impulsores desgastados consomem até 30% mais energia. Limpeza e revisão semestral compensam
+- **Lâmina d'água:** para arroz irrigado, nivelamento a laser permite usar menos água e homogeniza a germinação
+
+💡 O programa ABC+ financia sistemas de gotejamento com juros reduzidos (7% ao ano).`;
+  }
+
+  if (p.includes('semente') || p.includes('cultivar') || p.includes('variedade')) {
+    return `**Como reduzir gastos com sementes:**
+
+- **Densidade correta:** muitos produtores semeiam 10–20% a mais do que precisa. A recomendação da EMBRAPA para cada cultura é o ideal — verifique antes de comprar
+- **Semente própria (quando possível):** para feijão, arroz e algumas hortaliças, guardar semente do próprio plantio reduz o custo — mas exija variedade de polinização aberta (não híbrido)
+- **Tratamento de sementes:** tratar a semente com fungicida e inseticida antes de plantar pode substituir 1–2 aplicações no campo
+- **Cultivares regionais:** a EMBRAPA disponibiliza zoneamento agroclimático — plante a cultivar recomendada para sua região e clima. Cultivar errado = menor produtividade com o mesmo gasto
+- **Compra em grupo:** cooperativas e associações de produtores conseguem preços 15–30% menores na compra em quantidade
+
+💡 Consulte o zoneamento agroclimático gratuito em embrapa.br.`;
+  }
+
+  if (p.includes('combustiv') || p.includes('diesel') || p.includes('trator') || p.includes('maquinari')) {
+    return `**Como reduzir gastos com combustível e maquinário:**
+
+- **Manutenção preventiva:** filtro de ar sujo pode aumentar o consumo em até 15%. Troca de filtros, ajuste de injeção e calibragem de pneus fazem grande diferença
+- **Plantio direto:** elimina 2–3 operações de preparo do solo (aração, gradagem) — reduz horas de trator e consumo de diesel
+- **Rotação de cultura:** além do benefício agronômico, diminui a necessidade de herbicidas e preparo de solo
+- **Operações combinadas:** combine adubação e plantio em uma só passagem quando possível
+- **Aluguel vs. próprio:** para produtores com menos de 100 ha, terceirizar a colheita pode ser mais barato que manter colheitadeira própria — calcule o custo por hectare
+- **Telemática:** sistemas de rastreamento mostra horas trabalhadas, rotação do motor e consumo em tempo real — identifica gargalos de eficiência
+
+💡 Consórcio de maquinário com vizinhos pode reduzir o custo em 40–60%.`;
+  }
+
+  // Resposta genérica
+  const topCat = Object.entries(por).sort((a,b)=>b[1]-a[1])[0];
+  if (topCat && total > 0) {
+    const c = CATS[topCat[0]] || CATS.outro;
+    return `Você registrou **${fmt(total)}** em gastos, com o maior gasto em **${c.label}** (${((topCat[1]/total)*100).toFixed(0)}% do total).\n\nPode me perguntar especificamente sobre essa categoria para eu dar dicas de redução — ou pergunte sobre qualquer outro custo da lavoura!`;
+  }
+
+  return `Pode me perguntar sobre qualquer custo da lavoura:\n\n- **Defensivos** (herbicidas, fungicidas, inseticidas)\n- **Fertilizantes** e adubação\n- **Sementes** e cultivares\n- **Combustível** e maquinário\n- **Irrigação** e uso de água\n- **Mão de obra** e organização\n\nQual categoria representa mais custo para você?`;
+}
+
+/* ════════════════════════════════════════════════
+   INICIALIZAÇÃO
+════════════════════════════════════════════════ */
+renderTabela();
+atualizarHero();
+</script>
+</body>
+</html>
