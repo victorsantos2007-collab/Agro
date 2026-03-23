@@ -327,16 +327,17 @@
     </a>
     <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-nav">
       <span></span><span></span><span></span>
-    </button>
+    </button></div>
     <nav class="menu" id="menu-nav">
       <ul>
         <li><a href="index.html"    class="menu-link">Início</a></li>
         <li><a href="dados.html"    class="menu-link">Dados</a></li>
+        <li><a href="agropecuaria.html" class="menu-link">Agropecuária</a></li>
+        <li><a href="gastos.html"   class="menu-link">Gastos</a></li>
         <li><a href="proposta.html" class="menu-link menu-link-highlight">Calculadora</a></li>
         <li><a href="cadastro.html" class="btn-nav">Cadastre-se</a></li>
       </ul>
     </nav>
-  </div>
 </header>
 
 <main>
@@ -923,15 +924,16 @@ function renderPrecos() {
   const reg = document.getElementById('sel-reg-painel').value;
 
   // Preços de referência (R$/unidade) com variação simulada realista
+  // Preços CEPEA/CONAB — referência março 2026
   const BASE_PRECOS = [
-    { key:'soja',    emoji:'🌱', nome:'Soja',      unidade:'sc 60kg', base:{ sul:145, sudeste:148, centroeste:143, nordeste:155, norte:160 }, var:+1.2 },
-    { key:'milho',   emoji:'🌽', nome:'Milho',     unidade:'sc 60kg', base:{ sul:55,  sudeste:58,  centroeste:54,  nordeste:62,  norte:66  }, var:-0.8 },
-    { key:'cafe',    emoji:'☕', nome:'Café (arábica)', unidade:'sc 60kg', base:{ sul:1380,sudeste:1320,centroeste:1290,nordeste:1250,norte:1200}, var:+3.5 },
-    { key:'algodao', emoji:'☁️', nome:'Algodão',   unidade:'@ 15kg',  base:{ sul:680, sudeste:685, centroeste:672, nordeste:660, norte:652 }, var:+0.5 },
-    { key:'arroz',   emoji:'🍚', nome:'Arroz',     unidade:'sc 50kg', base:{ sul:62,  sudeste:65,  centroeste:63,  nordeste:68,  norte:65  }, var:-1.1 },
-    { key:'feijao',  emoji:'🫘', nome:'Feijão carioca', unidade:'sc 60kg', base:{ sul:320,sudeste:340,centroeste:330,nordeste:350,norte:360}, var:+2.8 },
-    { key:'laranja', emoji:'🍊', nome:'Laranja',   unidade:'cx 40kg', base:{ sul:28,  sudeste:24,  centroeste:26,  nordeste:22,  norte:24  }, var:-0.4 },
-    { key:'banana',  emoji:'🍌', nome:'Banana',    unidade:'cx 20kg', base:{ sul:22,  sudeste:20,  centroeste:18,  nordeste:15,  norte:17  }, var:+1.0 },
+    { key:'soja',    emoji:'🌱', nome:'Soja',           unidade:'sc 60kg', base:{ sul:148, sudeste:152, centroeste:145, nordeste:158, norte:165 }, var:+1.4 },
+    { key:'milho',   emoji:'🌽', nome:'Milho',          unidade:'sc 60kg', base:{ sul:62,  sudeste:66,  centroeste:60,  nordeste:70,  norte:74  }, var:-0.5 },
+    { key:'cafe',    emoji:'☕', nome:'Café arábica',   unidade:'sc 60kg', base:{ sul:2050,sudeste:1980,centroeste:1920,nordeste:1880,norte:1820}, var:+6.8 },
+    { key:'algodao', emoji:'☁️', nome:'Algodão',        unidade:'@ 15kg',  base:{ sul:722, sudeste:728, centroeste:714, nordeste:700, norte:690 }, var:+0.6 },
+    { key:'arroz',   emoji:'🍚', nome:'Arroz',          unidade:'sc 50kg', base:{ sul:78,  sudeste:82,  centroeste:80,  nordeste:88,  norte:84  }, var:+1.2 },
+    { key:'feijao',  emoji:'🫘', nome:'Feijão carioca', unidade:'sc 60kg', base:{ sul:345,sudeste:375,centroeste:360,nordeste:392,norte:408}, var:+2.4 },
+    { key:'laranja', emoji:'🍊', nome:'Laranja',        unidade:'cx 40kg', base:{ sul:34,  sudeste:28,  centroeste:30,  nordeste:25,  norte:27  }, var:+0.8 },
+    { key:'banana',  emoji:'🍌', nome:'Banana',         unidade:'cx 20kg', base:{ sul:25,  sudeste:22,  centroeste:20,  nordeste:17,  norte:19  }, var:+1.1 },
   ];
 
   const cultSelecionada = document.getElementById('sel-cult-painel').value;
