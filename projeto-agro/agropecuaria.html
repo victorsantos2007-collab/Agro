@@ -235,9 +235,80 @@
 .cot-var{font-size:.7rem;font-weight:700;padding:1px 6px;border-radius:99px}
 .up{background:#d1fae5;color:#065f46}.dn{background:#fee2e2;color:#991b1b}
 /* RESPONSIVO */
-@media(max-width:1024px){.g2,.g3,.g4{grid-template-columns:1fr 1fr}.cp-form{grid-template-columns:1fr 1fr}.cr-g{grid-template-columns:1fr 1fr}.cp-res{grid-template-columns:1fr 1fr}.cp-peri{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){.g2,.g3,.g4{grid-template-columns:1fr}.rf-stats{grid-template-columns:repeat(2,1fr)}.meses-n{grid-template-columns:repeat(4,1fr)}.cal-s{grid-template-columns:repeat(4,1fr)}.cp-add{grid-template-columns:1fr 1fr}.cp-add .cp-add-btn{grid-column:1/-1}.cp-form{grid-template-columns:1fr}.vi-grid{grid-template-columns:1fr}.apc{padding:16px 14px}.cp-res{grid-template-columns:1fr}}
-@media(max-width:480px){.meses-n{grid-template-columns:repeat(3,1fr)}.cal-s{grid-template-columns:repeat(3,1fr)}.cp-peri{grid-template-columns:1fr 1fr}.cr-g{grid-template-columns:1fr}.cr-res{grid-template-columns:1fr 1fr}}
+@media(max-width:1024px){
+  .g2,.g3,.g4{grid-template-columns:1fr 1fr}
+  .cp-form{grid-template-columns:1fr 1fr}
+  .cr-g{grid-template-columns:1fr 1fr}
+  .cp-res{grid-template-columns:1fr 1fr}
+  .cp-peri{grid-template-columns:repeat(2,1fr)}
+  .rf-stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .rf-stats{grid-template-columns:repeat(2,1fr)}
+  .meses-n{grid-template-columns:repeat(4,1fr)}
+  .cal-s{grid-template-columns:repeat(3,1fr)}
+  .cp-add{grid-template-columns:1fr 1fr}
+  .cp-add .cp-add-btn{grid-column:1/-1}
+  .cp-form{grid-template-columns:1fr}
+  .vi-grid{grid-template-columns:1fr}
+  .apc{padding:16px 14px}
+  .cp-res{grid-template-columns:1fr}
+  .ciclo .cf{min-width:80px;padding:10px 6px}
+  .cf-ico{font-size:1.1rem}
+  .cf-nome{font-size:.58rem}
+  .cf-dias{font-size:.8rem}
+  .rfc-top{padding:13px 14px 10px}
+  .rf-top{padding:13px 14px 10px}
+  .rf-emoji{font-size:1.7rem}
+  .rfp{font-size:.72rem}
+  .rf-uso{font-size:.72rem}
+  .rf-body{padding:12px 14px}
+  .cr-g{grid-template-columns:1fr}
+  .cr-res{grid-template-columns:1fr}
+  .iatf-tb{font-size:.76rem}
+  .tarefas-g{grid-template-columns:1fr}
+  .mh{padding:14px 16px}
+  .mh-ico{font-size:1.8rem}
+  .mh-nome{font-size:1rem}
+  .ap-tabs{top:56px}
+  .ap-tab{padding:11px 12px;font-size:.7rem;gap:5px}
+  .comp-tb{font-size:.76rem}
+  .tb th,.tb td{padding:7px 9px}
+  .cot-card{padding:12px 11px}
+  .cot-v{font-size:1.25rem}
+}
+@media(max-width:480px){
+  .meses-n{grid-template-columns:repeat(3,1fr)}
+  .cal-s{grid-template-columns:repeat(2,1fr)}
+  .cp-peri{grid-template-columns:1fr 1fr}
+  .cr-g{grid-template-columns:1fr}
+  .cr-res{grid-template-columns:1fr}
+  .cp-res{grid-template-columns:1fr}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .rf-stats{grid-template-columns:1fr 1fr}
+  .ap-tab{padding:9px 8px;font-size:.64rem}
+  .apc{padding:14px 12px}
+  .rf-top{padding:12px 12px 9px}
+  .rf-emoji{font-size:1.5rem}
+  .rf-nome{font-size:.88rem}
+  .ciclo{flex-wrap:nowrap;overflow-x:auto}
+  .cf{min-width:72px}
+  .ciclo-det{padding:13px 14px}
+  .vacc-h{padding:9px 12px;gap:7px}
+  .vacc-nome{font-size:.82rem}
+  .cot-card{padding:11px 10px}
+  .cot-v{font-size:1.1rem}
+  .calc-pec{padding:20px 14px}
+  .cr{padding:20px 16px}
+  .cp-esps{gap:5px}
+  .cpe{font-size:.72rem;padding:5px 9px}
+  .pills{gap:5px}
+  .pt{font-size:.74rem;padding:6px 11px}
+  .gl{font-size:1.1rem}
+  .gi-t{font-size:.84rem}
+  .gi-d{font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -276,8 +347,8 @@
 </section>
 <div class="ap-tabs" id="ap-tabs">
   <div class="ap-tab active" onclick="irAba('racas')">🐄 Raças</div>
-  <div class="ap-tab" onclick="irAba('nutricao')">🌿 Nutrição</div>
-  <div class="ap-tab" onclick="irAba('reproducao')">🔬 Reprodução</div>
+  <div class="ap-tab" onclick="irAba('nutrição')">🌿 Nutrição</div>
+  <div class="ap-tab" onclick="irAba('reprodução')">🔬 Reprodução</div>
   <div class="ap-tab" onclick="irAba('sanidade')">💉 Sanidade</div>
   <div class="ap-tab" onclick="irAba('manejo')">📅 Manejo</div>
   <div class="ap-tab" onclick="irAba('custos')">💰 Custos</div>
@@ -317,7 +388,7 @@
 </div>
 
 <!-- ABA NUTRIÇÃO -->
-<div class="ap-panel" id="panel-nutricao">
+<div class="ap-panel" id="panel-nutrição">
   <div class="apc">
     <div class="apc-t">🌿 Os 3 pilares da alimentação animal — explicados</div>
     <div class="apc-s">Antes de calcular ração, entenda o que cada nutriente faz. Isso evita comprar o que não precisa e economiza de 15 a 30% no custo de alimentação.</div>
@@ -392,7 +463,7 @@
 </div>
 
 <!-- ABA REPRODUÇÃO -->
-<div class="ap-panel" id="panel-reproducao">
+<div class="ap-panel" id="panel-reprodução">
   <div class="apc">
     <div class="apc-t">🔄 Ciclo estral bovino — o que acontece em cada fase</div>
     <div class="apc-s">O ciclo dura ~21 dias. A janela para inseminar é de apenas 12–18h. Clique em cada fase para entender o que está acontecendo no ovário e o que fazer.</div>
@@ -440,7 +511,7 @@
   </div>
   <div class="apc">
     <div class="apc-t">📅 Calendário sanitário anual — bovinos</div>
-    <div class="apc-s">Clique em um mês para ver as vacinações recomendadas. 🔴 Obrigatória por lei · 🟡 Recomendada · ⚪ Opcional conforme região e histórico.</div>
+    <div class="apc-s">Clique em um mês para ver as vacinações. 🔴 Obrigatória por lei · 🟡 Recomendada · ⚪ Opcional conforme região.</div>
     <div class="cal-s" id="cal-san"></div>
     <div style="padding:11px 13px;background:var(--ink-50);border:var(--border);border-radius:var(--radius-sm);font-size:.8rem;color:var(--ink-600);line-height:1.6" id="cal-det">Clique em um mês acima para ver o protocolo de vacinação.</div>
   </div>
@@ -474,10 +545,10 @@
 <!-- ABA CUSTOS -->
 <div class="ap-panel" id="panel-custos">
   <div class="g4" style="margin-bottom:18px">
-    <div class="cot-card alta"><div class="cot-l">Boi gordo (@ 15kg)</div><div class="cot-v">R$ 312</div><div class="cot-s">São Paulo · CEPEA</div><span class="cot-var up">▲ +2,8%</span></div>
-    <div class="cot-card media"><div class="cot-l">Frango vivo (kg)</div><div class="cot-v">R$ 6,40</div><div class="cot-s">Sul · CEPEA</div><span class="cot-var dn">▼ -1,2%</span></div>
-    <div class="cot-card alta"><div class="cot-l">Leite (L produtor)</div><div class="cot-v">R$ 2,85</div><div class="cot-s">Nacional · CEPEA</div><span class="cot-var up">▲ +0,9%</span></div>
-    <div class="cot-card baixa"><div class="cot-l">Suíno vivo (kg)</div><div class="cot-v">R$ 7,20</div><div class="cot-s">Sul · CEPEA</div><span class="cot-var up">▲ +1,5%</span></div>
+    <div class="cot-card alta"><div class="cot-l">Boi gordo (@ 15kg)</div><div class="cot-v">R$ 338</div><div class="cot-s">São Paulo · CEPEA/ESALQ</div><span class="cot-var up">▲ +2,8%</span></div>
+    <div class="cot-card media"><div class="cot-l">Frango vivo (kg)</div><div class="cot-v">R$ 6,10</div><div class="cot-s">Sul · CEPEA</div><span class="cot-var dn">▼ -1,2%</span></div>
+    <div class="cot-card alta"><div class="cot-l">Leite (L produtor)</div><div class="cot-v">R$ 3,10</div><div class="cot-s">Nacional · CEPEA</div><span class="cot-var up">▲ +0,9%</span></div>
+    <div class="cot-card baixa"><div class="cot-l">Suíno vivo (kg)</div><div class="cot-v">R$ 7,00</div><div class="cot-s">Sul · CEPEA</div><span class="cot-var up">▲ +1,5%</span></div>
   </div>
   <div class="calc-pec">
     <div class="cp-t">🐄 Calculadora de Custos do Rebanho</div>
@@ -562,7 +633,7 @@ document.querySelectorAll('.menu-link,.btn-nav').forEach(l=>l.addEventListener('
 hbg.addEventListener('click',()=>{const o=mnav.classList.toggle('menu-open');hbg.classList.toggle('hamburger-open',o);hbg.setAttribute('aria-expanded',o)});
 
 /* ABAS */
-const ABAS=['racas','nutricao','reproducao','sanidade','manejo','custos','glossario'];
+const ABAS=['racas','nutrição','reprodução','sanidade','manejo','custos','glossario'];
 function irAba(n){
   document.querySelectorAll('.ap-tab').forEach((t,i)=>t.classList.toggle('active',ABAS[i]===n));
   document.querySelectorAll('.ap-panel').forEach(p=>p.classList.remove('active'));
@@ -659,7 +730,7 @@ const DB={
     {emoji:'🥚',nome:'Lohmann Brown — postura',origem:'Alemanha',badge:'bd',bLabel:'Postura',
      gmd:'—',carcaca:'—',peso:'1,8–2,0 kg adulta',adapt:'Gaiola ou piso',
      desc:'A linhagem de postura mais popular do Brasil — presente na maioria dos granjas comerciais. Ovos com casca marrom-escura, pico de postura acima de 95% e boa persistência até a 90ª semana.',
-     pros:['310–320 ovos/ave/ano — das melhores do mercado','Pico de postura > 95% de produção','Resistência a doenças respiratórias','Casca marrom — preferência absoluta do mercado brasileiro'],
+     pros:['290–305 ovos/ave/ano — desempenho médio real','Pico de postura > 95% de produção','Resistência a doenças respiratórias','Casca marrom — preferência absoluta do mercado brasileiro'],
      uso:'Para postura comercial em qualquer escala. Sistema em gaiola convencional permite maior densidade; cage-free e enriched colony atendem mercados mais exigentes. O mercado brasileiro prefere ovo marrom.',
      clima:'★★★★',precocidade:'★★★★',carcS:'—',rustic:'★★★',custo:'★★★',apt:'Postura'},
   ],
@@ -1178,7 +1249,7 @@ const MESES_MAN=[
    nutri:['Manutenção da suplementação','Bezerros: máximo esforço — ganhar peso agora para entrar na estação de monta com peso adequado','Touros: condição corporal ideal 3,5 para estação de monta'],
    alert:'⚠ Julho — falta 3 meses para a estação de monta. Touro com escore corporal abaixo de 3,0 vai ter baixa libido e sêmen de pior qualidade. Fêmeas abaixo de 2,5 não vão ciclar.'},
   {past:['Primavera começando — pasto verde nas últimas chuvas','Vedar piquetes para recuperação','Adubação de cobertura nos piquetes de pastejo intensivo'],
-   repro:['Aplicar progesterona/protocolo pré-estação em fêmeas que vão para IATF','Flushing nutricional 30–45 dias antes da estação','Vacinação IBR/BVD se o rebanho tiver histórico de abortos'],
+   repro:['Aplicar progesterona/protocolo pré-estação em fêmeas que vão para IATF','Flushing nutricional 30–45 dias antes da estação de monta','Vacinação IBR/BVD se o rebanho tiver histórico de abortos'],
    sani:['Vermifugação estratégica pré-período chuvoso','Vacinação de febre aftosa','Desmama de bezerros se não foi feita antes'],
    nutri:['Flushing: aumentar 20–30% a suplementação das fêmeas que vão à estação','Touros: suplementação plena 60 dias antes','Bezerros desmamados: 500 g ração concentrada + mineral'],
    alert:'⚠ Agosto é o mês decisivo para a reprodução. A condição corporal que as fêmeas entram na estação de monta em outubro define a taxa de prenhez do ano inteiro.'},
@@ -1229,8 +1300,8 @@ function selecionarMes(i){
 selecionarMes(mesAtual);
 /* ══ CALCULADORA PECUÁRIA ══ */
 const CUSTOS_PEC={
-  bovino_corte:{nome:'Boi gordo',precoVenda:{kg:6.24,arroba:312},
-    ref:{extensivo:185,semintensivo:260,intensivo:480},
+  bovino_corte:{nome:'Boi gordo',precoVenda:{kg:6.27,arroba:338},
+    ref:{extensivo:210,semintensivo:295,intensivo:540},
     itens:{
       extensivo:[
         {id:'past',n:'Pastagem (manutenção + adubação)',cat:'alimentacao',vha:42,base:'ha'},
@@ -1259,8 +1330,8 @@ const CUSTOS_PEC={
       ]
     }
   },
-  leite:{nome:'Gado de leite',precoVenda:{litro:2.85},prodLitros:{extensivo:8,semintensivo:15,intensivo:28},
-    ref:{extensivo:280,semintensivo:420,intensivo:720},
+  leite:{nome:'Gado de leite',precoVenda:{litro:3.10},prodLitros:{extensivo:8,semintensivo:15,intensivo:28},
+    ref:{extensivo:320,semintensivo:480,intensivo:820},
     itens:{
       extensivo:[
         {id:'past',n:'Pastagem e forragem',cat:'alimentacao',vha:55,base:'ha'},
@@ -1289,7 +1360,7 @@ const CUSTOS_PEC={
       ]
     }
   },
-  suino:{nome:'Suínos',precoVenda:{kg:7.20},
+  suino:{nome:'Suínos',precoVenda:{kg:7.00},
     ref:{extensivo:180,semintensivo:280,intensivo:420},
     itens:{
       extensivo:[{id:'rac',n:'Ração (todas as fases)',cat:'alimentacao',vcab:95,base:'cab'},{id:'vacu',n:'Vacinas e medicamentos',cat:'sanitario',vcab:22,base:'cab'},{id:'maob',n:'Mão de obra',cat:'maodeobra',vcab:38,base:'cab'},{id:'agua',n:'Água e energia',cat:'infraestrutura',vcab:15,base:'cab'}],
@@ -1297,7 +1368,7 @@ const CUSTOS_PEC={
       intensivo:[{id:'rac',n:'Ração formulada integrada',cat:'alimentacao',vcab:210,base:'cab'},{id:'vacu',n:'Protocolo sanitário completo',cat:'sanitario',vcab:45,base:'cab'},{id:'maob',n:'Mão de obra especializada',cat:'maodeobra',vcab:72,base:'cab'},{id:'ener',n:'Energia, ventilação, automação',cat:'infraestrutura',vcab:48,base:'cab'}],
     }
   },
-  frango:{nome:'Frango de corte',precoVenda:{kg:6.40},
+  frango:{nome:'Frango de corte',precoVenda:{kg:6.10},
     ref:{extensivo:12,semintensivo:16,intensivo:22},
     itens:{
       extensivo:[{id:'rac',n:'Ração caipira',cat:'alimentacao',vcab:6.5,base:'cab'},{id:'vacu',n:'Vacinas e medicamentos',cat:'sanitario',vcab:0.8,base:'cab'},{id:'maob',n:'Mão de obra',cat:'maodeobra',vcab:1.8,base:'cab'},{id:'cama',n:'Cama de aviário',cat:'infraestrutura',vcab:0.9,base:'cab'}],
@@ -1305,7 +1376,7 @@ const CUSTOS_PEC={
       intensivo:[{id:'rac',n:'Ração pré-inicial a abate',cat:'alimentacao',vcab:13.5,base:'cab'},{id:'pint',n:'Pintinhos certificados',cat:'alimentacao',vcab:3.8,base:'cab'},{id:'vacu',n:'Protocolo sanitário integrado',cat:'sanitario',vcab:1.5,base:'cab'},{id:'maob',n:'Mão de obra',cat:'maodeobra',vcab:1.8,base:'cab'},{id:'ener',n:'Energia (ventilação + aquecimento)',cat:'infraestrutura',vcab:1.8,base:'cab'}],
     }
   },
-  ovino:{nome:'Ovinos',precoVenda:{kg:12.50},
+  ovino:{nome:'Ovinos',precoVenda:{kg:14.00},
     ref:{extensivo:45,semintensivo:75,intensivo:130},
     itens:{
       extensivo:[{id:'past',n:'Pastagem e capineira',cat:'alimentacao',vha:28,base:'ha'},{id:'mine',n:'Suplementação mineral',cat:'alimentacao',vcab:8,base:'cab'},{id:'verm',n:'Vermífugos (FAMACHA)',cat:'sanitario',vcab:6,base:'cab'},{id:'vacu',n:'Vacinas e medicamentos',cat:'sanitario',vcab:5,base:'cab'},{id:'maob',n:'Mão de obra',cat:'maodeobra',vcab:12,base:'cab'}],
